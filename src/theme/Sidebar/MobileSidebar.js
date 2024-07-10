@@ -39,7 +39,7 @@ const MobileSidebar = ({ sidebarCompact }) => {
           maxHeight: `calc(100vh - ${SIDEBAR_TOP_HEADER_AREA}px)`
         }}
       >
-        <NavWrapper compact={sidebarCompact}>
+        <NavWrapper compact={1}>
           <MultiLevelMenu sidebarCompact={false} />
         </NavWrapper>
       </Scrollbar>

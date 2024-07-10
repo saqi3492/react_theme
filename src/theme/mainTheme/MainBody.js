@@ -1,14 +1,17 @@
 import { styled } from '@mui/material/styles';
 import { Outlet } from 'react-router-dom';
-import { Box } from '@mui/material';
+import { Box, useMediaQuery, useTheme } from '@mui/material';
 import { COLLAPSED_SIDEBAR_WIDTH, SIDEBAR_WIDTH } from 'utils/constants';
 import { useSelector } from 'react-redux';
 
 const MainBody = () => {
+  const theme = useTheme();
+  const downLg = useMediaQuery(theme.breakpoints.down('lg'));
   const sidebarCompact = useSelector((state) => state.ThemeOptions.sidebarCompact);
 
+  const space = downLg ? 0 : sidebarCompact ? COLLAPSED_SIDEBAR_WIDTH : SIDEBAR_WIDTH;
   return (
-    <StyledBox sidebarCompact={sidebarCompact}>
+    <StyledBox space={space}>
       <Outlet />
     </StyledBox>
   );
@@ -16,10 +19,11 @@ const MainBody = () => {
 
 export default MainBody;
 
-const StyledBox = styled(Box, { shouldForwardProp: (prop) => prop !== 'sidebarCompact' })(({ theme, sidebarCompact }) => ({
+const StyledBox = styled(Box, { shouldForwardProp: (prop) => prop !== 'space' })(({ theme, space }) => ({
   zIndex: theme.zIndex.drawer + 1,
   padding: '10px',
-  marginLeft: sidebarCompact ? COLLAPSED_SIDEBAR_WIDTH : SIDEBAR_WIDTH,
+  marginLeft: space,
+  height: 'calc(100vh - 64px)', // or minHeight?
   transition: theme.transitions.create(['width', 'margin'], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen
