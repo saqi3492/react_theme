@@ -1,3 +1,19 @@
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import TrendingUpIcon from '@mui/icons-material/TrendingUp';
+import PeopleIcon from '@mui/icons-material/People';
+import AssignmentIcon from '@mui/icons-material/Assignment';
+import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import SettingsApplicationsIcon from '@mui/icons-material/SettingsApplications';
+import TableChartIcon from '@mui/icons-material/TableChart';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
+import ChatIcon from '@mui/icons-material/Chat';
+import LockIcon from '@mui/icons-material/Lock';
+import PagesIcon from '@mui/icons-material/Pages';
+import DescriptionIcon from '@mui/icons-material/Description';
+
+// Define the navigation items with icons
 export const navigations = [
   {
     type: 'label',
@@ -6,37 +22,37 @@ export const navigations = [
   {
     name: 'LMS',
     path: '/dashboard',
-    icon: null
+    icon: DashboardIcon
   },
   {
     name: 'Sales 1',
     path: '/dashboard/sales',
-    icon: null
+    icon: TrendingUpIcon
   },
   {
     name: 'Sales 2',
     path: '/dashboard/sales-v2',
-    icon: null
+    icon: TrendingUpIcon
   },
   {
     name: 'Hiring',
     path: '/dashboard/job-management',
-    icon: null
+    icon: PeopleIcon
   },
   {
     name: 'Project 1',
     path: '/dashboard/project-management',
-    icon: null
+    icon: AssignmentIcon
   },
   {
     name: 'Project 2',
     path: '/dashboard/project-management-v2',
-    icon: null
+    icon: AssignmentIcon
   },
   {
     name: 'CRM',
     path: '/dashboard/crm',
-    icon: null,
+    icon: BusinessCenterIcon,
     badge: {
       value: '30'
     }
@@ -44,7 +60,7 @@ export const navigations = [
   {
     name: 'SaaS',
     path: '/dashboard/saas',
-    icon: null
+    icon: SettingsApplicationsIcon
   },
   {
     type: 'label',
@@ -52,7 +68,7 @@ export const navigations = [
   },
   {
     name: 'Profiles',
-    icon: null,
+    icon: PeopleIcon,
     children: [
       {
         name: 'Profile 1',
@@ -66,7 +82,7 @@ export const navigations = [
   },
   {
     name: 'Accounts',
-    icon: null,
+    icon: LockIcon,
     children: [
       {
         name: 'Account 1',
@@ -80,7 +96,7 @@ export const navigations = [
   },
   {
     name: 'User & Contact',
-    icon: null,
+    icon: PeopleIcon,
     children: [
       {
         name: 'Add User',
@@ -114,7 +130,7 @@ export const navigations = [
   },
   {
     name: 'Invoice',
-    icon: null,
+    icon: DescriptionIcon,
     children: [
       {
         name: 'Invoice List 1',
@@ -144,7 +160,7 @@ export const navigations = [
   },
   {
     name: 'Ecommerce',
-    icon: null,
+    icon: ShoppingCartIcon,
     children: [
       {
         name: 'Cart',
@@ -190,7 +206,7 @@ export const navigations = [
   },
   {
     name: 'Admin Ecommerce',
-    icon: null,
+    icon: SettingsApplicationsIcon,
     children: [
       {
         name: 'Product List',
@@ -220,7 +236,7 @@ export const navigations = [
   },
   {
     name: 'Projects',
-    icon: null,
+    icon: AssignmentIcon,
     children: [
       {
         name: 'Project List 1',
@@ -246,8 +262,8 @@ export const navigations = [
   },
   {
     name: 'Data Table',
-    icon: null,
-    path: '/dashboard/data-table-v2' // children: [{ name: 'Data Table', path: '/dashboard/data-table-v2' }],
+    icon: TableChartIcon,
+    path: '/dashboard/data-table-v2'
   },
   {
     type: 'label',
@@ -255,17 +271,17 @@ export const navigations = [
   },
   {
     name: 'Todo List',
-    icon: null,
+    icon: CheckCircleIcon,
     path: '/dashboard/todo-list'
   },
   {
     name: 'Calendar',
-    icon: null,
+    icon: CalendarTodayIcon,
     path: '/dashboard/calender'
   },
   {
     name: 'Chats',
-    icon: null,
+    icon: ChatIcon,
     children: [
       {
         name: 'Chat 1',
@@ -279,7 +295,7 @@ export const navigations = [
   },
   {
     name: 'Sessions',
-    icon: null,
+    icon: LockIcon,
     children: [
       {
         iconText: 'RT',
@@ -331,7 +347,7 @@ export const navigations = [
   },
   {
     name: 'Pages',
-    icon: null,
+    icon: PagesIcon,
     children: [
       {
         name: 'Pricing',
@@ -353,7 +369,7 @@ export const navigations = [
   },
   {
     name: 'Documentation',
-    icon: null,
+    icon: DescriptionIcon,
     type: 'extLink',
     path: 'https://uko-react-doc.vercel.app/'
   }

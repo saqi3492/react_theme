@@ -1,37 +1,40 @@
-import { alpha, styled } from "@mui/material";
-import SimpleBar from "simplebar-react";
-const StyledScrollBar = styled(SimpleBar)(({
-  theme
-}) => ({
-  maxHeight: "100%",
-  "& .simplebar-scrollbar": {
-    "&:before": {
-      backgroundColor: alpha(theme.palette.grey[400], 0.6)
-    },
-    "&.simplebar-visible:before": {
-      opacity: 1
-    }
-  },
-  "& .simplebar-track.simplebar-vertical": {
-    width: 9
-  },
-  "& .simplebar-track.simplebar-horizontal .simplebar-scrollbar": {
-    height: 6
-  },
-  "& .simplebar-mask": {
-    zIndex: "inherit"
-  }
-})); // props type
+import { styled } from '@mui/material';
+import PerfectScrollbar from 'react-perfect-scrollbar';
+import 'perfect-scrollbar/css/perfect-scrollbar.css'; // Import the styles
 
-const Scrollbar = ({
-  children,
-  style,
-  sx,
-  ...props
-}) => {
-  return <StyledScrollBar style={style} sx={sx} {...props}>
+const StyledScrollBar = styled(PerfectScrollbar)(({ theme }) => ({
+  maxHeight: '100%',
+  '& .ps__rail-y': {
+    width: 9,
+    right: 2, // Adjusts scrollbar's position
+    backgroundColor: 'transparent'
+  },
+  '& .ps__thumb-y': {
+    backgroundColor: theme.palette.grey[400],
+    borderRadius: 4,
+    opacity: 0.6
+  },
+  '& .ps__rail-x': {
+    height: 6,
+    bottom: 2, // Adjusts scrollbar's position
+    backgroundColor: 'transparent'
+  },
+  '& .ps__thumb-x': {
+    backgroundColor: theme.palette.grey[400],
+    borderRadius: 4,
+    opacity: 0.6
+  },
+  '&:hover .ps__thumb-y, &:hover .ps__thumb-x': {
+    opacity: 1
+  }
+}));
+
+const Scrollbar = ({ children, style, sx, ...props }) => {
+  return (
+    <StyledScrollBar style={style} sx={sx} {...props}>
       {children}
-    </StyledScrollBar>;
+    </StyledScrollBar>
+  );
 };
 
 export default Scrollbar;

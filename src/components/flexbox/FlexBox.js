@@ -1,10 +1,9 @@
-import { Box } from "@mui/material";
+import { Box } from '@mui/material';
 
-const FlexBox = ({
-  children,
-  ...props
-}) => <Box display="flex" {...props}>
+const FlexBox = ({ children, ...props }) => (
+  <Box display="flex" alignItems="center" justifyContent="center" {...props}>
     {children}
-  </Box>;
+  </Box>
+);
 
 export default FlexBox;

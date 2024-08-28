@@ -5,7 +5,10 @@ import AuthGuard from 'theme/guards/AuthGuard';
 import { Navigate } from 'react-router-dom';
 
 const MainTheme = Loadable(lazy(() => import('theme/mainTheme/MainTheme')));
-const Dashboard = Loadable(lazy(() => import('pages/dashboard/Dashboard')));
+const DummyListing = Loadable(lazy(() => import('pages/dashboard/DummyListing')));
+const SignIn = Loadable(lazy(() => import('pages/auth/SignIn')));
+const SignUp = Loadable(lazy(() => import('pages/auth/SignUp')));
+const ForgotPassword = Loadable(lazy(() => import('pages/auth/ForgotPassword')));
 
 const Routes = () => {
   return useRoutes([
@@ -18,9 +21,12 @@ const Routes = () => {
       ),
       children: [
         { element: <Navigate to="/dashboard" />, index: true },
-        { path: '/dashboard', element: <Dashboard /> }
+        { path: '/dashboard', element: <DummyListing /> }
       ]
     },
+    { path: '/signin', element: <SignIn /> },
+    { path: '/signup', element: <SignUp /> },
+    { path: '/forgotpassword', element: <ForgotPassword /> },
     { path: '*', element: <Navigate to="/" /> }
   ]);
 };
