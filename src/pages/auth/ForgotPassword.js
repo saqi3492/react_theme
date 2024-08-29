@@ -1,17 +1,26 @@
-import React from 'react';
-import { Card, CardContent, TextField, Button, Typography, Grid, Box, Stack } from '@mui/material';
+import React, { useState } from 'react';
+import { Card, CardContent, TextField, Typography, Grid, Box, Stack } from '@mui/material';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import CustomLink from 'components/CustomLink';
 import Logo from 'assets/logo-dark.png';
+import { LoadingButton } from '@mui/lab';
+import { forgotPassword } from './AuthApiCalls';
 
 // Validation schema for login
 const validationSchema = Yup.object().shape({
-  email: Yup.string().email('Invalid email address').required('Email is required'),
-  password: Yup.string().min(8, 'Password must be at least 8 characters long').required('Password is required')
+  email: Yup.string().email('Invalid email address').required('Email is required')
 });
 
 const ForgotPassword = () => {
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (values) => {
+    setLoading(true);
+    await forgotPassword(values);
+    setLoading(false);
+  };
+
   return (
     <Grid container justifyContent="center" alignItems="center" sx={{ minHeight: '100vh' }}>
       <Grid item xs={11} sm={8} lg={4}>
@@ -23,13 +32,7 @@ const ForgotPassword = () => {
                 Forgot Password
               </Typography>
             </Box>
-            <Formik
-              initialValues={{ email: '' }}
-              validationSchema={validationSchema}
-              onSubmit={(values) => {
-                console.log('Login Form Values:', values);
-              }}
-            >
+            <Formik initialValues={{ email: '' }} validationSchema={validationSchema} onSubmit={handleSubmit}>
               {({ errors, touched, handleChange }) => (
                 <Form noValidate autoComplete="off" sx={{ marginTop: '20px' }}>
                   <Stack spacing={2}>
@@ -43,9 +46,9 @@ const ForgotPassword = () => {
                       error={touched.email && Boolean(errors.email)}
                       helperText={touched.email && errors.email}
                     />
-                    <Button size="small" type="submit" fullWidth variant="contained" color="primary">
+                    <LoadingButton size="small" type="submit" fullWidth variant="contained" color="primary" loading={loading}>
                       Submit
-                    </Button>
+                    </LoadingButton>
                     <Stack alignItems="flex-end">
                       <CustomLink to="/signin">Back to Sign In</CustomLink>
                     </Stack>

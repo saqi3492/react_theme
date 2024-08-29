@@ -4,9 +4,11 @@ import Logout from '@mui/icons-material/Logout';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import StyledAvatar from './StyledAvatar';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import { useNavigate } from 'react-router-dom';
 
 const UserMenu = () => {
   const theme = useTheme();
+  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const downMd = useMediaQuery(theme.breakpoints.down('md'));
@@ -57,7 +59,7 @@ const UserMenu = () => {
           </ListItemIcon>
           Settings
         </MenuItem>
-        <MenuItem>
+        <MenuItem onClick={() => navigate('signin')}>
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>

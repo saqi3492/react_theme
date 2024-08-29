@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
-import { Card, CardContent, TextField, Button, Typography, Grid, Box, InputAdornment, IconButton, Stack } from '@mui/material';
+import { Card, CardContent, TextField, Typography, Grid, Box, InputAdornment, IconButton, Stack } from '@mui/material';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import CustomLink from 'components/CustomLink';
 import Logo from 'assets/logo-dark.png';
+import { signIn } from './AuthApiCalls';
+import { LoadingButton } from '@mui/lab';
+import { useNavigate } from 'react-router-dom';
 
 // Validation schema for login
 const validationSchema = Yup.object().shape({
@@ -14,6 +17,14 @@ const validationSchema = Yup.object().shape({
 
 const SignIn = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const handleSubmit = async (values) => {
+    setLoading(true);
+    await signIn(values, navigate);
+    setLoading(false);
+  };
 
   return (
     <Grid container justifyContent="center" alignItems="center" sx={{ minHeight: '100vh' }}>
@@ -26,13 +37,7 @@ const SignIn = () => {
                 Sign In
               </Typography>
             </Box>
-            <Formik
-              initialValues={{ email: '', password: '' }}
-              validationSchema={validationSchema}
-              onSubmit={(values) => {
-                console.log('Login Form Values:', values);
-              }}
-            >
+            <Formik initialValues={{ email: '', password: '' }} validationSchema={validationSchema} onSubmit={handleSubmit}>
               {({ errors, touched, handleChange }) => (
                 <Form noValidate autoComplete="off" sx={{ marginTop: '20px' }}>
                   <Stack spacing={2}>
@@ -65,9 +70,9 @@ const SignIn = () => {
                         )
                       }}
                     />
-                    <Button size="small" type="submit" fullWidth variant="contained" color="primary">
+                    <LoadingButton size="small" type="submit" fullWidth variant="contained" color="primary" loading={loading}>
                       Sign In
-                    </Button>
+                    </LoadingButton>
                     <Grid container justifyContent="space-between">
                       <Grid item>
                         <CustomLink to="/forgotpassword">Forgot password</CustomLink>

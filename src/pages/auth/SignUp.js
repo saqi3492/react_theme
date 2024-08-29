@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { Card, CardContent, TextField, Button, Typography, Grid, Box, InputAdornment, IconButton, Stack } from '@mui/material';
+import { Card, CardContent, TextField, Typography, Grid, Box, InputAdornment, IconButton, Stack } from '@mui/material';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import CustomLink from 'components/CustomLink';
 import Logo from 'assets/logo-dark.png';
+import { signUp } from './AuthApiCalls';
+import { LoadingButton } from '@mui/lab';
 
 // Validation schema for signup
 const validationSchema = Yup.object().shape({
@@ -19,6 +21,13 @@ const validationSchema = Yup.object().shape({
 const SignupPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (values) => {
+    setLoading(true);
+    await signUp(values);
+    setLoading(false);
+  };
 
   return (
     <Grid container justifyContent="center" alignItems="center" sx={{ minHeight: '100vh' }}>
@@ -34,9 +43,7 @@ const SignupPage = () => {
             <Formik
               initialValues={{ fullName: '', email: '', password: '', confirmPassword: '' }}
               validationSchema={validationSchema}
-              onSubmit={(values) => {
-                console.log('Signup Form Values:', values);
-              }}
+              onSubmit={handleSubmit}
             >
               {({ errors, touched, handleChange }) => (
                 <Form noValidate autoComplete="off" sx={{ marginTop: '20px' }}>
@@ -98,9 +105,9 @@ const SignupPage = () => {
                         )
                       }}
                     />
-                    <Button size="small" type="submit" fullWidth variant="contained" color="primary">
+                    <LoadingButton size="small" type="submit" fullWidth variant="contained" color="primary" loading={loading}>
                       Sign Up
-                    </Button>
+                    </LoadingButton>
                     <Stack alignItems="flex-end">
                       <CustomLink to="/signin">Already have an account? Sign In</CustomLink>
                     </Stack>
