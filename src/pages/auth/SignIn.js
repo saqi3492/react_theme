@@ -4,7 +4,7 @@ import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import CustomLink from 'components/CustomLink';
-import Logo from 'assets/logo.png';
+import Logo from 'assets/logo-dark.png';
 
 // Validation schema for login
 const validationSchema = Yup.object().shape({
@@ -21,8 +21,8 @@ const SignIn = () => {
         <Card elevation={10} sx={{ padding: '20px', borderRadius: '12px' }}>
           <CardContent>
             <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center">
-              <img src={Logo} alt="logo" width={50} />
-              <Typography variant="h5" gutterBottom>
+              <img src={Logo} alt="logo" width={150} />
+              <Typography variant="h5" gutterBottom my={2}>
                 Sign In
               </Typography>
             </Box>
