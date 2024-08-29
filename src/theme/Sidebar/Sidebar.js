@@ -10,12 +10,12 @@ import { useSelector } from 'react-redux';
 const Sidebar = () => {
   const theme = useTheme();
   const [onHover, setOnHover] = useState(false);
-  const downLg = useMediaQuery(theme.breakpoints.down('lg'));
+  const downMd = useMediaQuery(theme.breakpoints.down('md'));
   const sidebarCompact = useSelector((state) => state.ThemeOptions.sidebarCompact);
 
   const COMPACT = sidebarCompact && !onHover ? 1 : 0; //   IF MOBILE
 
-  if (downLg) {
+  if (downMd) {
     return <MobileSidebar />;
   }
 

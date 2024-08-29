@@ -1,53 +1,67 @@
 import React, { useState } from 'react';
-import { Avatar, Menu, MenuItem, ListItemIcon, IconButton, Tooltip } from '@mui/material';
-import { Settings, Logout } from '@mui/icons-material';
-import UserImg from 'assets/user.jpg';
+import { Menu, MenuItem, ListItemIcon, IconButton, Typography, useMediaQuery, Divider, Stack, useTheme } from '@mui/material';
+import Logout from '@mui/icons-material/Logout';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import StyledAvatar from './StyledAvatar';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+
 const UserMenu = () => {
+  const theme = useTheme();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  const downMd = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
     <>
-      <Tooltip title="Account settings">
-        <IconButton onClick={handleClick} size="small" sx={{ ml: 2 }}>
-          <Avatar alt="User Avatar" src={UserImg} />
-        </IconButton>
-      </Tooltip>
+      <IconButton size="small" onClick={(event) => setAnchorEl(event.currentTarget)} disableRipple sx={{ ml: 2 }}>
+        <Stack direction="row" alignItems="center" spacing={1}>
+          <StyledAvatar />
+          {downMd ? null : (
+            <>
+              <Stack alignItems="center">
+                <Typography variant="body1" fontWeight="bold" color="white">
+                  Hassan Siddique
+                </Typography>
+                <Typography variant="body2" color="white">
+                  imhassan66@gmail.com
+                </Typography>
+              </Stack>
+              <KeyboardArrowDownIcon fontSize="small" sx={{ color: 'white' }} />
+            </>
+          )}
+        </Stack>
+      </IconButton>
 
       <Menu
         anchorEl={anchorEl}
         open={open}
-        onClose={handleClose}
-        onClick={handleClose}
-        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+        onClose={() => setAnchorEl(null)}
+        onClick={() => setAnchorEl(null)}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem onClick={handleClose}>
+        <MenuItem>
+          <Stack alignItems="center">
+            <StyledAvatar />
+            <Typography variant="body1" fontWeight="bold">
+              Hassan Siddique
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              imhassan66@gmail.com
+            </Typography>
+          </Stack>
+        </MenuItem>
+        <Divider />
+        <MenuItem>
           <ListItemIcon>
             <AccountBoxIcon fontSize="small" />
           </ListItemIcon>
-          Profile
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <ListItemIcon>
-            <Settings fontSize="small" />
-          </ListItemIcon>
           Settings
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        <MenuItem>
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>
-          Logout
+          Sign Out
         </MenuItem>
       </Menu>
     </>

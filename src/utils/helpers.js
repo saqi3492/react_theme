@@ -6,3 +6,7 @@ export const getLocalStorageItem = (key, defaultValue = null) => {
     return defaultValue;
   }
 };
+
+export const handleLogout = () => {
+  localStorage.clear();
+};

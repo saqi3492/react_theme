@@ -14,6 +14,8 @@ export default Header;
 
 const MuiAppBar = styled(AppBar)(({ theme }) => ({
   height: HEADER_HEIGHT,
+  position: 'sticky',
+  top: 0,
   padding: '0 10px',
   justifyContent: 'center',
   transition: theme.transitions.create(['width', 'margin'], {
