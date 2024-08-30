@@ -8,6 +8,7 @@ import Logo from 'assets/logo-dark.png';
 import { signIn } from './AuthApiCalls';
 import { LoadingButton } from '@mui/lab';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 // Validation schema for login
 const validationSchema = Yup.object().shape({
@@ -17,14 +18,10 @@ const validationSchema = Yup.object().shape({
 
 const SignIn = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const loaderBtn = useSelector((state) => state.Master.loaderBtn);
   const navigate = useNavigate();
 
-  const handleSubmit = async (values) => {
-    setLoading(true);
-    await signIn(values, navigate);
-    setLoading(false);
-  };
+  const handleSubmit = (values) => signIn(values, navigate);
 
   return (
     <Grid container justifyContent="center" alignItems="center" sx={{ minHeight: '100vh' }}>
@@ -70,7 +67,7 @@ const SignIn = () => {
                         )
                       }}
                     />
-                    <LoadingButton size="small" type="submit" fullWidth variant="contained" color="primary" loading={loading}>
+                    <LoadingButton size="small" type="submit" fullWidth variant="contained" color="primary" loading={loaderBtn}>
                       Sign In
                     </LoadingButton>
                     <Grid container justifyContent="space-between">

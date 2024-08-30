@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import { Card, CardContent, TextField, Typography, Grid, Box, Stack } from '@mui/material';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
@@ -6,6 +5,7 @@ import CustomLink from 'components/CustomLink';
 import Logo from 'assets/logo-dark.png';
 import { LoadingButton } from '@mui/lab';
 import { forgotPassword } from './AuthApiCalls';
+import { useSelector } from 'react-redux';
 
 // Validation schema for login
 const validationSchema = Yup.object().shape({
@@ -13,13 +13,9 @@ const validationSchema = Yup.object().shape({
 });
 
 const ForgotPassword = () => {
-  const [loading, setLoading] = useState(false);
+  const loaderBtn = useSelector((state) => state.Master.loaderBtn);
 
-  const handleSubmit = async (values) => {
-    setLoading(true);
-    await forgotPassword(values);
-    setLoading(false);
-  };
+  const handleSubmit = (values) => forgotPassword(values);
 
   return (
     <Grid container justifyContent="center" alignItems="center" sx={{ minHeight: '100vh' }}>
@@ -46,7 +42,7 @@ const ForgotPassword = () => {
                       error={touched.email && Boolean(errors.email)}
                       helperText={touched.email && errors.email}
                     />
-                    <LoadingButton size="small" type="submit" fullWidth variant="contained" color="primary" loading={loading}>
+                    <LoadingButton size="small" type="submit" fullWidth variant="contained" color="primary" loading={loaderBtn}>
                       Submit
                     </LoadingButton>
                     <Stack alignItems="flex-end">
