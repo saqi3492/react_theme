@@ -6,10 +6,10 @@ import { useSelector } from 'react-redux';
 
 const MainBody = () => {
   const theme = useTheme();
-  const downLg = useMediaQuery(theme.breakpoints.down('lg'));
+  const downMd = useMediaQuery(theme.breakpoints.down('md'));
   const sidebarCompact = useSelector((state) => state.ThemeOptions.sidebarCompact);
 
-  const space = downLg ? 0 : sidebarCompact ? COLLAPSED_SIDEBAR_WIDTH : SIDEBAR_WIDTH;
+  const space = downMd ? 0 : sidebarCompact ? COLLAPSED_SIDEBAR_WIDTH : SIDEBAR_WIDTH;
   return (
     <StyledBox space={space}>
       <Outlet />
