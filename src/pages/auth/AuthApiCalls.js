@@ -1,10 +1,8 @@
 import { dispatch } from 'redux/store';
 import { setSnackbarObj } from 'redux/reducers/alertsSlice';
-import { setLoaderBtn } from 'redux/reducers/masterSlice';
 
 export const signIn = async (credentials, navigate) => {
   try {
-    dispatch(setLoaderBtn());
     await new Promise((resolve) => setTimeout(resolve, 1000));
     const isSuccessful = true;
 
@@ -16,14 +14,11 @@ export const signIn = async (credentials, navigate) => {
     }
   } catch (error) {
     console.error('Error during sign-in:', error);
-  } finally {
-    dispatch(setLoaderBtn());
   }
 };
 
 export const signUp = async (userDetails) => {
   try {
-    dispatch(setLoaderBtn());
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
     const isSuccessful = true;
@@ -35,14 +30,11 @@ export const signUp = async (userDetails) => {
     }
   } catch (error) {
     console.error('Error during sign-up:', error);
-  } finally {
-    dispatch(setLoaderBtn());
   }
 };
 
 export const forgotPassword = async (email) => {
   try {
-    dispatch(setLoaderBtn());
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
     const isSuccessful = true;
@@ -54,7 +46,5 @@ export const forgotPassword = async (email) => {
     }
   } catch (error) {
     console.error('Error during forgot password:', error);
-  } finally {
-    dispatch(setLoaderBtn());
   }
 };

@@ -7,7 +7,6 @@ import CustomLink from 'components/CustomLink';
 import Logo from 'assets/logo-dark.png';
 import { signUp } from './AuthApiCalls';
 import { LoadingButton } from '@mui/lab';
-import { useSelector } from 'react-redux';
 
 // Validation schema for signup
 const validationSchema = Yup.object().shape({
@@ -22,9 +21,13 @@ const validationSchema = Yup.object().shape({
 const SignupPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const loaderBtn = useSelector((state) => state.Master.loaderBtn);
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (values) => signUp(values);
+  const handleSubmit = async (values) => {
+    setLoading(true);
+    await signUp(values);
+    setLoading(false);
+  };
 
   return (
     <Grid container justifyContent="center" alignItems="center" sx={{ minHeight: '100vh' }}>
@@ -102,7 +105,7 @@ const SignupPage = () => {
                         )
                       }}
                     />
-                    <LoadingButton size="small" type="submit" fullWidth variant="contained" color="primary" loading={loaderBtn}>
+                    <LoadingButton size="small" type="submit" fullWidth variant="contained" color="primary" loading={loading}>
                       Sign Up
                     </LoadingButton>
                     <Stack alignItems="flex-end">
