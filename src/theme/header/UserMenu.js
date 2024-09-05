@@ -5,6 +5,7 @@ import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import StyledAvatar from './StyledAvatar';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const UserMenu = () => {
   const theme = useTheme();
@@ -12,6 +13,7 @@ const UserMenu = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const downMd = useMediaQuery(theme.breakpoints.down('md'));
+  const userDetail = useSelector((state) => state.User.userDetail);
 
   return (
     <>
@@ -22,10 +24,10 @@ const UserMenu = () => {
             <>
               <Stack alignItems="center">
                 <Typography variant="body1" fontWeight="bold" color="white">
-                  Hassan Siddique
+                  {userDetail.name}
                 </Typography>
                 <Typography variant="body2" color="white">
-                  imhassan66@gmail.com
+                  {userDetail.email}
                 </Typography>
               </Stack>
               <KeyboardArrowDownIcon fontSize="small" sx={{ color: 'white' }} />
@@ -45,10 +47,10 @@ const UserMenu = () => {
           <Stack alignItems="center">
             <StyledAvatar />
             <Typography variant="body1" fontWeight="bold">
-              Hassan Siddique
+              {userDetail.name}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              imhassan66@gmail.com
+              {userDetail.email}
             </Typography>
           </Stack>
         </MenuItem>

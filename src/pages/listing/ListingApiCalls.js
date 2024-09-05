@@ -1,6 +1,6 @@
 // dataFetcher.js
 
-import { setSnackbarObj } from 'redux/reducers/alertsSlice';
+import { setShowCustomLoader, setSnackbarObj } from 'redux/reducers/alertsSlice';
 import { dispatch } from 'redux/store';
 import { dummyListingData } from 'utils/constants';
 
@@ -19,6 +19,7 @@ export const fetchDummyData = async () => {
 
 export const fetchDataById = async (id) => {
   try {
+    dispatch(setShowCustomLoader());
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
     const foundData = dummyListingData.find((item) => item.id === id);
@@ -34,5 +35,7 @@ export const fetchDataById = async (id) => {
     console.error('Error fetching data by ID:', error);
     dispatch(setSnackbarObj({ message: 'Error fetching data by ID' }));
     return null;
+  } finally {
+    dispatch(setShowCustomLoader());
   }
 };

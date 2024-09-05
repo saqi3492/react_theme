@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { fetchDummyData } from './ApiCalls';
+import { fetchDummyData } from './ListingApiCalls';
 import ListingTable from './ListingTable';
 import { Typography } from '@mui/material';
 
-const DummyListing = () => {
+const Listing = () => {
   const [rowData, setRowData] = useState(null);
 
   useEffect(() => {
@@ -25,4 +25,4 @@ const DummyListing = () => {
   );
 };
 
-export default DummyListing;
+export default Listing;

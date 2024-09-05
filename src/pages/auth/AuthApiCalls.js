@@ -8,7 +8,7 @@ export const signIn = async (credentials, navigate) => {
 
     if (isSuccessful) {
       dispatch(setSnackbarObj({ message: 'Login successful!', severity: 'success' }));
-      navigate('/dashboard');
+      navigate('/listing');
     } else {
       dispatch(setSnackbarObj({ message: 'Error during sign-in', severity: 'error' }));
     }

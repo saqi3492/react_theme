@@ -5,8 +5,8 @@ import AuthGuard from 'theme/guards/AuthGuard';
 import { Navigate } from 'react-router-dom';
 
 const MainTheme = Loadable(lazy(() => import('theme/mainTheme/MainTheme')));
-const DummyListing = Loadable(lazy(() => import('pages/dashboard/DummyListing')));
-const Details = Loadable(lazy(() => import('pages/dashboard/Details')));
+const Listing = Loadable(lazy(() => import('pages/listing')));
+const Details = Loadable(lazy(() => import('pages/details')));
 const SignIn = Loadable(lazy(() => import('pages/auth/SignIn')));
 const SignUp = Loadable(lazy(() => import('pages/auth/SignUp')));
 const ForgotPassword = Loadable(lazy(() => import('pages/auth/ForgotPassword')));
@@ -21,8 +21,8 @@ const Routes = () => {
         </AuthGuard>
       ),
       children: [
-        { element: <Navigate to="/dashboard" />, index: true },
-        { path: '/dashboard', element: <DummyListing /> },
+        { element: <Navigate to="/listing" />, index: true },
+        { path: '/listing', element: <Listing /> },
         { path: '/details/:id', element: <Details /> }
       ]
     },

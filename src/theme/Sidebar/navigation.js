@@ -20,8 +20,8 @@ export const navigations = [
     label: 'Dashboard'
   },
   {
-    name: 'LMS',
-    path: '/dashboard',
+    name: 'Listing',
+    path: '/listing',
     icon: DashboardIcon
   },
   {

@@ -16,7 +16,7 @@ const ConfirmationDialog = ({ setOpen, data }) => {
       <DialogTitle sx={{ fontWeight: 'bold' }}>Confirmation!</DialogTitle>
       <DialogContent>
         <DialogContentText>
-          Are you sure you want to delete <b>'{data.title ?? 'Transcript'}'</b> ?
+          Are you sure you want to delete <b>'{data.title ?? 'this'}'</b> ?
         </DialogContentText>
       </DialogContent>
       <DialogActions sx={{ mr: 1, mb: 1 }}>

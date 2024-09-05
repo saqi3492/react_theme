@@ -21,12 +21,7 @@ const Sidebar = () => {
 
   return (
     <SidebarWrapper compact={sidebarCompact ? 1 : 0} onMouseEnter={() => setOnHover(true)} onMouseLeave={() => setOnHover(false)}>
-      <Scrollbar
-        sx={{
-          overflowX: 'hidden',
-          maxHeight: `calc(100vh - ${SIDEBAR_TOP_HEADER_AREA}px)`
-        }}
-      >
+      <Scrollbar style={{ maxHeight: `calc(100vh - ${SIDEBAR_TOP_HEADER_AREA}px)` }}>
         <NavWrapper>
           <MultiLevelMenu sidebarCompact={!!COMPACT} />
         </NavWrapper>
