@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   snackbarObj: null,
   loadingBackdrop: 0,
-  showCustomLoader: false
+  beatLoader: 0
 };
 
 const alertsSlice = createSlice({
@@ -19,12 +19,15 @@ const alertsSlice = createSlice({
     hideLoadingBackdrop(state) {
       state.loadingBackdrop -= 1;
     },
-    setShowCustomLoader(state) {
-      state.showCustomLoader = !state.showCustomLoader;
+    setShowBeatLoader(state) {
+      state.beatLoader += 1;
+    },
+    setHideBeatLoader(state) {
+      state.beatLoader -= 1;
     }
   }
 });
 
 export default alertsSlice.reducer;
 
-export const { setSnackbarObj, showLoadingBackdrop, hideLoadingBackdrop, setShowCustomLoader } = alertsSlice.actions;
+export const { setSnackbarObj, showLoadingBackdrop, hideLoadingBackdrop, setShowBeatLoader, setHideBeatLoader } = alertsSlice.actions;
