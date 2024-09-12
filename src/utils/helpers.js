@@ -9,4 +9,5 @@ export const getLocalStorageItem = (key, defaultValue = null) => {
 
 export const handleLogout = () => {
   localStorage.clear();
+  window.location.reload();
 };

@@ -8,12 +8,12 @@ export const themeOptionsSlice = createSlice({
   name: 'themeOptions',
   initialState,
   reducers: {
-    setToggleSidebarCompact: (state) => {
+    setSidebarCompact: (state) => {
       state.sidebarCompact = !state.sidebarCompact;
     }
   }
 });
 
-export const { setToggleSidebarCompact } = themeOptionsSlice.actions;
+export const { setSidebarCompact } = themeOptionsSlice.actions;
 
 export default themeOptionsSlice.reducer;

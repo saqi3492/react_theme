@@ -1,9 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  userDetail: null,
-  delegateUserDetail: null,
-  delegateUsers: []
+  userDetail: { name: 'Hassan Saddique', email: 'imhassan66@gmail.com' }
 };
 
 const userSlice = createSlice({
@@ -12,16 +10,10 @@ const userSlice = createSlice({
   reducers: {
     setUserDetail(state, actions) {
       state.userDetail = actions.payload;
-    },
-    setDelegateUserDetail(state, actions) {
-      state.delegateUserDetail = actions.payload;
-    },
-    setDelegateUsers(state, actions) {
-      state.delegateUsers = actions.payload;
     }
   }
 });
 
 export default userSlice.reducer;
 
-export const { setUserDetail, setDelegateUsers, setDelegateUserDetail } = userSlice.actions;
+export const { setUserDetail } = userSlice.actions;

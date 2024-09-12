@@ -1,6 +1,4 @@
-// dataFetcher.js
-
-import { setSnackbarObj } from 'redux/reducers/alertsSlice';
+import { setHideBeatLoader, setShowBeatLoader, setSnackbarObj } from 'redux/reducers/alertsSlice';
 import { dispatch } from 'redux/store';
 import { dummyListingData } from 'utils/constants';
 
@@ -18,21 +16,24 @@ export const fetchDummyData = async () => {
 };
 
 export const fetchDataById = async (id) => {
+  let foundData = {};
   try {
+    dispatch(setShowBeatLoader());
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    const foundData = dummyListingData.find((item) => item.id === id);
+    foundData = dummyListingData.find((item) => item.id === id);
 
     if (foundData) {
       dispatch(setSnackbarObj({ message: `Fetched data for ID: ${id} successfully`, severity: 'success' }));
-      return foundData;
     } else {
       dispatch(setSnackbarObj({ message: `No data found for ID: ${id}` }));
-      return null;
+      foundData = {};
     }
   } catch (error) {
     console.error('Error fetching data by ID:', error);
     dispatch(setSnackbarObj({ message: 'Error fetching data by ID' }));
-    return null;
+  } finally {
+    dispatch(setHideBeatLoader());
+    return foundData;
   }
 };

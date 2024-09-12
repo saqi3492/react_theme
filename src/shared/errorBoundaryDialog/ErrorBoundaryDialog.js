@@ -6,11 +6,9 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import { handleLogout } from 'utils/helpers';
 
 const ErrorBoundaryDialog = () => {
-  const handleClose = () => {
-    window.location.reload();
-  };
   return (
     <Dialog open={true}>
       <DialogContent>
@@ -20,7 +18,7 @@ const ErrorBoundaryDialog = () => {
         </Box>
       </DialogContent>
       <DialogActions>
-        <Button fullWidth variant="contained" color={'error'} onClick={handleClose}>
+        <Button fullWidth variant="contained" color={'error'} onClick={() => handleLogout()}>
           Reload
         </Button>
       </DialogActions>

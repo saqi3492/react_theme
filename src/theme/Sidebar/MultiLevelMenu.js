@@ -1,24 +1,12 @@
-import { alpha, Box, ButtonBase, styled } from '@mui/material';
+import { Box, styled } from '@mui/material';
 import { Paragraph, Span } from 'components/Typography';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { navigations } from './navigation';
 import SidebarAccordion from './SidebarAccordion';
-const NavItemButton = styled(ButtonBase)(({ theme, active }) => ({
-  height: 44,
-  width: '100%',
-  borderRadius: 8,
-  marginBottom: 4,
-  padding: '0 18px',
-  justifyContent: 'flex-start',
-  transition: 'all 0.15s ease',
-  ...(active && {
-    color: theme.palette.primary.main,
-    backgroundColor: alpha(theme.palette.primary.main, 0.06)
-  }),
-  '&:hover': {
-    backgroundColor: theme.palette.action.hover
-  }
-}));
+import NavItemButton from 'components/NavItemButton';
+import BulletIcon from 'components/BulletIcon';
+import BadgeValue from 'components/BadgeValue';
+
 const ListLabel = styled(Paragraph)(({ theme, compact }) => ({
   fontWeight: 700,
   fontSize: '12px',
@@ -52,26 +40,6 @@ const StyledText = styled(Span)(({ theme, compact, active }) => ({
     width: 0
   })
 }));
-const BulletIcon = styled('div')(({ theme, active }) => ({
-  width: 4,
-  height: 4,
-  marginLeft: '10px',
-  marginRight: '8px',
-  overflow: 'hidden',
-  borderRadius: '50%',
-  background: active ? theme.palette.primary.main : theme.palette.text.disabled,
-  boxShadow: active ? `0px 0px 0px 3px ${theme.palette.primary[200]}` : 'none'
-}));
-const BadgeValue = styled(Box)(({ compact, theme }) => ({
-  color: 'white',
-  fontSize: '12px',
-  fontWeight: 500,
-  padding: '1px 6px',
-  overflow: 'hidden',
-  borderRadius: '300px',
-  backgroundColor: theme.palette.primary.main,
-  display: compact ? 'none' : 'unset'
-})); // Common icon style
 
 const iconStyle = (active) => ({
   fontSize: 18,
@@ -79,7 +47,7 @@ const iconStyle = (active) => ({
   color: active ? 'primary.main' : 'text.secondary'
 });
 
-const MultiLevelMenu = ({ sidebarCompact }) => {
+const MultiLevelMenu = ({ sidebarCompact = false }) => {
   const navigate = useNavigate();
   const { pathname } = useLocation(); // handle active current page
 

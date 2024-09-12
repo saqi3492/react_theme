@@ -4,7 +4,7 @@ import LayoutDrawer from './LayoutDrawer';
 import MultiLevelMenu from './MultiLevelMenu';
 import { useDispatch, useSelector } from 'react-redux';
 import { SIDEBAR_TOP_HEADER_AREA } from 'utils/constants';
-import { setToggleSidebarCompact } from 'redux/reducers/themeOptionsSlice';
+import { setSidebarCompact } from 'redux/reducers/themeOptionsSlice';
 import LogoDark from 'assets/logo-dark.png';
 
 const MobileSidebar = () => {
@@ -12,19 +12,14 @@ const MobileSidebar = () => {
   const sidebarCompact = useSelector((state) => state.ThemeOptions.sidebarCompact);
 
   return (
-    <LayoutDrawer open={!sidebarCompact} onClose={() => dispatch(setToggleSidebarCompact())}>
+    <LayoutDrawer open={!sidebarCompact} onClose={() => dispatch(setSidebarCompact())}>
       <Box p={2} maxHeight={SIDEBAR_TOP_HEADER_AREA}>
         <img src={LogoDark} alt="logo" width={130} />
       </Box>
 
-      <Scrollbar
-        sx={{
-          overflowX: 'hidden',
-          maxHeight: `calc(100vh - ${SIDEBAR_TOP_HEADER_AREA}px)`
-        }}
-      >
+      <Scrollbar style={{ maxHeight: `calc(100vh - ${SIDEBAR_TOP_HEADER_AREA}px)` }}>
         <NavWrapper compact={1}>
-          <MultiLevelMenu sidebarCompact={false} />
+          <MultiLevelMenu />
         </NavWrapper>
       </Scrollbar>
     </LayoutDrawer>
