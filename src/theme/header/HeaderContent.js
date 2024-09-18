@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setSidebarCompact } from 'redux/reducers/themeOptionsSlice';
+import { setSidebarCompact } from 'store/reducers/themeOptionsSlice';
 import IconButton from '@mui/material/IconButton';
 import { Stack } from '@mui/material';
 import Logo from 'assets/logo.png';

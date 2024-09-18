@@ -1,5 +1,5 @@
-import { dispatch } from 'redux/store';
-import { setSnackbarObj } from 'redux/reducers/alertsSlice';
+import { dispatch } from 'store/store';
+import { setSnackbarObj } from 'store/reducers/alertsSlice';
 
 export const signIn = async (credentials, navigate) => {
   try {

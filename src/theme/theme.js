@@ -1,4 +1,6 @@
 import { createTheme } from '@mui/material/styles';
+import { green, purple } from '@mui/material/colors';
+
 // import { GRADIENT_COLOR } from 'utils/constants';
 
 const theme = createTheme({
@@ -34,8 +36,9 @@ const theme = createTheme({
   //     }
   //   },
   palette: {
-    primary: { main: '#1976d2', light: '#9b8acc' },
-    secondary: { main: '#f50057' }
+    // primary: { main: '#1976d2', light: '#9b8acc' },
+    primary: { main: green[900] },
+    secondary: { main: purple[500] }
     // Add more custom colors as needed
   }
 });
