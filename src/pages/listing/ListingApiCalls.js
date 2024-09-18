@@ -1,5 +1,5 @@
-import { setHideBeatLoader, setShowBeatLoader, setSnackbarObj } from 'redux/reducers/alertsSlice';
-import { dispatch } from 'redux/store';
+import { setHideBeatLoader, setShowBeatLoader, setSnackbarObj } from 'store/reducers/alertsSlice';
+import { dispatch } from 'store/store';
 import { dummyListingData } from 'utils/constants';
 
 export const fetchDummyData = async () => {

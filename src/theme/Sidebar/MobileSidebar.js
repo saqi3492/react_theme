@@ -4,7 +4,7 @@ import LayoutDrawer from './LayoutDrawer';
 import MultiLevelMenu from './MultiLevelMenu';
 import { useDispatch, useSelector } from 'react-redux';
 import { SIDEBAR_TOP_HEADER_AREA } from 'utils/constants';
-import { setSidebarCompact } from 'redux/reducers/themeOptionsSlice';
+import { setSidebarCompact } from 'store/reducers/themeOptionsSlice';
 import LogoDark from 'assets/logo-dark.png';
 
 const MobileSidebar = () => {

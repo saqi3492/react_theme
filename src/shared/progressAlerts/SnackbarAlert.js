@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 import { useDispatch, useSelector } from 'react-redux';
-import { setSnackbarObj } from 'redux/reducers/alertsSlice';
+import { setSnackbarObj } from 'store/reducers/alertsSlice';
 
 const SnackbarAlert = () => {
   const dispatch = useDispatch();

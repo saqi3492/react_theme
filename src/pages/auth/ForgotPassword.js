@@ -1,4 +1,4 @@
-import { Card, CardContent, TextField, Typography, Grid, Box, Stack } from '@mui/material';
+import { Card, CardContent, TextField, Typography, Grid2 as Grid, Box, Stack } from '@mui/material';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import CustomLink from 'components/CustomLink';
@@ -23,7 +23,7 @@ const ForgotPassword = () => {
 
   return (
     <Grid container justifyContent="center" alignItems="center" sx={{ minHeight: '100vh' }}>
-      <Grid item xs={11} sm={8} lg={4}>
+      <Grid size={{ xs: 11, sm: 8, lg: 4 }}>
         <Card elevation={10} sx={{ padding: '20px', borderRadius: '12px' }}>
           <CardContent>
             <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center">
