@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Card, CardContent, TextField, Typography, Grid, Box, InputAdornment, IconButton, Stack } from '@mui/material';
+import { Card, CardContent, TextField, Typography, Box, InputAdornment, IconButton, Stack } from '@mui/material';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
@@ -7,6 +7,7 @@ import CustomLink from 'components/CustomLink';
 import Logo from 'assets/logo-dark.png';
 import { signUp } from './AuthApiCalls';
 import { LoadingButton } from '@mui/lab';
+import Grid from '@mui/material/Grid2';
 
 // Validation schema for signup
 const validationSchema = Yup.object().shape({
@@ -31,7 +32,7 @@ const SignupPage = () => {
 
   return (
     <Grid container justifyContent="center" alignItems="center" sx={{ minHeight: '100vh' }}>
-      <Grid item xs={11} sm={8} lg={4}>
+      <Grid size={{ xs: 11, sm: 8, lg: 4 }}>
         <Card elevation={10} sx={{ padding: '20px', borderRadius: '12px' }}>
           <CardContent>
             <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center">

@@ -8,7 +8,7 @@ const renderers = { ActionRenderer };
 
 const ListingTable = ({ rowData }) => {
   return (
-    <div className="ag-theme-alpine" style={{ height: 'calc(200% - 35px)' }}>
+    <div className="ag-theme-alpine" style={{ height: 'calc(100% - 35px)' }}>
       <AgGridReact rowData={rowData} columnDefs={colDefs} defaultColDef={listingDefaultColDef} components={renderers} />
     </div>
   );

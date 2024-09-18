@@ -5,7 +5,7 @@ import { HEADER_HEIGHT } from 'utils/constants';
 
 const Header = () => {
   return (
-    <MuiAppBar position="static">
+    <MuiAppBar>
       <HeaderContent />
     </MuiAppBar>
   );

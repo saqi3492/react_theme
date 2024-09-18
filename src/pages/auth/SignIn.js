@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Card, CardContent, TextField, Typography, Grid, Box, InputAdornment, IconButton, Stack } from '@mui/material';
+import { Card, CardContent, TextField, Typography, Box, InputAdornment, IconButton, Stack } from '@mui/material';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
@@ -8,6 +8,7 @@ import Logo from 'assets/logo-dark.png';
 import { signIn } from './AuthApiCalls';
 import { LoadingButton } from '@mui/lab';
 import { useNavigate } from 'react-router-dom';
+import Grid from '@mui/material/Grid2';
 
 // Validation schema for login
 const validationSchema = Yup.object().shape({
@@ -28,7 +29,7 @@ const SignIn = () => {
 
   return (
     <Grid container justifyContent="center" alignItems="center" sx={{ minHeight: '100vh' }}>
-      <Grid item xs={11} sm={8} lg={4}>
+      <Grid size={{ xs: 11, sm: 8, lg: 4 }}>
         <Card elevation={10} sx={{ padding: '20px', borderRadius: '12px' }}>
           <CardContent>
             <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center">
@@ -74,10 +75,10 @@ const SignIn = () => {
                       Sign In
                     </LoadingButton>
                     <Grid container justifyContent="space-between">
-                      <Grid item>
+                      <Grid>
                         <CustomLink to="/forgotpassword">Forgot password</CustomLink>
                       </Grid>
-                      <Grid item>
+                      <Grid>
                         <CustomLink to="/signup"> Don't have an account? Sign Up</CustomLink>
                       </Grid>
                     </Grid>

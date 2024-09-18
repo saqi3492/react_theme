@@ -33,7 +33,7 @@ const Sidebar = () => {
 export default Sidebar;
 
 const SidebarWrapper = styled(Box)(({ theme, compact }) => ({
-  height: '100vh',
+  height: '100%',
   // marginTop: HEADER_HEIGHT,
   position: 'fixed',
   width: compact ? COLLAPSED_SIDEBAR_WIDTH : SIDEBAR_WIDTH,
