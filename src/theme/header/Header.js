@@ -14,7 +14,8 @@ export default Header;
 
 const MuiAppBar = styled(AppBar)(({ theme }) => ({
   height: HEADER_HEIGHT,
-  position: 'sticky',
+  position: 'fixed',
+  zIndex: theme.zIndex.appBar,
   top: 0,
   padding: '0 10px',
   justifyContent: 'center',

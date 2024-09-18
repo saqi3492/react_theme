@@ -4,7 +4,7 @@ import Scrollbar from 'components/ScrollBar';
 import { useState } from 'react';
 import MultiLevelMenu from './MultiLevelMenu';
 import MobileSidebar from './MobileSidebar';
-import { COLLAPSED_SIDEBAR_WIDTH, HEADER_HEIGHT, SIDEBAR_TOP_HEADER_AREA, SIDEBAR_WIDTH } from 'utils/constants';
+import { COLLAPSED_SIDEBAR_WIDTH, SIDEBAR_TOP_HEADER_AREA, SIDEBAR_WIDTH } from 'utils/constants';
 import { useSelector } from 'react-redux';
 
 const Sidebar = () => {
@@ -34,7 +34,7 @@ export default Sidebar;
 
 const SidebarWrapper = styled(Box)(({ theme, compact }) => ({
   height: '100vh',
-  marginTop: HEADER_HEIGHT,
+  // marginTop: HEADER_HEIGHT,
   position: 'fixed',
   width: compact ? COLLAPSED_SIDEBAR_WIDTH : SIDEBAR_WIDTH,
   transition: 'all .2s ease',

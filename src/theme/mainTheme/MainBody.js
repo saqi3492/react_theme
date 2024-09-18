@@ -22,8 +22,9 @@ export default MainBody;
 const StyledBox = styled(Box, { shouldForwardProp: (prop) => prop !== 'space' })(({ theme, space }) => ({
   zIndex: theme.zIndex.drawer + 1,
   padding: '10px',
+  marginTop: HEADER_HEIGHT,
   marginLeft: space,
-  height: `calc(100vh - ${HEADER_HEIGHT})`,
+  height: `calc(100vh - ${HEADER_HEIGHT}px)`,
   transition: theme.transitions.create(['width', 'margin'], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen
