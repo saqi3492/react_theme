@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Card, CardContent, TextField, Typography, Box, InputAdornment, IconButton, Stack } from '@mui/material';
+import { Card, CardContent, TextField, Typography, Box, Grid2 as Grid, InputAdornment, IconButton, Stack } from '@mui/material';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
@@ -8,7 +8,6 @@ import Logo from 'assets/logo-dark.png';
 import { signIn } from './AuthApiCalls';
 import { LoadingButton } from '@mui/lab';
 import { useNavigate } from 'react-router-dom';
-import Grid from '@mui/material/Grid2';
 
 // Validation schema for login
 const validationSchema = Yup.object().shape({

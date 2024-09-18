@@ -1,4 +1,4 @@
-import { Card, CardContent, TextField, Typography, Box, Stack } from '@mui/material';
+import { Card, CardContent, TextField, Typography, Grid2 as Grid, Box, Stack } from '@mui/material';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import CustomLink from 'components/CustomLink';
@@ -6,7 +6,6 @@ import Logo from 'assets/logo-dark.png';
 import { LoadingButton } from '@mui/lab';
 import { forgotPassword } from './AuthApiCalls';
 import { useState } from 'react';
-import Grid from '@mui/material/Grid2';
 
 // Validation schema for login
 const validationSchema = Yup.object().shape({
