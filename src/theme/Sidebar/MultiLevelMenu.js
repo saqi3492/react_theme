@@ -6,6 +6,9 @@ import SidebarAccordion from './SidebarAccordion';
 import NavItemButton from 'components/NavItemButton';
 import BulletIcon from 'components/BulletIcon';
 import BadgeValue from 'components/BadgeValue';
+import { SIDEBAR_TOP_HEADER_AREA } from 'utils/constants';
+import PerfectScrollbar from 'react-perfect-scrollbar';
+import 'perfect-scrollbar/css/perfect-scrollbar.css';
 
 const ListLabel = styled(Paragraph)(({ theme, compact }) => ({
   fontWeight: 700,
@@ -114,7 +117,11 @@ const MultiLevelMenu = ({ sidebarCompact = false }) => {
     });
   };
 
-  return <>{renderLevels(navigations)}</>;
+  return (
+    <PerfectScrollbar style={{ maxHeight: `calc(100vh - ${SIDEBAR_TOP_HEADER_AREA}px)` }}>
+      <Box sx={{ p: '0 5px', height: '100%' }}>{renderLevels(navigations)}</Box>
+    </PerfectScrollbar>
+  );
 };
 
 export default MultiLevelMenu;

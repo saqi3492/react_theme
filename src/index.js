@@ -5,7 +5,7 @@ import store from './store/store';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
-import AxiosInterceptor from './utils/axios';
+import AxiosInterceptor from './utils/AxiosInterceptor';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { ErrorBoundary } from 'react-error-boundary';
 import ErrorBoundaryDialog from 'shared/errorBoundaryDialog/ErrorBoundaryDialog';

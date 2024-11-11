@@ -18,9 +18,5 @@ const MuiAppBar = styled(AppBar)(({ theme }) => ({
   zIndex: theme.zIndex.appBar,
   top: 0,
   padding: '0 10px',
-  justifyContent: 'center',
-  transition: theme.transitions.create(['width', 'margin'], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.enteringScreen
-  })
+  justifyContent: 'center'
 }));

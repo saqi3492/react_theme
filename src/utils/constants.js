@@ -1,6 +1,6 @@
 export const HEADER_HEIGHT = 60;
-export const SIDEBAR_WIDTH = 260;
-export const COLLAPSED_SIDEBAR_WIDTH = 86;
+export const SIDEBAR_WIDTH = 240;
+export const COLLAPSED_SIDEBAR_WIDTH = 70;
 export const SIDEBAR_TOP_HEADER_AREA = 70;
 
 export const listingDefaultColDef = {
