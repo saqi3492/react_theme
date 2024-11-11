@@ -2,7 +2,7 @@ import axios from 'axios';
 import { config } from 'config/config';
 import { handleLogout } from './helpers';
 
-const axiosInstance = {
+const AxiosInterceptor = {
   initialize: () => {
     axios.defaults.baseURL = config.backendUrl;
     axios.interceptors.request.use(
@@ -38,4 +38,4 @@ const axiosInstance = {
   }
 };
 
-export default axiosInstance;
+export default AxiosInterceptor;

@@ -18,8 +18,9 @@ const SnackbarAlert = () => {
 
   const handleClose = useCallback(
     (e, reason) => {
-      if (reason === 'clickaway') return;
-      dispatch(setSnackbarObj(null));
+      if (reason !== 'clickaway') {
+        dispatch(setSnackbarObj(null));
+      }
     },
     [dispatch]
   );

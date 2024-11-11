@@ -1,13 +1,13 @@
 import SnackbarAlert from './SnackbarAlert';
 import LoadingBackdrop from './LoadingBackdrop';
-import CustomLoader from './CustomLoader';
+import TimTimLoader from './TimTimLoader';
 
 const ProgressAlerts = () => {
   return (
     <>
       <SnackbarAlert />
       <LoadingBackdrop />
-      <CustomLoader />
+      <TimTimLoader />
     </>
   );
 };
