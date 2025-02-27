@@ -1,0 +1,22 @@
+import path from 'path';
+import react from '@vitejs/plugin-react';
+import { defineConfig } from 'vite';
+import eslintPlugin from 'vite-plugin-eslint';
+
+const __dirname = path.dirname('./');
+
+// https://vite.dev/config/
+export default defineConfig({
+  plugins: [react(), eslintPlugin({ failOnError: true, failOnWarning: false })],
+  build: {
+    outDir: 'build',
+    emptyOutDir: true,
+  },
+  server: {
+    port: 3000,
+    open: true,
+  },
+  resolve: {
+    alias: { '@': path.resolve(__dirname, './src') },
+  },
+});
