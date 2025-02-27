@@ -13,8 +13,8 @@ const StyledNavItemButton = styled(ButtonBase)(({ theme, active }) => ({
   backgroundColor: active ? alpha(theme.palette.primary.main, 0.06) : 'transparent',
   color: active ? theme.palette.primary.main : 'inherit',
   '&:hover': {
-    backgroundColor: theme.palette.action.hover
-  }
+    backgroundColor: theme.palette.action.hover,
+  },
 }));
 
 const NavItemButton = ({ active, sx, children, ...props }) => {

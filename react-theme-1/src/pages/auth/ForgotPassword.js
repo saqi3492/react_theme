@@ -9,13 +9,13 @@ import { useState } from 'react';
 
 // Validation schema for login
 const validationSchema = Yup.object().shape({
-  email: Yup.string().email('Invalid email address').required('Email is required')
+  email: Yup.string().email('Invalid email address').required('Email is required'),
 });
 
 const ForgotPassword = () => {
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (values) => {
+  const handleSubmit = async values => {
     setLoading(true);
     await forgotPassword(values);
     setLoading(false);

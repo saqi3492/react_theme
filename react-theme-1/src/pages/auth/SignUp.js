@@ -15,7 +15,7 @@ const validationSchema = Yup.object().shape({
   password: Yup.string().min(8, 'Password must be at least 8 characters long').required('Password is required'),
   confirmPassword: Yup.string()
     .oneOf([Yup.ref('password'), null], 'Passwords must match')
-    .required('Confirm password is required')
+    .required('Confirm password is required'),
 });
 
 const SignupPage = () => {
@@ -23,7 +23,7 @@ const SignupPage = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (values) => {
+  const handleSubmit = async values => {
     setLoading(true);
     await signUp(values);
     setLoading(false);
@@ -82,7 +82,7 @@ const SignupPage = () => {
                               {showPassword ? <VisibilityOff /> : <Visibility />}
                             </IconButton>
                           </InputAdornment>
-                        )
+                        ),
                       }}
                     />
                     <TextField
@@ -102,7 +102,7 @@ const SignupPage = () => {
                               {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
                             </IconButton>
                           </InputAdornment>
-                        )
+                        ),
                       }}
                     />
                     <LoadingButton size="small" type="submit" fullWidth variant="contained" color="primary" loading={loading}>

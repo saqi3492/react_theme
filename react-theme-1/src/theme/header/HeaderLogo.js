@@ -8,7 +8,7 @@ import MenuOpenIcon from '@mui/icons-material/MenuOpen';
 
 const HeaderLogo = () => {
   const dispatch = useDispatch();
-  const sidebarCompact = useSelector((state) => state.ThemeOptions.sidebarCompact);
+  const sidebarCompact = useSelector(state => state.ThemeOptions.sidebarCompact);
 
   return (
     <Stack direction="row" alignItems="center" spacing={2}>

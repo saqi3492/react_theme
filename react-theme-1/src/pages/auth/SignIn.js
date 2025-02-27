@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 // Validation schema for login
 const validationSchema = Yup.object().shape({
   email: Yup.string().email('Invalid email address').required('Email is required'),
-  password: Yup.string().min(8, 'Password must be at least 8 characters long').required('Password is required')
+  password: Yup.string().min(8, 'Password must be at least 8 characters long').required('Password is required'),
 });
 
 const SignIn = () => {
@@ -20,7 +20,7 @@ const SignIn = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (values) => {
+  const handleSubmit = async values => {
     setLoading(true);
     await signIn(values, navigate);
     setLoading(false);
@@ -67,7 +67,7 @@ const SignIn = () => {
                               {showPassword ? <VisibilityOff /> : <Visibility />}
                             </IconButton>
                           </InputAdornment>
-                        )
+                        ),
                       }}
                     />
                     <LoadingButton size="small" type="submit" fullWidth variant="contained" color="primary" loading={loading}>

@@ -4,10 +4,10 @@ const StyledBox = styled(Box)(({ ellipsis }) => ({
   ...(ellipsis && {
     overflow: 'hidden',
     whiteSpace: 'nowrap',
-    textOverflow: 'ellipsis'
-  })
+    textOverflow: 'ellipsis',
+  }),
 }));
-export const H1 = (props) => {
+export const H1 = props => {
   const { ellipsis, children, className, ...others } = props;
   return (
     <StyledBox
@@ -16,7 +16,7 @@ export const H1 = (props) => {
       fontWeight={600}
       ellipsis={ellipsis ? 1 : 0}
       className={clsx({
-        [className || '']: true
+        [className || '']: true,
       })}
       {...others}
     >
@@ -24,7 +24,7 @@ export const H1 = (props) => {
     </StyledBox>
   );
 };
-export const H2 = (props) => {
+export const H2 = props => {
   const { ellipsis, children, className, ...others } = props;
   return (
     <StyledBox
@@ -33,7 +33,7 @@ export const H2 = (props) => {
       fontWeight={600}
       ellipsis={ellipsis ? 1 : 0}
       className={clsx({
-        [className || '']: true
+        [className || '']: true,
       })}
       {...others}
     >
@@ -41,7 +41,7 @@ export const H2 = (props) => {
     </StyledBox>
   );
 };
-export const H3 = (props) => {
+export const H3 = props => {
   const { ellipsis, children, className, ...others } = props;
   return (
     <StyledBox
@@ -50,7 +50,7 @@ export const H3 = (props) => {
       fontWeight={600}
       ellipsis={ellipsis ? 1 : 0}
       className={clsx({
-        [className || '']: true
+        [className || '']: true,
       })}
       {...others}
     >
@@ -58,7 +58,7 @@ export const H3 = (props) => {
     </StyledBox>
   );
 };
-export const H4 = (props) => {
+export const H4 = props => {
   const { ellipsis, children, className, ...others } = props;
   return (
     <StyledBox
@@ -67,7 +67,7 @@ export const H4 = (props) => {
       fontWeight={600}
       ellipsis={ellipsis ? 1 : 0}
       className={clsx({
-        [className || '']: true
+        [className || '']: true,
       })}
       {...others}
     >
@@ -75,7 +75,7 @@ export const H4 = (props) => {
     </StyledBox>
   );
 };
-export const H5 = (props) => {
+export const H5 = props => {
   const { ellipsis, children, className, ...others } = props;
   return (
     <StyledBox
@@ -85,7 +85,7 @@ export const H5 = (props) => {
       fontWeight={600}
       ellipsis={ellipsis ? 1 : 0}
       className={clsx({
-        [className || '']: true
+        [className || '']: true,
       })}
       {...others}
     >
@@ -93,7 +93,7 @@ export const H5 = (props) => {
     </StyledBox>
   );
 };
-export const H6 = (props) => {
+export const H6 = props => {
   const { ellipsis, children, className, ...others } = props;
   return (
     <StyledBox
@@ -102,7 +102,7 @@ export const H6 = (props) => {
       fontWeight={600}
       ellipsis={ellipsis ? 1 : 0}
       className={clsx({
-        [className || '']: true
+        [className || '']: true,
       })}
       {...others}
     >
@@ -110,7 +110,7 @@ export const H6 = (props) => {
     </StyledBox>
   );
 };
-export const Paragraph = (props) => {
+export const Paragraph = props => {
   const { ellipsis, children, className, ...others } = props;
   return (
     <StyledBox
@@ -119,7 +119,7 @@ export const Paragraph = (props) => {
       fontWeight={500}
       ellipsis={ellipsis ? 1 : 0}
       className={clsx({
-        [className || '']: true
+        [className || '']: true,
       })}
       {...others}
     >
@@ -127,7 +127,7 @@ export const Paragraph = (props) => {
     </StyledBox>
   );
 };
-export const Small = (props) => {
+export const Small = props => {
   const { ellipsis, children, className, ...others } = props;
   return (
     <StyledBox
@@ -137,7 +137,7 @@ export const Small = (props) => {
       lineHeight={1.6}
       ellipsis={ellipsis ? 1 : 0}
       className={clsx({
-        [className || '']: true
+        [className || '']: true,
       })}
       {...others}
     >
@@ -145,7 +145,7 @@ export const Small = (props) => {
     </StyledBox>
   );
 };
-export const Span = (props) => {
+export const Span = props => {
   const { ellipsis, children, className, ...others } = props;
   return (
     <StyledBox
@@ -153,7 +153,7 @@ export const Span = (props) => {
       component="span"
       ellipsis={ellipsis ? 1 : 0}
       className={clsx({
-        [className || '']: true
+        [className || '']: true,
       })}
       {...others}
     >
@@ -161,7 +161,7 @@ export const Span = (props) => {
     </StyledBox>
   );
 };
-export const Tiny = (props) => {
+export const Tiny = props => {
   const { ellipsis, children, className, ...others } = props;
   return (
     <StyledBox
@@ -172,7 +172,7 @@ export const Tiny = (props) => {
       color="text.secondary"
       ellipsis={ellipsis ? 1 : 0}
       className={clsx({
-        [className || '']: true
+        [className || '']: true,
       })}
       {...others}
     >

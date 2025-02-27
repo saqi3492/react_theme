@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 const DesktopSidebar = () => {
   const theme = useTheme();
   const [onHover, setOnHover] = useState(false);
-  const sidebarCompact = useSelector((state) => state.ThemeOptions.sidebarCompact);
+  const sidebarCompact = useSelector(state => state.ThemeOptions.sidebarCompact);
 
   return (
     <Box

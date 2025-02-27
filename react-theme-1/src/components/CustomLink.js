@@ -13,7 +13,7 @@ const CustomLink = ({ to, children, sx, ...props }) => {
         fontSize: '15px',
         textDecoration: 'none',
         color: theme.palette.primary.main,
-        ...sx
+        ...sx,
       }}
       {...props}
     >

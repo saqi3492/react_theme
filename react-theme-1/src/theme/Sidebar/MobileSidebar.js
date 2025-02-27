@@ -8,7 +8,7 @@ import { Box, Drawer, useTheme } from '@mui/material';
 const MobileSidebar = () => {
   const theme = useTheme();
   const dispatch = useDispatch();
-  const sidebarCompact = useSelector((state) => state.ThemeOptions.sidebarCompact);
+  const sidebarCompact = useSelector(state => state.ThemeOptions.sidebarCompact);
 
   const closeSidebar = () => {
     dispatch(setSidebarCompact());

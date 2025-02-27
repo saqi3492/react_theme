@@ -13,11 +13,11 @@ const UserMenu = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const downMd = useMediaQuery(theme.breakpoints.down('md'));
-  const userDetail = useSelector((state) => state.User.userDetail);
+  const userDetail = useSelector(state => state.User.userDetail);
 
   return (
     <>
-      <IconButton size="small" onClick={(event) => setAnchorEl(event.currentTarget)} disableRipple sx={{ ml: 2 }}>
+      <IconButton size="small" onClick={event => setAnchorEl(event.currentTarget)} disableRipple sx={{ ml: 2 }}>
         <Stack direction="row" alignItems="center" spacing={1}>
           <StyledAvatar />
           {downMd ? null : (

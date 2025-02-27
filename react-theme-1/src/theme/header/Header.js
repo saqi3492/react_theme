@@ -18,5 +18,5 @@ const MuiAppBar = styled(AppBar)(({ theme }) => ({
   zIndex: theme.zIndex.appBar,
   top: 0,
   padding: '0 10px',
-  justifyContent: 'center'
+  justifyContent: 'center',
 }));

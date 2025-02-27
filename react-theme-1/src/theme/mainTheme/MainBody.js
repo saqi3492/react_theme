@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 
 const MainBody = () => {
   const theme = useTheme();
-  const sidebarCompact = useSelector((state) => state.ThemeOptions.sidebarCompact);
+  const sidebarCompact = useSelector(state => state.ThemeOptions.sidebarCompact);
 
   return (
     <Box
@@ -16,8 +16,8 @@ const MainBody = () => {
       sx={{
         transition: theme.transitions.create(['width', 'margin'], {
           easing: theme.transitions.easing.sharp,
-          duration: theme.transitions.duration.enteringScreen
-        })
+          duration: theme.transitions.duration.enteringScreen,
+        }),
       }}
     >
       <Outlet />

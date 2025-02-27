@@ -2,7 +2,7 @@ import Routes from 'routes/routes';
 import './App.css';
 import CssBaseline from '@mui/material/CssBaseline';
 import ProgressAlerts from 'shared/progressAlerts/ProgressAlerts';
-import {  ThemeProvider } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
 import theme from 'theme/theme';
 
 const App = () => {
