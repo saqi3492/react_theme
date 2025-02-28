@@ -1,16 +1,17 @@
 import { Box, Divider } from '@mui/material';
-import { StyledNavItemButton, StyledText } from './MultiLevelMenu';
+import { iconStyle, StyledText } from './MultiLevelMenu';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { handleLogout } from 'utils/helpers';
+import { handleLogout } from '@/utils/helpers';
+import { NavItemButton } from './SidebarComponents';
 
-const LogoutBox = ({ iscompact }) => {
+const LogoutBox = ({ isCompact }) => {
   return (
-    <Box>
+    <Box sx={{ p: '0 7px' }}>
       <Divider sx={{ borderWidth: '1px', marginBottom: '4px' }} />
-      <StyledNavItemButton onClick={handleLogout}>
-        <LogoutIcon sx={{ fontSize: 22 }} />
-        <StyledText compact={iscompact}>Log Out</StyledText>
-      </StyledNavItemButton>
+      <NavItemButton onClick={handleLogout}>
+        <LogoutIcon sx={iconStyle()} />
+        <StyledText compact={isCompact}>Log Out</StyledText>
+      </NavItemButton>
     </Box>
   );
 };

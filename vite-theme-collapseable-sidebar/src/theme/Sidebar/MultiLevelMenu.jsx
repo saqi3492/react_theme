@@ -1,12 +1,13 @@
-import { Box } from '@mui/material';
+import { Box, Stack } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { navItems } from './navItems';
 import SidebarAccordion from './SidebarAccordion';
 import { SIDEBAR_TOP_HEADER_AREA } from '@/utils/constants';
-import PerfectScrollbar from 'react-perfect-scrollbar';
-import 'perfect-scrollbar/css/perfect-scrollbar.css';
+import LogoutBox from './LogoutBox';
 import { NavItemButton, BulletIcon, BadgeValue, Paragraph, Span } from './SidebarComponents';
+import SimpleBar from 'simplebar-react';
+import 'simplebar-react/dist/simplebar.min.css';
 
 const ListLabel = styled(Paragraph)(({ theme, compact }) => ({
   fontWeight: 700,
@@ -23,7 +24,7 @@ const ListLabel = styled(Paragraph)(({ theme, compact }) => ({
   }),
 }));
 
-const StyledText = styled(Span)(({ theme, compact, active }) => ({
+export const StyledText = styled(Span)(({ theme, compact, active }) => ({
   whiteSpace: 'nowrap',
   paddingLeft: '0.8rem',
   transition: 'all 0.15s ease',
@@ -36,7 +37,7 @@ const StyledText = styled(Span)(({ theme, compact, active }) => ({
   }),
 }));
 
-const iconStyle = active => ({
+export const iconStyle = active => ({
   fontSize: 18,
   marginRight: '4px',
   color: active ? 'primary.main' : 'text.secondary',
@@ -87,9 +88,13 @@ const MultiLevelMenu = ({ sidebarCompact = false }) => {
   };
 
   return (
-    <PerfectScrollbar style={{ maxHeight: `calc(100vh - ${SIDEBAR_TOP_HEADER_AREA}px)` }}>
-      <Box sx={{ p: '0 5px', height: '100%' }}>{renderLevels(navItems)}</Box>
-    </PerfectScrollbar>
+    <Stack direction="column" justifyContent="space-between" height={`calc(100vh - ${SIDEBAR_TOP_HEADER_AREA}px)`}>
+      <SimpleBar style={{ maxHeight: '100%', overflowX: 'hidden' }}>
+        <Box sx={{ p: '0 5px' }}>{renderLevels(navItems)}</Box>
+      </SimpleBar>
+
+      <LogoutBox isCompact={COMPACT} />
+    </Stack>
   );
 };
 
