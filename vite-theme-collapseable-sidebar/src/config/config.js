@@ -1,4 +1,4 @@
 export const config = {
-  frontendUrl: import.meta.env.REACT_APP_FRONTEND_URL,
-  backendUrl: import.meta.env.REACT_APP_BACKEND_URL,
+  frontendUrl: import.meta.env.VITE_FRONTEND_URL,
+  backendUrl: import.meta.env.VITE_BACKEND_URL,
 };
