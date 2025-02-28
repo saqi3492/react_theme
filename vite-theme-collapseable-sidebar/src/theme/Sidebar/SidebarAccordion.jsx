@@ -70,6 +70,7 @@ const SidebarAccordion = props => {
 
     return;
   }, []);
+
   useEffect(() => {
     if (!elementRef) return;
     calcaulateHeight(elementRef.current); // OPEN DROPDOWN IF CHILD IS ACTIVE
@@ -83,13 +84,12 @@ const SidebarAccordion = props => {
 
     return () => {
       setHasActive(false);
-    }; // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [calcaulateHeight, pathname]);
+    };
+  }, [calcaulateHeight, pathname, item.children]);
   return (
     <NavExpandRoot className="subMenu">
       <NavItemButton sx={{ padding: '0 12px', justifyContent: 'space-between' }} onClick={handleClick} active={hasActive ? 1 : 0}>
         <Box pl="7px" display="flex" alignItems="center">
-          {/* //@ts-ignore */}
           {icon && (
             <item.icon
               sx={{

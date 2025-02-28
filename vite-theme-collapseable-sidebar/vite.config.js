@@ -7,7 +7,14 @@ const __dirname = path.dirname('./');
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), eslintPlugin({ failOnError: true, failOnWarning: false })],
+  plugins: [
+    react({
+      babel: {
+        plugins: [['babel-plugin-react-compiler']],
+      },
+    }),
+    eslintPlugin({ failOnError: true, failOnWarning: false }),
+  ],
   build: {
     outDir: 'build',
     emptyOutDir: true,
