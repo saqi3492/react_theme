@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Box, Button, Typography } from '@mui/material';
 import OTPInput from 'react-otp-input';
 
-const OtpVerification = ({ formik, loading }) => {
+const OtpVerification = ({ formik }) => {
   const [otp, setOtp] = useState('');
 
   const handleChange = otpValue => {
@@ -11,13 +11,7 @@ const OtpVerification = ({ formik, loading }) => {
   };
 
   return (
-    <Box
-      sx={{
-        p: { xs: 5, lg: 16 },
-        width: '100%',
-        maxWidth: '800px',
-      }}
-    >
+    <Box sx={{ p: { xs: 5, lg: 12 }, width: '100%', maxWidth: '800px' }}>
       <Typography fontSize={28} fontWeight="500" gutterBottom>
         Enter Verification Code
       </Typography>
@@ -61,7 +55,7 @@ const OtpVerification = ({ formik, loading }) => {
         </Typography>
       )}
 
-      <Button size="large" type="submit" fullWidth variant="contained" loading={loading}>
+      <Button size="large" type="submit" fullWidth variant="contained" loading={formik.isSubmitting}>
         Continue
       </Button>
     </Box>

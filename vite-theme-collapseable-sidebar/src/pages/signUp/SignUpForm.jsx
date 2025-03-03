@@ -1,14 +1,13 @@
-import { useState } from 'react';
 import { useFormik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { handleSignUp } from '@/pages/auth/AuthApiCalls';
-import { Box, Button, IconButton, InputAdornment, Stack, TextField, Typography } from '@mui/material';
+import { Box, Button, Stack, Typography } from '@mui/material';
 import CustomLink from '@/components/CustomLink';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
 import InputField from '@/shared/InputField';
 import InputDropdownField from '@/shared/InputDropdownField';
 import { useSelector } from 'react-redux';
+import PasswordInputField from '@/shared/PasswordInputField';
 
 const validationSchema = Yup.object().shape({
   firstName: Yup.string().required('First Name is required'),
@@ -30,10 +29,6 @@ const SignUpForm = () => {
   const countries = useSelector(state => state.MasterData.countries);
   const specialities = useSelector(state => state.MasterData.specialities);
 
-  const [loading, setLoading] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
   const navigate = useNavigate();
 
   const formik = useFormik({
@@ -50,12 +45,10 @@ const SignUpForm = () => {
     },
     validationSchema: validationSchema,
     onSubmit: async values => {
-      setLoading(true);
       const isSuccess = await handleSignUp(values);
       if (isSuccess) {
         navigate('/tutorial', { replace: true });
       }
-      setLoading(false);
     },
   });
   const handleCountryChange = selectedCountryValue => {
@@ -69,102 +62,38 @@ const SignUpForm = () => {
   };
 
   return (
-    <Box
-      sx={{
-        p: { xs: 5, lg: 12 },
-        width: '100%',
-        maxWidth: '800px',
-      }}
-    >
+    <Box sx={{ p: { xs: 5, lg: 12 }, width: '100%', maxWidth: '800px' }}>
       <Typography fontWeight="500" fontSize={28} gutterBottom>
         Create your account
       </Typography>
 
       <form onSubmit={formik.handleSubmit} noValidate autoComplete="off" style={{ marginTop: '20px' }}>
-        <Stack spacing={2}>
-          <Stack direction="row" spacing={2}>
-            <Stack direction="column" sx={{ flex: 1 }}>
-              <InputField formik={formik} name="firstName" label="First Name" />
-            </Stack>
-            <Stack direction="column" sx={{ flex: 1 }}>
-              <InputField formik={formik} name="lastName" label="Last Name" />
-            </Stack>
+        <Stack direction="row" spacing={2}>
+          <Stack flexGrow={1}>
+            <InputField formik={formik} name="firstName" label="First Name" />
           </Stack>
-
-          <Stack direction="column" spacing={1}>
-            <InputField formik={formik} name="email" label="Email Address" />
+          <Stack flexGrow={1}>
+            <InputField formik={formik} name="lastName" label="Last Name" />
           </Stack>
-
-          <Stack direction="column" spacing={1}>
-            <Typography fontSize={14} fontWeight="500" gutterBottom>
-              Password
-            </Typography>
-            <TextField
-              name="password"
-              placeholder="Password"
-              type={showPassword ? 'text' : 'password'}
-              size="small"
-              fullWidth
-              value={formik.values.password}
-              onChange={formik.handleChange}
-              error={formik.touched.password && Boolean(formik.errors.password)}
-              helperText={formik.touched.password && formik.errors.password}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-            />
-          </Stack>
-
-          <Stack direction="column" spacing={1}>
-            <Typography fontSize={14} fontWeight="500" gutterBottom>
-              Confirm Password
-            </Typography>
-            <TextField
-              name="confirmPassword"
-              placeholder="Confirm Password"
-              type={showConfirmPassword ? 'text' : 'password'}
-              size="small"
-              fullWidth
-              value={formik.values.confirmPassword}
-              onChange={formik.handleChange}
-              error={formik.touched.confirmPassword && Boolean(formik.errors.confirmPassword)}
-              helperText={formik.touched.confirmPassword && formik.errors.confirmPassword}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton onClick={() => setShowConfirmPassword(!showConfirmPassword)} edge="end">
-                      {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-            />
-          </Stack>
-
-          <Stack direction="column" spacing={1}>
-            <InputField formik={formik} name="zipCode" label="Zip Code" />
-          </Stack>
-
-          <Stack direction="column" spacing={1}>
-            <InputDropdownField formik={formik} items={countries} name="country" label="Country" onChange={handleCountryChange} />
-          </Stack>
-          <Stack direction="column" spacing={1}>
-            <InputField formik={formik} name="phone" label="Phone Number" onChange={handlePhoneInput} />
-          </Stack>
-          <Stack direction="column" spacing={1}>
-            <InputDropdownField formik={formik} items={specialities} name="speciality" label="Speciality" />
-          </Stack>
-
-          <Button size="large" type="submit" fullWidth variant="contained" sx={{ my: 3 }} loading={loading}>
-            Sign Up
-          </Button>
         </Stack>
+
+        <InputField formik={formik} name="email" label="Email Address" />
+
+        <PasswordInputField formik={formik} name="password" label="Password" size="small" />
+
+        <PasswordInputField formik={formik} name="confirmPassword" label="Confirm Password" size="small" />
+
+        <InputField formik={formik} name="zipCode" label="Zip Code" />
+
+        <InputDropdownField formik={formik} items={countries} name="country" label="Country" onChange={handleCountryChange} />
+
+        <InputField formik={formik} name="phone" label="Phone Number" onChange={handlePhoneInput} />
+
+        <InputDropdownField formik={formik} items={specialities} name="speciality" label="Speciality" />
+
+        <Button size="large" type="submit" fullWidth variant="contained" sx={{ my: 3 }} loading={formik.isSubmitting}>
+          Sign Up
+        </Button>
 
         <Typography variant="body2" color="textSecondary" align="center" mt={2}>
           Already have an account? <CustomLink to="/signin">Sign In</CustomLink>

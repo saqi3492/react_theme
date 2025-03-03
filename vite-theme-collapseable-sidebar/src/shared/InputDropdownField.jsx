@@ -1,32 +1,44 @@
-import { MenuItem, TextField, Typography } from '@mui/material';
+import { Autocomplete, TextField, Typography } from '@mui/material';
 
-const InputDropdownField = ({ formik, items = [], name, label, onChange }) => {
+const InputDropdownField = ({ items = [], name, label, formik, multiSelect = false, onChange, disabled = false }) => {
   return (
     <>
-      <Typography fontSize={14} fontWeight="500" gutterBottom>
+      <Typography color={disabled ? 'textSecondary' : 'textPrimary'} fontSize={14} fontWeight="500" mb="4px">
         {label}
       </Typography>
-      <TextField
-        select
-        name={name}
-        value={formik.values[name]}
-        onChange={e => {
-          onChange ? onChange(e.target.value) : formik.handleChange(e);
+      <Autocomplete
+        multiple={multiSelect}
+        options={items}
+        getOptionLabel={option => option.label}
+        disableCloseOnSelect={multiSelect}
+        disabled={disabled}
+        value={
+          multiSelect
+            ? items.filter(item => formik.values[name]?.includes(item.value))
+            : items.find(item => item.value === formik.values[name]) || null
+        }
+        onChange={(e, newValue) => {
+          const updatedValue = multiSelect ? newValue?.map(option => option.value) : (newValue?.value ?? null);
+          if (onChange) {
+            onChange(updatedValue);
+          } else {
+            formik.setFieldValue(name, updatedValue);
+          }
         }}
-        fullWidth
-        size="small"
-        sx={{
-          '& .MuiSelect-select span::before': { content: `"Select ${label}"` },
-        }}
-        error={formik.touched[name] && Boolean(formik.errors[name])}
-        helperText={formik.touched[name] && formik.errors[name]}
-      >
-        {items.map(item => (
-          <MenuItem key={item.value} value={item.value}>
-            {item.label}
-          </MenuItem>
-        ))}
-      </TextField>
+        renderInput={params => (
+          <TextField
+            {...params}
+            name={name}
+            fullWidth
+            size="small"
+            error={formik.touched[name] && Boolean(formik.errors[name])}
+            helperText={formik.touched[name] && formik.errors[name]}
+            placeholder={`Select ${label}`}
+            variant="outlined"
+            sx={{ mb: 1 }}
+          />
+        )}
+      />
     </>
   );
 };

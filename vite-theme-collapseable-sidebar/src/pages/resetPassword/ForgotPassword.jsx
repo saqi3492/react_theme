@@ -26,7 +26,6 @@ const validationSchemaOtp = Yup.object().shape({
 });
 
 const ForgotPassword = () => {
-  const [loading, setLoading] = useState(false);
   const [formType, setFormType] = useState('forgot');
   const navigate = useNavigate();
 
@@ -40,16 +39,15 @@ const ForgotPassword = () => {
       formType === 'forgot' ? validationSchemaEmail : formType === 'otp-verification' ? validationSchemaOtp : validationSchemaPassword,
     enableReinitialize: true,
     onSubmit: async values => {
-      setLoading(true);
       if (formType === 'forgot') {
         await forgotPassword(values);
         handleContinue('otp-verification');
       } else if (formType === 'otp-verification') {
         handleContinue('reset');
       } else {
-        await resetPassword(values, navigate);
+        await resetPassword(values);
+        navigate('/signin');
       }
-      setLoading(false);
     },
   });
 
@@ -71,9 +69,9 @@ const ForgotPassword = () => {
         justifyContent="center"
         alignItems="center"
       >
-        {formType === 'forgot' && <ForgotPasswordForm formik={formik} loading={loading} />}
-        {formType === 'otp-verification' && <OtpVerification formik={formik} loading={loading} />}
-        {formType === 'reset' && <ResetPasswordForm formik={formik} loading={loading} />}
+        {formType === 'forgot' && <ForgotPasswordForm formik={formik} />}
+        {formType === 'otp-verification' && <OtpVerification formik={formik} />}
+        {formType === 'reset' && <ResetPasswordForm formik={formik} />}
       </Grid>
     </Grid>
   );

@@ -1,19 +1,9 @@
-import { useState } from 'react';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { Box, Button, IconButton, InputAdornment, TextField, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
+import PasswordInputField from '@/shared/PasswordInputField';
 
-const ResetPasswordForm = ({ formik, loading }) => {
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
+const ResetPasswordForm = ({ formik }) => {
   return (
-    <Box
-      sx={{
-        p: { xs: 5, lg: 16 },
-        width: '100%',
-        maxWidth: '800px',
-      }}
-    >
+    <Box sx={{ p: { xs: 5, lg: 12 }, width: '100%', maxWidth: '800px' }}>
       <Typography fontSize={28} fontWeight="500" gutterBottom>
         Reset Password
       </Typography>
@@ -21,51 +11,9 @@ const ResetPasswordForm = ({ formik, loading }) => {
         Please input your new desired password in the fields below to create a new password and regain access to your account.
       </Typography>
 
-      <Typography fontSize={14} fontWeight="500" gutterBottom>
-        New Password
-      </Typography>
-      <TextField
-        name="password"
-        placeholder="New Password"
-        type={showPassword ? 'text' : 'password'}
-        size="small"
-        fullWidth
-        onChange={formik.handleChange}
-        error={formik.touched.password && !!formik.errors.password}
-        helperText={formik.touched.password && formik.errors.password}
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="end">
-              <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
-                {showPassword ? <VisibilityOff /> : <Visibility />}
-              </IconButton>
-            </InputAdornment>
-          ),
-        }}
-      />
-      <Typography fontSize={14} fontWeight="500" gutterBottom mt={2}>
-        Confirm Password
-      </Typography>
-      <TextField
-        name="confirmPassword"
-        placeholder="Confirm Password"
-        type={showConfirmPassword ? 'text' : 'password'}
-        size="small"
-        fullWidth
-        onChange={formik.handleChange}
-        error={formik.touched.confirmPassword && !!formik.errors.confirmPassword}
-        helperText={formik.touched.confirmPassword && formik.errors.confirmPassword}
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="end">
-              <IconButton onClick={() => setShowConfirmPassword(!showConfirmPassword)} edge="end">
-                {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
-              </IconButton>
-            </InputAdornment>
-          ),
-        }}
-      />
-      <Button size="large" type="submit" fullWidth variant="contained" color="primary" loading={loading} sx={{ mt: 5 }}>
+      <PasswordInputField formik={formik} name="password" label="New Password" size="small" />
+      <PasswordInputField formik={formik} name="confirmPassword" label="Confirm Password" size="small" />
+      <Button size="large" type="submit" fullWidth variant="contained" color="primary" loading={formik.isSubmitting} sx={{ mt: 5 }}>
         Reset Password
       </Button>
     </Box>
