@@ -8,6 +8,7 @@ import ForgotPasswordForm from './ForgotPasswordForm';
 import ResetPasswordForm from './ResetPasswordForm';
 import OtpVerification from './OtpVerification';
 import { forgotPassword, resetPassword } from '../auth/AuthApiCalls';
+import Description from '../signIn/Description';
 
 const validationSchemaEmail = Yup.object().shape({
   email: Yup.string().email('Invalid email address').required('Email is required'),
@@ -55,7 +56,9 @@ const ForgotPassword = () => {
   return (
     <Grid container px={1} sx={{ minHeight: '100vh' }}>
       <Grid my={1} size={{ xs: 12, md: 6 }}>
-        <AuthCard></AuthCard>
+        <AuthCard>
+          <Description />
+        </AuthCard>
       </Grid>
       <Grid
         component="form"
