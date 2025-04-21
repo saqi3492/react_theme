@@ -12,10 +12,10 @@ const Sessions = () => {
   }, []);
 
   return (
-    <>
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
       <SessionHeader />
       <SessionsTable rowData={rowData} />
-    </>
+    </div>
   );
 };
 

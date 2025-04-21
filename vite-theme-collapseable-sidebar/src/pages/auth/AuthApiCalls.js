@@ -2,7 +2,7 @@ import { dispatch, getState } from '@/store/store';
 import { setSnackbarObj } from '@/store/reducers/alertsSlice';
 // import axios from 'axios';
 import { setUserDetail } from '@/store/reducers/userSlice';
-import { handleErrorMessages, setItemInLocalStorage } from '@/utils/helpers';
+import { handleCatchError, handleErrorMessages, setItemInLocalStorage } from '@/utils/helpers';
 
 export const resetPassword = async () => {};
 
@@ -32,7 +32,7 @@ export const handleSignUp = async () => {
     }
     handleErrorMessages(response.errors);
   } catch (error) {
-    console.log('error', error);
+    handleCatchError(error);
   }
 };
 
@@ -60,7 +60,7 @@ export const handleSignIn = async () => {
     }
     handleErrorMessages(response.errors);
   } catch (error) {
-    console.log('error', error);
+    handleCatchError(error);
   }
 };
 
@@ -84,7 +84,7 @@ export const getUserByAuthToken = async () => {
     }
     handleErrorMessages(response.errors);
   } catch (error) {
-    console.log('error', error);
+    handleCatchError(error);
   }
 };
 
@@ -96,6 +96,6 @@ export const getUserByAuthToken = async () => {
 //     if (response.status && response.data?.data) {
 //     }
 //   } catch (error) {
-//     console.log('error', error);
+//     handleCatchError(error);
 //   }
 // };

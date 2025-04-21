@@ -1,9 +1,8 @@
 // import axios from 'axios';
-import { cloneDeep } from 'lodash';
 import { setHideBeatLoader, setShowBeatLoader, setSnackbarObj } from '@/store/reducers/alertsSlice';
-import { setSessions } from '@/store/reducers/sessionSLice';
+import { setSessions, deleteSessionAction } from '@/store/reducers/sessionSLice';
 import { dispatch, getState } from '@/store/store';
-import { getFormattedDate, handleErrorMessages } from '@/utils/helpers';
+import { getFormattedDate, handleCatchError, handleErrorMessages } from '@/utils/helpers';
 
 const getFormattedSessionData = session => {
   return {
@@ -17,8 +16,6 @@ const getFormattedSessionData = session => {
 
 export const fetchSessionData = async () => {
   if (getState().Session.sessions) return;
-
-  let formattedData = [];
 
   try {
     dispatch(setShowBeatLoader());
@@ -51,14 +48,13 @@ export const fetchSessionData = async () => {
     };
 
     if (response?.status && response.data?.data) {
-      formattedData = response.data.data.map(getFormattedSessionData);
+      dispatch(setSessions(response.data.data.map(getFormattedSessionData)));
     } else {
       handleErrorMessages(response.errors);
     }
   } catch (error) {
-    console.log('error', error);
+    handleCatchError(error);
   } finally {
-    dispatch(setSessions(formattedData));
     dispatch(setHideBeatLoader());
   }
 };
@@ -69,16 +65,12 @@ export const deleteSessionById = async sessionId => {
     const response = { status: true, data: true, message: 'Session deleted successfully.' };
 
     if (response.status) {
-      const clonedSessions = cloneDeep(getState().Session.sessions);
-      const index = clonedSessions.findIndex(sessions => sessions.sessionId === sessionId);
-      clonedSessions.splice(index, 1);
-      dispatch(setSessions(clonedSessions));
-
+      dispatch(deleteSessionAction(sessionId));
       dispatch(setSnackbarObj({ message: 'Session  deleted successfully.', severity: 'success' }));
     } else {
       handleErrorMessages(response.errors);
     }
   } catch (error) {
-    console.log('error', error);
+    handleCatchError(error);
   }
 };

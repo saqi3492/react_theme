@@ -20,8 +20,8 @@ export const getLocalStorageItem = (key, defaultValue = null, isParse = true) =>
   try {
     const value = localStorage.getItem(key);
     return (isParse ? JSON.parse(value) : value) ?? defaultValue;
-  } catch (e) {
-    console.log('getItemFromLocalStorage: ', e);
+  } catch (error) {
+    handleCatchError(error);
     return defaultValue;
   }
 };
@@ -35,4 +35,8 @@ export const handleErrorMessages = errors => {
   const message = errors?.map?.(e => e.message + '\n').join('') || 'Oops! Something went wrong.';
 
   dispatch(setSnackbarObj({ message, severity: 'error' }));
+};
+
+export const handleCatchError = error => {
+  console.log('error', error);
 };

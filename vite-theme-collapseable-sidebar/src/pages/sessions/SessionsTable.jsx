@@ -8,8 +8,14 @@ const renderers = { ActionRenderer };
 
 const SessionsTable = ({ rowData }) => {
   return (
-    <div className="ag-theme-alpine" style={{ height: 'calc(100% - 75px)' }}>
-      <AgGridReact rowData={rowData} columnDefs={sessionsColDefs} defaultColDef={defaultColDef} components={renderers} />
+    <div className="ag-theme-alpine" style={{ flex: 1 }}>
+      <AgGridReact
+        loading={rowData === null}
+        rowData={rowData}
+        columnDefs={sessionsColDefs}
+        defaultColDef={defaultColDef}
+        components={renderers}
+      />
     </div>
   );
 };
