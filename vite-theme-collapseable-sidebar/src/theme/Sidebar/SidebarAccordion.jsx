@@ -50,11 +50,14 @@ const SidebarAccordion = props => {
   const { pathname } = useLocation();
   const [collapsed, setCollapsed] = useState(false);
   const [hasActive, setHasActive] = useState(false);
+  const [height, setHeight] = useState(0);
+
   const { name, icon, iconText, badge } = item;
 
   const handleClick = () => {
     componentHeight.current = 0;
     calcaulateHeight(elementRef.current);
+    setHeight(componentHeight.current);
     setCollapsed(!collapsed);
   };
 
@@ -74,6 +77,7 @@ const SidebarAccordion = props => {
   useEffect(() => {
     if (!elementRef) return;
     calcaulateHeight(elementRef.current); // OPEN DROPDOWN IF CHILD IS ACTIVE
+    setHeight(componentHeight.current);
 
     for (let child of item.children) {
       if (child.path === pathname) {
@@ -86,6 +90,7 @@ const SidebarAccordion = props => {
       setHasActive(false);
     };
   }, [calcaulateHeight, pathname, item.children]);
+  
   return (
     <NavExpandRoot className="subMenu">
       <NavItemButton sx={{ padding: '0 12px', justifyContent: 'space-between' }} onClick={handleClick} active={hasActive ? 1 : 0}>
@@ -117,7 +122,7 @@ const SidebarAccordion = props => {
         ref={elementRef}
         className="expansion-panel"
         style={{
-          maxHeight: !collapsed || sidebarCompact ? '0px' : componentHeight.current + 'px',
+          maxHeight: !collapsed || sidebarCompact ? '0px' : height + 'px',
         }}
       >
         {children}
