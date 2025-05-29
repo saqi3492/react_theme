@@ -16,7 +16,7 @@ echo "Local date and time: $(date)"
 # Run npm to install the dependencies
 nvm use 18
 
-npm i
+npm i --legacy-peer-deps
 
 # Run run build
 npm run build:dev

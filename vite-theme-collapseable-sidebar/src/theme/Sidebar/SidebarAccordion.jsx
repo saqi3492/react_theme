@@ -117,7 +117,6 @@ const SidebarAccordion = props => {
         ref={elementRef}
         className="expansion-panel"
         style={{
-          // eslint-disable-next-line react-compiler/react-compiler
           maxHeight: !collapsed || sidebarCompact ? '0px' : componentHeight.current + 'px',
         }}
       >
