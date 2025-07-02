@@ -1,14 +1,15 @@
 import { config } from '@/config/config';
-import dayjs from 'dayjs';
+import moment from 'moment/moment';
 import { setSnackbarObj } from '@/store/reducers/alertsSlice';
 import { dispatch } from '@/store/store';
 
-export const getFormattedDate = (isoDate, defaultValue = '', isTime = false) => {
-  const dateObj = dayjs(isoDate);
-  if (dateObj.isValid()) {
-    return dateObj.format(`${config.dateFormat} ${isTime ? config.timeFormat : ''}`);
+export const getFormattedDate = isoDate => {
+  const momentObj = moment(isoDate);
+
+  if (momentObj.isValid()) {
+    return momentObj.format(config.dateFormat);
   }
-  return defaultValue;
+  return '';
 };
 
 export const setItemInLocalStorage = (key, value, isStringify = true) => {

@@ -9,7 +9,7 @@ const getFormattedSessionData = session => {
     id: session.id,
     sessionId: session.sessionId,
     patientName: session.patientPseudoName,
-    createdAt: getFormattedDate(session.createdAt, '', true),
+    createdAt: getFormattedDate(session.createdAt),
     duration: session.sessionDuration || session.sessionDuration === 0 ? `${session.sessionDuration} mins` : '',
   };
 };
