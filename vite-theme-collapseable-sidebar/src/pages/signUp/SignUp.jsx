@@ -1,4 +1,4 @@
-import { Grid2 as Grid } from '@mui/material';
+import { Grid } from '@mui/material';
 import SignUpForm from './SignUpForm';
 import AuthCard from '@/shared/AuthCard';
 import Description from '../signIn/Description';
