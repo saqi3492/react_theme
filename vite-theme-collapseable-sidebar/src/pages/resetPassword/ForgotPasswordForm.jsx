@@ -1,8 +1,7 @@
 import { Box, Button, Stack, Typography } from '@mui/material';
 import CustomLink from '@/components/CustomLink';
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import InputField from '@/shared/InputField';
-
+import ArrowBackIosNewRoundedIcon from '@mui/icons-material/ArrowBackIosNewRounded';
 const ForgotPasswordForm = ({ formik }) => {
   return (
     <Box sx={{ p: { xs: 5, lg: 12 }, width: '100%', maxWidth: '800px' }}>
@@ -20,7 +19,7 @@ const ForgotPasswordForm = ({ formik }) => {
       </Button>
       <Stack alignItems="center" mt={1}>
         <CustomLink to="/signin" sx={{ display: 'flex', alignItems: 'center' }}>
-          <ArrowBackIosNewIcon fontSize="small" />
+          <ArrowBackIosNewRoundedIcon fontSize="small" />
           Back to Sign In
         </CustomLink>
       </Stack>
