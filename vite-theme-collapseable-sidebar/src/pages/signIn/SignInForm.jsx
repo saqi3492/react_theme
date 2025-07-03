@@ -45,7 +45,7 @@ const SignInForm = () => {
           Sign In
         </Button>
         <Typography variant="body2" color="textSecondary" align="center" mt={2}>
-          New on our platform? <CustomLink to="/signup">Create a New Account</CustomLink>
+          New on our platform? <CustomLink to="/sign-up">Create a New Account</CustomLink>
         </Typography>
       </form>
     </Box>

@@ -30,8 +30,8 @@ const Routes = () => {
     {
       element: <PublicLayout />,
       children: [
-        { path: '/signin', element: <SignIn /> },
-        { path: '/signup', element: <SignUp /> },
+        { path: '/sign-in', element: <SignIn /> },
+        { path: '/sign-up', element: <SignUp /> },
         { path: '/forgot-password', element: <ForgotPassword /> },
       ],
     },

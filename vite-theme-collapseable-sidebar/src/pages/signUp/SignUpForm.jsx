@@ -96,7 +96,7 @@ const SignUpForm = () => {
         </Button>
 
         <Typography variant="body2" color="textSecondary" align="center" mt={2}>
-          Already have an account? <CustomLink to="/signin">Sign In</CustomLink>
+          Already have an account? <CustomLink to="/sign-in">Sign In</CustomLink>
         </Typography>
       </form>
     </Box>

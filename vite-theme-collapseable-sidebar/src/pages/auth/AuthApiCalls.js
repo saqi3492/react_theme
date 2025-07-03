@@ -70,15 +70,7 @@ export const getUserByAuthToken = async () => {
     if (getState().User.userDetail) return true;
 
     // const response = await axios.get('/me');
-    const response = {
-      status: true,
-      data: {
-        id: 41,
-        fullName: 'Saqlain Ali',
-        email: 'imhassan66@gmail.com',
-      },
-      message: 'User fetched successfully',
-    };
+    const response = { status: true, data: { id: 41, fullName: 'Saqlain Ali', email: 'imhassan66@gmail.com' }, message: '' };
     if (response.status && response.data) {
       formatAndSetUserDetail(response.data);
       return true;

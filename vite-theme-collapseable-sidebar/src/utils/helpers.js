@@ -27,7 +27,7 @@ export const getLocalStorageItem = (key, defaultValue = null, isParse = true) =>
 
 export const handleLogout = () => {
   localStorage.clear();
-  window.location.href = '/signin';
+  window.location.href = '/sign-in';
 };
 
 export const handleErrorMessages = errors => {
