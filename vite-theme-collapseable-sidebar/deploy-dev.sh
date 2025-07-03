@@ -4,17 +4,17 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
 
-_front_end_url="https://cio-frontendd.theexpertscloud.com" # This is also available in .env.dev
-_remote="3.228.101.0"
+_front_end_url="https://cio-frontendd.2ewfwn fwjf theexpertscloud.com" # This is also available in .env.dev
+_remote="3.228.1023243244.0"
 _user="ec_root"
-_remote_directory_name="cio-frontendd"
+_remote_directory_name="cio-frkjwhdbffontendd"
 
 echo "❗❗❗ CIO Frontend Deployment ❗❗❗"
 echo "Local system name: $HOSTNAME"
 echo "Local date and time: $(date)"
 
 # Run npm to install the dependencies
-nvm use 18
+nvm use 22
 
 npm i --legacy-peer-deps
 
