@@ -2,7 +2,7 @@ import { dispatch, getState } from '@/store/store';
 import { setSnackbarObj } from '@/store/reducers/alertsSlice';
 // import axios from 'axios';
 import { setUserDetail } from '@/store/reducers/userSlice';
-import { handleCatchError, handleErrorMessages, setItemInLocalStorage } from '@/utils/helpers';
+import { getLocalStorageItem, handleCatchError, handleErrorMessages, setItemInLocalStorage } from '@/utils/helpers';
 
 export const resetPassword = async () => {};
 
@@ -66,6 +66,7 @@ export const handleSignIn = async () => {
 
 export const getUserByAuthToken = async () => {
   try {
+    if (!getLocalStorageItem('authentication_token')) return false;
     if (getState().User.userDetail) return true;
 
     // const response = await axios.get('/me');
