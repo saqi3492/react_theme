@@ -9,7 +9,7 @@ const SessionHeader = () => {
 
   const handleStartSession = async () => {
     setLoading(true);
-    navigate('/');
+    navigate('/training');
     setLoading(false);
   };
 

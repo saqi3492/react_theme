@@ -18,6 +18,7 @@ export default defineConfig({
   build: {
     outDir: 'build',
     emptyOutDir: true,
+    target: 'baseline-widely-available', // Vite 7 default target
   },
   server: {
     port: 3000,

@@ -46,7 +46,7 @@ const ForgotPassword = () => {
         handleContinue('reset');
       } else {
         await resetPassword(values);
-        navigate('/signin');
+        navigate('/sign-in');
       }
     },
   });

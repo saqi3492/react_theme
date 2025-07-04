@@ -18,7 +18,7 @@ const ForgotPasswordForm = ({ formik }) => {
         Submit
       </Button>
       <Stack alignItems="center" mt={1}>
-        <CustomLink to="/signin" sx={{ display: 'flex', alignItems: 'center' }}>
+        <CustomLink to="/sign-in" sx={{ display: 'flex', alignItems: 'center' }}>
           <ArrowBackIosNewRoundedIcon fontSize="small" />
           Back to Sign In
         </CustomLink>
