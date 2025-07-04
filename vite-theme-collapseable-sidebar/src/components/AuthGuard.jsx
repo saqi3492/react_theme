@@ -1,25 +1,19 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { ClimbingLoader } from '@/theme/Loader/Loader';
 import { getUserByAuthToken } from '@/pages/auth/AuthApiCalls';
-import { handleLogout } from '@/utils/helpers';
 
 const AuthGuard = ({ children }) => {
-  const navigate = useNavigate();
   const [isVerifyingUser, setIsVerifyingUser] = useState(true);
 
   useEffect(() => {
     (async () => {
       const isValidUser = await getUserByAuthToken();
 
-      if (!isValidUser) handleLogout();
-
-      setIsVerifyingUser(false);
+      if (isValidUser) setIsVerifyingUser(false);
     })();
-  }, [navigate]);
+  }, []); // if you want to run this effect on every route change then add navigate in dependency
 
-  if (isVerifyingUser) return <ClimbingLoader />;
-  return children;
+  return isVerifyingUser ? <ClimbingLoader /> : children;
 };
 
 export default AuthGuard;
