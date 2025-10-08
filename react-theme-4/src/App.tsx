@@ -1,11 +1,32 @@
-import { Button } from "@/components/ui/button";
+import { BrowserRouter } from 'react-router-dom';
+import { useEffect } from 'react';
+import ToastAlert from '@/components/ui/ToastAlert';
+import { useAppSelector } from './store/hooks';
+import Routes from './routes/routes';
 
-function App() {
+const ThemeWrapper = () => {
+  const theme = useAppSelector(state => state.ui.theme);
+
+  useEffect(() => {
+    const root = window.document.documentElement;
+    root.classList.remove('light', 'dark');
+    root.classList.add(theme);
+  }, [theme]);
+
   return (
-    <div className="flex min-h-svh flex-col items-center justify-center">
-      <Button>Click me</Button>
-    </div>
+    <>
+      <Routes />
+      <ToastAlert />
+    </>
   );
-}
+};
+
+const App = () => {
+  return (
+    <BrowserRouter>
+      <ThemeWrapper />
+    </BrowserRouter>
+  );
+};
 
 export default App;
