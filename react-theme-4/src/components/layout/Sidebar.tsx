@@ -10,8 +10,8 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarMenuSub,
-  SidebarMenuSubItem,
   SidebarMenuSubButton,
+  SidebarMenuSubItem,
   useSidebar,
 } from '@/components/ui/sidebar';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -46,12 +46,12 @@ export function AppSidebar() {
   };
 
   const renderMenuItem = (item: NavItem) => {
-    if (item.children && item.children.length > 0) {
+    if (item.children) {
       return (
         <Collapsible key={item.name} asChild defaultOpen={hasActiveChild(item)} className="group/collapsible">
           <SidebarMenuItem>
             <CollapsibleTrigger asChild>
-              <SidebarMenuButton tooltip={item.name}>
+              <SidebarMenuButton className="text-base">
                 {item.icon && <item.icon className="h-4 w-4 shrink-0" />}
                 <span>{item.name}</span>
                 <ChevronRight className="ml-auto h-4 w-4 shrink-0 transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
@@ -61,9 +61,9 @@ export function AppSidebar() {
               <SidebarMenuSub>
                 {item.children.map(subItem => (
                   <SidebarMenuSubItem key={subItem.name}>
-                    <SidebarMenuSubButton onClick={() => handleItemClick(subItem)} isActive={isActive(subItem)}>
-                      {subItem.icon && <subItem.icon className="h-4 w-4 shrink-0" />}
-                      <span>{subItem.name}</span>
+                    <SidebarMenuSubButton onClick={() => handleItemClick(subItem)} isActive={isActive(subItem)} className="text-base">
+                      {subItem.icon && <subItem.icon className="h-5 w-5 shrink-0" />}
+                      <span className="text-base">{subItem.name}</span>
                     </SidebarMenuSubButton>
                   </SidebarMenuSubItem>
                 ))}
@@ -80,9 +80,10 @@ export function AppSidebar() {
           onClick={() => handleItemClick(item)}
           isActive={isActive(item)}
           tooltip={state === 'collapsed' ? item.name : undefined}
+          className="text-base"
         >
           {item.icon && <item.icon className="h-4 w-4 shrink-0" />}
-          <span>{item.name}</span>
+          <span className="text-base">{item.name}</span>
         </SidebarMenuButton>
       </SidebarMenuItem>
     );
@@ -97,8 +98,8 @@ export function AppSidebar() {
               <span className="text-lg font-bold">R</span>
             </div>
             <div className="flex min-w-0 flex-col">
-              <span className="truncate text-sm font-semibold">React Theme</span>
-              <span className="text-muted-foreground truncate text-xs">v4.0</span>
+              <span className="truncate text-base font-semibold">React Theme</span>
+              <span className="text-muted-foreground truncate text-sm">v4.0</span>
             </div>
           </div>
         ) : (
@@ -112,7 +113,7 @@ export function AppSidebar() {
 
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Main Menu</SidebarGroupLabel>
+          <SidebarGroupLabel className="text-sm">Main Menu</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>{navItems.map(item => renderMenuItem(item))}</SidebarMenu>
           </SidebarGroupContent>
@@ -127,6 +128,7 @@ export function AppSidebar() {
                 onClick={() => handleItemClick(item)}
                 isActive={isActive(item)}
                 tooltip={state === 'collapsed' ? item.name : undefined}
+                className="text-base"
               >
                 {item.icon && <item.icon className="h-5 w-5 shrink-0" />}
                 <span>{item.name}</span>

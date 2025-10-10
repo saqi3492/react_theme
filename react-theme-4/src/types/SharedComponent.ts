@@ -1,7 +1,6 @@
 import type { FormikProps } from 'formik';
 import type { store } from '@/store/store';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export interface InputFieldProps<T = any> {
   id: string;
   type?: string;
@@ -26,4 +25,24 @@ export interface ToastObj {
   message: string;
   autoHideDuration?: number;
   position?: 'top-left' | 'top-center' | 'top-right' | 'bottom-left' | 'bottom-center' | 'bottom-right';
+}
+
+export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  children: React.ReactNode;
+  type?: 'button' | 'submit' | 'reset';
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  variant?: 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link';
+  isLoading?: boolean;
+  className?: string;
+  disabled?: boolean;
+}
+
+export interface ConfirmationDialogProps {
+  isOpen: boolean;
+  isLoading?: boolean;
+  onOpenChange: (open: boolean) => void;
+  onConfirm: () => void;
+  title: string;
+  description: string;
+  confirmButtonText?: string;
 }

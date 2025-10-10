@@ -1,5 +1,5 @@
-import { Suspense, lazy, useEffect, useState } from 'react';
-import { Navigate, useLocation, useNavigate, useRoutes } from 'react-router-dom';
+import { lazy, useEffect, useState } from 'react';
+import { Navigate, useRoutes } from 'react-router-dom';
 import { LoadingSpinner } from '@/components/ui/loading-spinner';
 
 const MainLayout = lazy(() => import('@/components/layout/MainLayout'));
@@ -16,18 +16,19 @@ const Billing = lazy(() => import('@/pages/Billing'));
 const Settings = lazy(() => import('@/pages/Settings'));
 const Help = lazy(() => import('@/pages/Help'));
 
+const getAuthToken = () => localStorage.getItem('authentication_token');
+
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
-  const token = localStorage.getItem('authentication_token');
+  const token = getAuthToken();
 
   if (!token) {
     return <Navigate to="/login" replace />;
   }
-
   return <>{children}</>;
 };
 
 const PublicRoute = ({ children }: { children: React.ReactNode }) => {
-  const token = localStorage.getItem('authentication_token');
+  const token = getAuthToken();
 
   if (token) {
     return <Navigate to="/dashboard" replace />;
@@ -37,23 +38,15 @@ const PublicRoute = ({ children }: { children: React.ReactNode }) => {
 };
 
 const Routes = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const [isVerifying, setIsVerifying] = useState(true);
+  const [isInitializing, setIsInitializing] = useState(true);
 
   useEffect(() => {
-    const authToken = localStorage.getItem('authentication_token');
-    const publicPaths = ['/login', '/signup'];
-    const isPublicPath = publicPaths.includes(location.pathname);
+    const timer = setTimeout(() => {
+      setIsInitializing(false);
+    }, 100);
 
-    if (!authToken && !isPublicPath) {
-      navigate('/login', { replace: true });
-    } else if (authToken && isPublicPath) {
-      navigate('/dashboard', { replace: true });
-    }
-
-    setIsVerifying(false);
-  }, [location.pathname, navigate]);
+    return () => clearTimeout(timer);
+  }, []);
 
   const routes = useRoutes([
     {
@@ -93,11 +86,11 @@ const Routes = () => {
     { path: '*', element: <Navigate to="/dashboard" replace /> },
   ]);
 
-  if (isVerifying) {
-    return <LoadingSpinner fullPage variant="hillclimb" />;
+  if (isInitializing) {
+    return <LoadingSpinner type="fullPage" />;
   }
 
-  return <Suspense fallback={<LoadingSpinner fullPage variant="hillclimb" />}>{routes}</Suspense>;
+  return <>{routes}</>;
 };
 
 export default Routes;

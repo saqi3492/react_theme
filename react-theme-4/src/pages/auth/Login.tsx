@@ -3,13 +3,12 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { showToast } from '@/lib/toast';
 import { Eye, EyeOff } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import SharedButton from '@/shared/Button';
 import InputField from '@/shared/InputField';
 
 interface LoginFormValues {
   email: string;
   password: string;
-  rememberMe: boolean;
   showPassword?: boolean;
 }
 
@@ -20,19 +19,14 @@ const Login = () => {
     initialValues: {
       email: '',
       password: '',
-      rememberMe: false,
       showPassword: false,
     },
     validationSchema: Yup.object({
       email: Yup.string().email('Invalid email address').required('Email is required'),
       password: Yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
     }),
-    onSubmit: async values => {
+    onSubmit: () => {
       localStorage.setItem('authentication_token', 'mock_token_12345');
-
-      if (values.rememberMe) {
-        localStorage.setItem('remember_me', 'true');
-      }
 
       showToast.success('Login successful! Welcome back.');
 
@@ -73,29 +67,9 @@ const Login = () => {
               }
             />
 
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <input
-                  id="rememberMe"
-                  name="rememberMe"
-                  type="checkbox"
-                  checked={formik.values.rememberMe}
-                  onChange={formik.handleChange}
-                  className="border-input h-4 w-4 rounded"
-                />
-                <label htmlFor="rememberMe" className="text-muted-foreground ml-2 text-sm">
-                  Remember me
-                </label>
-              </div>
-
-              <Link to="/forgot-password" className="text-primary text-sm font-medium hover:underline">
-                Forgot password?
-              </Link>
-            </div>
-
-            <Button type="submit" className="w-full" disabled={formik.isSubmitting}>
-              {formik.isSubmitting ? 'Signing in...' : 'Sign in'}
-            </Button>
+            <SharedButton type="submit" className="w-full" isLoading={formik.isSubmitting}>
+              Sign in
+            </SharedButton>
           </div>
 
           <div className="text-center text-sm">

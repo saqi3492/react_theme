@@ -1,26 +1,21 @@
-import { HillClimb, ThreeDots } from 'react-loader-spinner';
+import { RotatingTriangles, ThreeDots } from 'react-loader-spinner';
 
 interface LoadingSpinnerProps {
-  fullPage?: boolean;
-  size?: number;
-  color?: string;
-  variant?: 'hillclimb' | 'threedots';
+  type?: 'fullPage' | 'page';
 }
 
-export const LoadingSpinner = ({ fullPage = false, size = 80, color = '#6366f1', variant = 'threedots' }: LoadingSpinnerProps) => {
-  const spinner = (
-    <div className="flex items-center justify-center">
-      {variant === 'hillclimb' ? (
-        <HillClimb visible={true} height={size} width={size} color={color} ariaLabel="hillclimb-loading" />
-      ) : (
-        <ThreeDots visible={true} height={size} width={size} color={color} ariaLabel="threedots-loading" />
-      )}
-    </div>
-  );
-
-  if (fullPage) {
-    return <div className="bg-background/80 fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm">{spinner}</div>;
+export const LoadingSpinner = ({ type = 'page' }: LoadingSpinnerProps) => {
+  if (type === 'fullPage') {
+    return (
+      <div className="bg-background/80 fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm">
+        <RotatingTriangles ariaLabel="rotating-triangles-loading" />
+      </div>
+    );
   }
 
-  return <div className="flex min-h-[400px] items-center justify-center">{spinner}</div>;
+  return (
+    <div className="flex w-full items-center justify-center">
+      <ThreeDots ariaLabel="threedots-loading" />
+    </div>
+  );
 };

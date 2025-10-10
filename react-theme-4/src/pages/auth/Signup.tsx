@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Eye, EyeOff } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import SharedButton from '@/shared/Button';
 import InputField from '@/shared/InputField';
 
 interface SignupFormValues {
@@ -10,7 +10,6 @@ interface SignupFormValues {
   email: string;
   password: string;
   confirmPassword: string;
-  terms: boolean;
   showPassword?: boolean;
   showConfirmPassword?: boolean;
 }
@@ -22,7 +21,6 @@ const Signup = () => {
       email: '',
       password: '',
       confirmPassword: '',
-      terms: false,
       showPassword: false,
       showConfirmPassword: false,
     },
@@ -39,7 +37,6 @@ const Signup = () => {
       confirmPassword: Yup.string()
         .oneOf([Yup.ref('password')], 'Passwords must match')
         .required('Please confirm your password'),
-      terms: Yup.boolean().oneOf([true], 'You must accept the terms and conditions').required('You must accept the terms and conditions'),
     }),
     onSubmit: async () => {},
   });
@@ -47,7 +44,6 @@ const Signup = () => {
   return (
     <div className="bg-background flex min-h-screen items-center justify-center px-4 py-12">
       <div className="w-full max-w-md space-y-8">
-        {/* Logo/Header */}
         <div className="text-center">
           <div className="bg-primary text-primary-foreground mx-auto flex h-16 w-16 items-center justify-center rounded-2xl">
             <span className="text-2xl font-bold">R</span>
@@ -101,34 +97,9 @@ const Signup = () => {
               }
             />
 
-            <div className="space-y-2">
-              <div className="flex items-center">
-                <input
-                  id="terms"
-                  name="terms"
-                  type="checkbox"
-                  checked={formik.values.terms}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  className="border-input h-4 w-4 rounded"
-                />
-                <label htmlFor="terms" className="text-muted-foreground ml-2 text-sm">
-                  I agree to the
-                  <Link to="/terms" className="text-primary font-medium hover:underline">
-                    Terms of Service
-                  </Link>
-                  and
-                  <Link to="/privacy" className="text-primary font-medium hover:underline">
-                    Privacy Policy
-                  </Link>
-                </label>
-              </div>
-              {formik.touched.terms && formik.errors.terms && <p className="text-destructive text-xs">{formik.errors.terms}</p>}
-            </div>
-
-            <Button type="submit" className="w-full" disabled={formik.isSubmitting}>
-              {formik.isSubmitting ? 'Creating account...' : 'Create account'}
-            </Button>
+            <SharedButton type="submit" className="w-full" isLoading={formik.isSubmitting}>
+              Create account
+            </SharedButton>
           </div>
 
           <div className="text-center text-sm">

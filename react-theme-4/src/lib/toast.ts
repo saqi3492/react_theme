@@ -8,38 +8,18 @@ const createToast = (toast: ToastObj) => {
 
 export const showToast = {
   success: (message: string, duration?: number, position?: ToastObj['position']) => {
-    createToast({
-      severity: 'success',
-      message,
-      autoHideDuration: duration,
-      position,
-    });
+    createToast({ severity: 'success', message, autoHideDuration: duration, position });
   },
 
   error: (message: string, duration?: number, position?: ToastObj['position']) => {
-    createToast({
-      severity: 'error',
-      message,
-      autoHideDuration: duration,
-      position,
-    });
+    createToast({ severity: 'error', message, autoHideDuration: duration, position });
   },
 
   warning: (message: string, duration?: number, position?: ToastObj['position']) => {
-    createToast({
-      severity: 'warning',
-      message,
-      autoHideDuration: duration,
-      position,
-    });
+    createToast({ severity: 'warning', message, autoHideDuration: duration, position });
   },
 
   info: (message: string, duration?: number, position?: ToastObj['position']) => {
-    createToast({
-      severity: 'info',
-      message,
-      autoHideDuration: duration,
-      position,
-    });
+    createToast({ severity: 'info', message, autoHideDuration: duration, position });
   },
 };
