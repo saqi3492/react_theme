@@ -1,4 +1,6 @@
+import { handleCatchMessages } from '@/utils/helper';
 import { showToast } from '../../lib/toast';
+import { AxiosError } from 'axios';
 
 export const API_ENDPOINTS = {
   LOGOUT: '/auth/logout',
@@ -15,7 +17,7 @@ const delay = (ms: number) =>
     setTimeout(resolve, ms);
   });
 
-export const logoutUser = async (): Promise<boolean | void> => {
+export const logoutUser = async (): Promise<boolean> => {
   try {
     await delay(2000);
 
@@ -25,7 +27,9 @@ export const logoutUser = async (): Promise<boolean | void> => {
       showToast.success('Logged Out Successfully!');
       return true;
     }
-  } catch (error: any) {
-    console.log(error);
+    return false;
+  } catch (error: unknown) {
+    handleCatchMessages(error as AxiosError<{ message?: string }>);
+    return false;
   }
 };

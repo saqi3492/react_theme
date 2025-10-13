@@ -33,11 +33,13 @@ export const setLocalStorageItem = (key: string, value: unknown, stringify: bool
   }
 };
 
-export const handleCatchMessages = (error: AxiosError<{ message?: string }>): void => {
-  if (!axios.isCancel(error)) {
-    const errorMessage = error?.response?.data?.message || error?.message || 'Oops! Something went wrong';
-    console.log(errorMessage);
-  }
+export const handleCatchMessages = (error: unknown): void => {
+  if (axios.isCancel(error)) return;
+  const axiosError = error as AxiosError<{ message?: string }>;
+
+  const message = axiosError.response?.data?.message || axiosError.message || 'Oops! Something went wrong.';
+
+  console.error('API Error:', message);
 };
 
 export const handleErrorMessages = (errors?: ErrorMessage[]): void => {
