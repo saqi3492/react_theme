@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Eye, EyeOff } from 'lucide-react';
-import SharedButton from '@/shared/Button';
+import SharedButton from '@/shared/GenericButton';
 import InputField from '@/shared/InputField';
 
 interface SignupFormValues {

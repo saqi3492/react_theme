@@ -3,8 +3,9 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { showToast } from '@/lib/toast';
 import { Eye, EyeOff } from 'lucide-react';
-import SharedButton from '@/shared/Button';
+import SharedButton from '@/shared/GenericButton';
 import InputField from '@/shared/InputField';
+import { setLocalStorageItem } from '@/utils/helper';
 
 interface LoginFormValues {
   email: string;
@@ -26,7 +27,7 @@ const Login = () => {
       password: Yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
     }),
     onSubmit: () => {
-      localStorage.setItem('authentication_token', 'mock_token_12345');
+      setLocalStorageItem('authentication_token', 'mock_token_12345');
 
       showToast.success('Login successful! Welcome back.');
 

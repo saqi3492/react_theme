@@ -15,11 +15,8 @@ export const uiSlice = createSlice({
     toggleTheme: state => {
       state.theme = state.theme === 'light' ? 'dark' : 'light';
     },
-    setTheme: (state, action) => {
-      state.theme = action.payload;
-    },
   },
 });
 
-export const { toggleTheme, setTheme } = uiSlice.actions;
+export const { toggleTheme } = uiSlice.actions;
 export default uiSlice.reducer;

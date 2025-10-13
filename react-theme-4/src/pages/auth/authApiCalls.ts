@@ -1,4 +1,4 @@
-import { showToast } from './toast';
+import { showToast } from '../../lib/toast';
 
 export const API_ENDPOINTS = {
   LOGOUT: '/auth/logout',
@@ -19,10 +19,7 @@ export const logoutUser = async (): Promise<boolean | void> => {
   try {
     await delay(2000);
 
-    const response: ApiResponse = {
-      status: true,
-      message: 'Logged out successfully',
-    };
+    const response: ApiResponse = { status: true, message: 'Logged out successfully' };
 
     if (response.status) {
       showToast.success('Logged Out Successfully!');

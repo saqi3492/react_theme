@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
 import { Toaster, toast } from 'sonner';
 import { X } from 'lucide-react';
-import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { useAppSelector } from '@/store/hooks';
 import { setToastObj } from '@/store/slices/alertsSlice';
+import { useDispatch } from 'react-redux';
 
 const SEVERITY_CLASSES = {
   success: 'bg-green-600 text-white',
@@ -12,7 +13,7 @@ const SEVERITY_CLASSES = {
 } as const;
 
 const ToastAlert = () => {
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch();
   const toastObj = useAppSelector(state => state.alerts.toastObj);
 
   useEffect(() => {
@@ -23,7 +24,11 @@ const ToastAlert = () => {
     toast.custom(
       t => (
         <div className={`relative min-w-62 rounded-lg px-8 py-4 shadow-lg ${severityClass}`}>
-          <button onClick={() => toast.dismiss(t)} className="absolute top-2 right-2 rounded-full p-1 text-white opacity-80 hover:opacity-100" aria-label="Close">
+          <button
+            onClick={() => toast.dismiss(t)}
+            className="absolute top-2 right-2 rounded-full p-1 text-white opacity-80 hover:opacity-100"
+            aria-label="Close"
+          >
             <X className="size-5" />
           </button>
 

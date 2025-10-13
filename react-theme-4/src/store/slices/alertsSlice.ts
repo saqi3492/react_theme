@@ -1,5 +1,5 @@
-import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import type { ToastObj } from '@/types/SharedComponent';
+import { ToastObj } from '@/lib/toast';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 interface AlertsState {
   toastObj: ToastObj | null;

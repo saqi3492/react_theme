@@ -1,9 +1,8 @@
-import { store } from '@/store/store';
+import { dispatch } from '@/store/store';
 import { setToastObj } from '@/store/slices/alertsSlice';
-import type { ToastObj } from '@/types/SharedComponent';
 
 const createToast = (toast: ToastObj) => {
-  store.dispatch(setToastObj(toast));
+  dispatch(setToastObj(toast));
 };
 
 export const showToast = {
@@ -23,3 +22,10 @@ export const showToast = {
     createToast({ severity: 'info', message, autoHideDuration: duration, position });
   },
 };
+
+export interface ToastObj {
+  severity: 'success' | 'error' | 'warning' | 'info';
+  message: string;
+  autoHideDuration?: number;
+  position?: 'top-left' | 'top-center' | 'top-right' | 'bottom-left' | 'bottom-center' | 'bottom-right';
+}

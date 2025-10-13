@@ -1,6 +1,6 @@
 import { BrowserRouter } from 'react-router-dom';
 import { useEffect } from 'react';
-import ToastAlert from '@/components/ui/ToastAlert';
+import ToastAlert from '@/components/layout/ToastAlert';
 import { useAppSelector } from './store/hooks';
 import Routes from './routes/routes';
 

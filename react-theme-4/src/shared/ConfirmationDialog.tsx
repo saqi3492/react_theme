@@ -1,7 +1,6 @@
 import React from 'react';
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import SharedButton from './Button';
-import { ConfirmationDialogProps } from '@/types/SharedComponent';
+import SharedButton from './GenericButton';
 
 const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({
   isOpen,
@@ -33,3 +32,13 @@ const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({
 };
 
 export default ConfirmationDialog;
+
+export interface ConfirmationDialogProps {
+  isOpen: boolean;
+  isLoading?: boolean;
+  onOpenChange: (open: boolean) => void;
+  onConfirm: () => void;
+  title: string;
+  description: string;
+  confirmButtonText?: string;
+}

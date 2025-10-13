@@ -1,6 +1,7 @@
 import { lazy, useEffect, useState } from 'react';
 import { Navigate, useRoutes } from 'react-router-dom';
 import { LoadingSpinner } from '@/components/ui/loading-spinner';
+import { getLocalStorageItem } from '@/utils/helper';
 
 const MainLayout = lazy(() => import('@/components/layout/MainLayout'));
 const SimpleLayout = lazy(() => import('@/theme/simpleLayout/SimpleLayout'));
@@ -9,14 +10,15 @@ const Signup = lazy(() => import('@/pages/auth/Signup'));
 const Dashboard = lazy(() => import('@/pages/Dashboard'));
 const Users = lazy(() => import('@/pages/Users'));
 const Tasks = lazy(() => import('@/pages/Tasks'));
-const Configuration = lazy(() => import('@/pages/Configuration'));
+const StaffTypes = lazy(() => import('@/pages/configuration/StaffTypes'));
+const Documents = lazy(() => import('@/pages/configuration/Documents'));
 const CentralRecord = lazy(() => import('@/pages/CentralRecord'));
 const Venues = lazy(() => import('@/pages/Venues'));
 const Billing = lazy(() => import('@/pages/Billing'));
 const Settings = lazy(() => import('@/pages/Settings'));
 const Help = lazy(() => import('@/pages/Help'));
 
-const getAuthToken = () => localStorage.getItem('authentication_token');
+const getAuthToken = () => getLocalStorageItem('authentication_token');
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const token = getAuthToken();
@@ -59,9 +61,8 @@ const Routes = () => {
       children: [
         { index: true, element: <Navigate to="/dashboard" replace /> },
         { path: 'dashboard', element: <Dashboard /> },
-        { path: 'configuration', element: <Configuration /> },
-        { path: 'configuration/staff-types', element: <Configuration /> },
-        { path: 'configuration/documents', element: <Configuration /> },
+        { path: 'configuration/staff-types', element: <StaffTypes /> },
+        { path: 'configuration/documents', element: <Documents /> },
         { path: 'tasks', element: <Tasks /> },
         { path: 'central-record', element: <CentralRecord /> },
         { path: 'users', element: <Users /> },

@@ -3,7 +3,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { NavigateLink } from './Link';
 import { cn } from '@/lib/utils';
-import type { InputFieldProps } from '@/types/SharedComponent';
+import { FormikProps } from 'formik';
 
 const InputField: React.FC<InputFieldProps> = ({
   id,
@@ -66,3 +66,19 @@ const InputField: React.FC<InputFieldProps> = ({
 };
 
 export default InputField;
+
+export interface InputFieldProps<T = any> {
+  id: string;
+  type?: string;
+  placeholder?: string;
+  formik: FormikProps<T>;
+  label?: string;
+  labelExtraParams?: boolean;
+  disabled?: boolean;
+  value?: string;
+  icon?: React.ReactNode;
+  variant?: 'default' | 'underline' | 'unstyled';
+  className?: string;
+  inputClassName?: string;
+  readOnly?: boolean;
+}
