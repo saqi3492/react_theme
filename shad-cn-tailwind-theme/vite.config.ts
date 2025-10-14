@@ -10,7 +10,6 @@ export default defineConfig({
     ValidateEnv({
       validator: 'builtin',
       schema: {
-        VITE_IS_LOCAL_HOST: Schema.boolean(),
         VITE_FRONTEND_URL: Schema.string(),
         VITE_BACKEND_URL: Schema.string(),
       },

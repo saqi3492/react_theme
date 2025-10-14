@@ -3,7 +3,6 @@ import { Toaster, toast } from 'sonner';
 import { X } from 'lucide-react';
 import { setToastObj } from '@/store/slices/alertsSlice';
 import { useDispatch } from 'react-redux';
-import { ToastObj } from '@/lib/toast';
 import { useAppSelector } from '@/store/store';
 
 const SEVERITY_CLASSES = {
@@ -15,7 +14,7 @@ const SEVERITY_CLASSES = {
 
 const ToastAlert = () => {
   const dispatch = useDispatch();
-  const toastObj = useAppSelector(state => state.alerts.toastObj) as ToastObj | null;
+  const toastObj = useAppSelector(state => state.alerts.toastObj);
 
   useEffect(() => {
     if (!toastObj) return;

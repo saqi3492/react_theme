@@ -12,22 +12,21 @@ export const handleLogout = (): void => {
   window.location.reload();
 };
 
-export const getLocalStorageItem = <T>(key: string, defaultValue: T | null = null, parse: boolean = true): T | string | null => {
+export const getLocalStorageItem = <T>(key: string, defaultValue: T | null = null): T | string | null => {
   try {
     const rawValue = localStorage.getItem(key);
     if (rawValue === null) return defaultValue;
 
-    return parse ? (JSON.parse(rawValue) as T) : (rawValue as string);
+    return JSON.parse(rawValue) as T;
   } catch (error) {
     console.error(`Error reading localStorage key "${key}":`, error);
     return defaultValue;
   }
 };
 
-export const setLocalStorageItem = (key: string, value: unknown, stringify: boolean = true): void => {
+export const setLocalStorageItem = (key: string, value: unknown): void => {
   try {
-    const storedValue = stringify ? JSON.stringify(value) : String(value);
-    localStorage.setItem(key, storedValue);
+    localStorage.setItem(key, JSON.stringify(value));
   } catch (error) {
     console.error(`Error writing localStorage key "${key}":`, error);
   }
