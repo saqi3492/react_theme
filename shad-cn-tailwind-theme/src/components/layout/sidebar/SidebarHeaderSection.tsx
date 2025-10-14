@@ -4,7 +4,7 @@ const SidebarHeaderSection = () => {
   const { state } = useSidebar();
 
   return (
-    <SidebarHeader className="border-b px-4 py-4">
+    <SidebarHeader className="border-b px-4 py-2.5">
       {state === 'expanded' ? (
         <div className="flex items-center gap-2">
           <div className="bg-primary text-primary-foreground flex h-9 w-9 shrink-0 items-center justify-center rounded-lg">

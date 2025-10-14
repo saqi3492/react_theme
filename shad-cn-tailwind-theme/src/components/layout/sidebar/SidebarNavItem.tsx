@@ -43,11 +43,7 @@ const SidebarNavItem = ({ item, isActive, hasActiveChild, onItemClick, isOpen, o
                 const subActive = isActive(subItem);
                 return (
                   <SidebarMenuSubItem key={subItem.name}>
-                    <SidebarMenuSubButton
-                      onClick={() => onItemClick(subItem)}
-                      isActive={subActive}
-                      className={subActive ? '!bg-primary !text-primary-foreground hover:!bg-primary hover:!text-primary-foreground' : ''}
-                    >
+                    <SidebarMenuSubButton onClick={() => onItemClick(subItem)} isActive={subActive}>
                       {subItem.icon && <subItem.icon className={subActive ? 'h-5 w-5' : 'h-4 w-4'} />}
                       <span className={subActive ? 'font-semibold' : ''}>{subItem.name}</span>
                     </SidebarMenuSubButton>
@@ -64,12 +60,7 @@ const SidebarNavItem = ({ item, isActive, hasActiveChild, onItemClick, isOpen, o
   const active = isActive(item);
   return (
     <SidebarMenuItem key={item.name}>
-      <SidebarMenuButton
-        onClick={() => onItemClick(item)}
-        isActive={active}
-        tooltip={state === 'collapsed' ? item.name : undefined}
-        className={active ? '!bg-primary !text-primary-foreground hover:!bg-primary hover:!text-primary-foreground' : ''}
-      >
+      <SidebarMenuButton onClick={() => onItemClick(item)} isActive={active} tooltip={state === 'collapsed' ? item.name : undefined}>
         {item.icon && <item.icon className={active ? 'h-5 w-5' : 'h-4 w-4'} />}
         <span className={active ? 'text-base font-semibold' : 'text-base'}>{item.name}</span>
       </SidebarMenuButton>

@@ -23,6 +23,9 @@ const Routes = () => {
         { path: 'dashboard', element: <Dashboard /> },
         { path: 'configuration/staff-types', element: <h1>Staff Types</h1> },
         { path: 'configuration/documents', element: <h1>Documents</h1> },
+        { path: 'central-record', element: <h1>Central Record</h1> },
+        { path: 'users', element: <h1>Users</h1> },
+        { path: 'venues', element: <h1>Venues</h1> },
         { path: 'tasks', element: <h1>Tasks</h1> },
         { path: 'help', element: <h1>Help</h1> },
       ],
@@ -42,7 +45,7 @@ const Routes = () => {
     { path: '*', element: <Navigate to="/dashboard" replace /> },
   ]);
 
-  return <>{routes}</>;
+  return routes;
 };
 
 export default Routes;
