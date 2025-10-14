@@ -1,11 +1,10 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { showToast } from '@/lib/toast';
 import { Eye, EyeOff } from 'lucide-react';
 import SharedButton from '@/shared/GenericButton';
 import InputField from '@/shared/InputField';
-import { setLocalStorageItem } from '@/utils/helper';
+import { handleSignIn } from './authApiCalls';
 
 interface LoginFormValues {
   email: string;
@@ -26,12 +25,9 @@ const Login = () => {
       email: Yup.string().email('Invalid email address').required('Email is required'),
       password: Yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
     }),
-    onSubmit: () => {
-      setLocalStorageItem('authentication_token', 'mock_token_12345');
-
-      showToast.success('Login successful! Welcome back.');
-
-      navigate('/dashboard');
+    onSubmit: async () => {
+      const isSuccess = await handleSignIn();
+      if (isSuccess) navigate('/dashboard');
     },
   });
 

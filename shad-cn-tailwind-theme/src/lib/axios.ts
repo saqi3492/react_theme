@@ -1,36 +1,39 @@
-import axios from 'axios';
-import type { InternalAxiosRequestConfig } from 'axios';
+import axios, { AxiosError, AxiosHeaders, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import { getLocalStorageItem, handleLogout } from '@/utils/helper';
+import { config } from '@/config/config';
 
-const axiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || 'https://api.example.com',
-  timeout: 10000,
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
+const AxiosInterceptor = {
+  initialized: false,
 
-axiosInstance.interceptors.request.use(
-  (config: InternalAxiosRequestConfig) => {
-    const token = getLocalStorageItem('authentication_token');
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-  },
-  error => {
-    return Promise.reject(error);
-  },
-);
+  initialize: (): void => {
+    if (AxiosInterceptor.initialized) return;
+    AxiosInterceptor.initialized = true;
 
-axiosInstance.interceptors.response.use(
-  response => response.data,
-  error => {
-    if (error.response?.status === 401) {
-      handleLogout();
-    }
-    return Promise.reject(error);
-  },
-);
+    axios.defaults.baseURL = config.backendUrl;
+    axios.defaults.timeout = 10000;
+    axios.defaults.headers['Content-Type'] = 'application/json';
 
-export default axiosInstance;
+    axios.interceptors.request.use(
+      (axiosConfig: InternalAxiosRequestConfig) => {
+        const token = getLocalStorageItem('authentication_token');
+        if (token) {
+          const headers = new AxiosHeaders(axiosConfig.headers);
+          headers.set('Authorization', `Bearer ${token}`);
+          axiosConfig.headers = headers;
+        }
+        return axiosConfig;
+      },
+      (error: AxiosError) => Promise.reject(error),
+    );
+
+    axios.interceptors.response.use(
+      (response: AxiosResponse) => response.data,
+      (error: AxiosError) => {
+        if (error.response?.status === 401) handleLogout();
+        return Promise.reject(error);
+      },
+    );
+  },
+};
+
+export default AxiosInterceptor;

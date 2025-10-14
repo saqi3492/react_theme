@@ -1,5 +1,5 @@
-import { useAppSelector } from '@/store/hooks';
 import { toggleTheme } from '@/store/slices/uiSlice';
+import { useAppSelector } from '@/store/store';
 import { Moon, Sun } from 'lucide-react';
 import { useDispatch } from 'react-redux';
 

@@ -1,7 +1,7 @@
 import { lazy, useEffect, useState } from 'react';
 import { Navigate, useRoutes } from 'react-router-dom';
-import { LoadingSpinner } from '@/components/ui/loading-spinner';
 import { getLocalStorageItem } from '@/utils/helper';
+import { FallBackLoader } from '@/components/layout/loader/FallBackLoader';
 
 const MainLayout = lazy(() => import('@/components/layout/MainLayout'));
 const SimpleLayout = lazy(() => import('@/theme/simpleLayout/SimpleLayout'));
@@ -88,7 +88,7 @@ const Routes = () => {
   ]);
 
   if (isInitializing) {
-    return <LoadingSpinner type="fullPage" />;
+    return <FallBackLoader type="fullPage" />;
   }
 
   return <>{routes}</>;

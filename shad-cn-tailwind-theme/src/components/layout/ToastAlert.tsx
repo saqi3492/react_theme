@@ -1,9 +1,10 @@
 import { useEffect } from 'react';
 import { Toaster, toast } from 'sonner';
 import { X } from 'lucide-react';
-import { useAppSelector } from '@/store/hooks';
 import { setToastObj } from '@/store/slices/alertsSlice';
 import { useDispatch } from 'react-redux';
+import { ToastObj } from '@/lib/toast';
+import { useAppSelector } from '@/store/store';
 
 const SEVERITY_CLASSES = {
   success: 'bg-green-600 text-white',
@@ -14,7 +15,7 @@ const SEVERITY_CLASSES = {
 
 const ToastAlert = () => {
   const dispatch = useDispatch();
-  const toastObj = useAppSelector(state => state.alerts.toastObj);
+  const toastObj = useAppSelector(state => state.alerts.toastObj) as ToastObj | null;
 
   useEffect(() => {
     if (!toastObj) return;

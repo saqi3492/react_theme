@@ -1,6 +1,6 @@
 import { SidebarHeader, useSidebar } from '@/components/ui/sidebar';
 
-export const SidebarHeaderSection = () => {
+const SidebarHeaderSection = () => {
   const { state } = useSidebar();
 
   return (
@@ -25,3 +25,5 @@ export const SidebarHeaderSection = () => {
     </SidebarHeader>
   );
 };
+
+export default SidebarHeaderSection;

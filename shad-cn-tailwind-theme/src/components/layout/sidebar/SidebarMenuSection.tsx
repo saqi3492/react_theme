@@ -1,5 +1,5 @@
 import { SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu } from '@/components/ui/sidebar';
-import { SidebarNavItem } from './SidebarNavItem';
+import SidebarNavItem from './SidebarNavItem';
 import { NavItem } from './navItems';
 
 interface SidebarMenuSectionProps {
@@ -10,7 +10,7 @@ interface SidebarMenuSectionProps {
   onItemClick: (item: NavItem) => void;
 }
 
-export const SidebarMenuSection = ({ items, label, isActive, hasActiveChild, onItemClick }: SidebarMenuSectionProps) => {
+const SidebarMenuSection = ({ items, label, isActive, hasActiveChild, onItemClick }: SidebarMenuSectionProps) => {
   return (
     <SidebarGroup>
       <SidebarGroupLabel className="text-sm">{label}</SidebarGroupLabel>
@@ -24,3 +24,5 @@ export const SidebarMenuSection = ({ items, label, isActive, hasActiveChild, onI
     </SidebarGroup>
   );
 };
+
+export default SidebarMenuSection;

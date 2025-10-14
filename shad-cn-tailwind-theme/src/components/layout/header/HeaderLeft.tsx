@@ -1,7 +1,7 @@
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import SharedLogo from '@/shared/SharedLogo';
 
-const HeaderLeft = () => {
+const HeaderLogo = () => {
   return (
     <div className="flex items-center gap-3">
       <SidebarTrigger />
@@ -10,4 +10,4 @@ const HeaderLeft = () => {
   );
 };
 
-export default HeaderLeft;
+export default HeaderLogo;

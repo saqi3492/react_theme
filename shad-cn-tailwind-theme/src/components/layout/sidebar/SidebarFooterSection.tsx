@@ -7,7 +7,7 @@ interface SidebarFooterSectionProps {
   onItemClick: (item: NavItem) => void;
 }
 
-export const SidebarFooterSection = ({ items, isActive, onItemClick }: SidebarFooterSectionProps) => {
+const SidebarFooterSection = ({ items, isActive, onItemClick }: SidebarFooterSectionProps) => {
   const { state } = useSidebar();
 
   return (
@@ -33,3 +33,5 @@ export const SidebarFooterSection = ({ items, isActive, onItemClick }: SidebarFo
     </SidebarFooter>
   );
 };
+
+export default SidebarFooterSection;

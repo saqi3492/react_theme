@@ -2,11 +2,11 @@ import { Sidebar, SidebarContent } from '@/components/ui/sidebar';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { NavItem, bottomNavItems, navItems } from './navItems';
 import { handleLogout } from '@/utils/helper';
-import { SidebarHeaderSection } from './SidebarHeaderSection';
-import { SidebarMenuSection } from './SidebarMenuSection';
-import { SidebarFooterSection } from './SidebarFooterSection';
+import SidebarHeaderSection from './SidebarHeaderSection';
+import SidebarMenuSection from './SidebarMenuSection';
+import SidebarFooterSection from './SidebarFooterSection';
 
-export function AppSidebar() {
+const AppSidebar = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -45,4 +45,6 @@ export function AppSidebar() {
       <SidebarFooterSection items={bottomNavItems} isActive={isActive} onItemClick={handleItemClick} />
     </Sidebar>
   );
-}
+};
+
+export default AppSidebar;

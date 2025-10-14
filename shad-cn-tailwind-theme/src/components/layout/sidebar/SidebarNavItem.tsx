@@ -19,7 +19,7 @@ interface SidebarNavItemProps {
   onToggle?: () => void;
 }
 
-export const SidebarNavItem = ({ item, isActive, hasActiveChild, onItemClick, isOpen, onToggle }: SidebarNavItemProps) => {
+const SidebarNavItem = ({ item, isActive, hasActiveChild, onItemClick, isOpen, onToggle }: SidebarNavItemProps) => {
   const { state } = useSidebar();
 
   if (item.children) {
@@ -76,3 +76,5 @@ export const SidebarNavItem = ({ item, isActive, hasActiveChild, onItemClick, is
     </SidebarMenuItem>
   );
 };
+
+export default SidebarNavItem;
