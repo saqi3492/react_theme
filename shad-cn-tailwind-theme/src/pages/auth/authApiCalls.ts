@@ -38,7 +38,7 @@ export const logoutUser = async (): Promise<boolean> => {
 
 export const handleSignIn = async (): Promise<boolean> => {
   dispatch(setShowBeatLoader());
-  await delay(500);
+  await delay(1000);
 
   try {
     // const response = await axios.post('/login', {

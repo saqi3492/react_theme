@@ -1,17 +1,4 @@
-import {
-  Briefcase,
-  Building2,
-  CheckSquare,
-  CreditCard,
-  FileText,
-  HelpCircle,
-  LayoutGrid,
-  LogOut,
-  Settings,
-  User,
-  UserCog,
-  Users,
-} from 'lucide-react';
+import { Briefcase, Building2, CheckSquare, FileText, HelpCircle, LayoutGrid, LogOut, User, UserCog, Users } from 'lucide-react';
 
 export const navItems: NavItem[] = [
   { path: '/dashboard', name: 'Dashboard', icon: LayoutGrid },
@@ -27,8 +14,6 @@ export const navItems: NavItem[] = [
   { path: '/central-record', name: 'Central Record', icon: User },
   { path: '/users', name: 'Users', icon: Users },
   { path: '/venues', name: 'Venues', icon: Building2 },
-  { path: '/billing', name: 'Billing', icon: CreditCard },
-  { path: '/settings', name: 'Settings', icon: Settings },
 ];
 
 export const bottomNavItems: NavItem[] = [

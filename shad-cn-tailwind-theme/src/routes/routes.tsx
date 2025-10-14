@@ -1,83 +1,38 @@
-import { lazy, useEffect, useState } from 'react';
+import { lazy } from 'react';
 import { Navigate, useRoutes } from 'react-router-dom';
-import { getLocalStorageItem } from '@/utils/helper';
-import { FallBackLoader } from '@/components/layout/loader/FallBackLoader';
+import AuthGuard from './AuthGuard';
+import PublicGuard from './PublicGuard';
 
 const MainLayout = lazy(() => import('@/components/layout/MainLayout'));
 const SimpleLayout = lazy(() => import('@/theme/simpleLayout/SimpleLayout'));
 const Login = lazy(() => import('@/pages/auth/Login'));
 const Signup = lazy(() => import('@/pages/auth/Signup'));
-const Dashboard = lazy(() => import('@/pages/Dashboard'));
-const Users = lazy(() => import('@/pages/Users'));
-const Tasks = lazy(() => import('@/pages/Tasks'));
-const StaffTypes = lazy(() => import('@/pages/configuration/StaffTypes'));
-const Documents = lazy(() => import('@/pages/configuration/Documents'));
-const CentralRecord = lazy(() => import('@/pages/CentralRecord'));
-const Venues = lazy(() => import('@/pages/Venues'));
-const Billing = lazy(() => import('@/pages/Billing'));
-const Settings = lazy(() => import('@/pages/Settings'));
-const Help = lazy(() => import('@/pages/Help'));
-
-const getAuthToken = () => getLocalStorageItem('authentication_token');
-
-const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
-  const token = getAuthToken();
-
-  if (!token) {
-    return <Navigate to="/login" replace />;
-  }
-  return <>{children}</>;
-};
-
-const PublicRoute = ({ children }: { children: React.ReactNode }) => {
-  const token = getAuthToken();
-
-  if (token) {
-    return <Navigate to="/dashboard" replace />;
-  }
-
-  return <>{children}</>;
-};
+const Dashboard = lazy(() => import('@/pages/dashboard/Dashboard'));
 
 const Routes = () => {
-  const [isInitializing, setIsInitializing] = useState(true);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsInitializing(false);
-    }, 100);
-
-    return () => clearTimeout(timer);
-  }, []);
-
   const routes = useRoutes([
     {
       path: '/',
       element: (
-        <ProtectedRoute>
+        <AuthGuard>
           <MainLayout />
-        </ProtectedRoute>
+        </AuthGuard>
       ),
       children: [
         { index: true, element: <Navigate to="/dashboard" replace /> },
         { path: 'dashboard', element: <Dashboard /> },
-        { path: 'configuration/staff-types', element: <StaffTypes /> },
-        { path: 'configuration/documents', element: <Documents /> },
-        { path: 'tasks', element: <Tasks /> },
-        { path: 'central-record', element: <CentralRecord /> },
-        { path: 'users', element: <Users /> },
-        { path: 'venues', element: <Venues /> },
-        { path: 'billing', element: <Billing /> },
-        { path: 'settings', element: <Settings /> },
-        { path: 'help', element: <Help /> },
+        { path: 'configuration/staff-types', element: <h1>Staff Types</h1> },
+        { path: 'configuration/documents', element: <h1>Documents</h1> },
+        { path: 'tasks', element: <h1>Tasks</h1> },
+        { path: 'help', element: <h1>Help</h1> },
       ],
     },
     {
       path: '/',
       element: (
-        <PublicRoute>
+        <PublicGuard>
           <SimpleLayout />
-        </PublicRoute>
+        </PublicGuard>
       ),
       children: [
         { path: 'login', element: <Login /> },
@@ -86,10 +41,6 @@ const Routes = () => {
     },
     { path: '*', element: <Navigate to="/dashboard" replace /> },
   ]);
-
-  if (isInitializing) {
-    return <FallBackLoader type="fullPage" />;
-  }
 
   return <>{routes}</>;
 };
