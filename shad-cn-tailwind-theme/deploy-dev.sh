@@ -5,7 +5,7 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
 
 _front_end_url="https://frontend.theexpertscloud.com" # This is also available in .env.dev
-_remote="3.228.101.116"
+_remote="*.***.***.***"
 _user="ec_root"
 _remote_directory_name="frontend"
 
