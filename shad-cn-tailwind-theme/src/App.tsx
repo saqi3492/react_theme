@@ -1,14 +1,6 @@
 import { BrowserRouter } from 'react-router-dom';
 import ProgressAlerts from './components/layout/loader/ProgressAlerts';
 import Routes from './routes/routes';
-kkk
-
-
-
-
-
-
-
 
 const ThemeWrapper = () => {
   return (
