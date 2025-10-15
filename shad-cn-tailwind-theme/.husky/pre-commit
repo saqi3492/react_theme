@@ -2,12 +2,4 @@
 
 cd "$(dirname "$0")/.."
 
-# Run linter
-echo "Running ESLint..."
-npx eslint . --max-warnings 0 || exit 1
-
-# Run formatter check
-echo "Running Prettier check..."
-npx prettier --check . || exit 1
-
-echo "Pre-commit checks passed!"
+npx lint-staged

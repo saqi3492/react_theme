@@ -45,7 +45,7 @@ const ToastAlert = () => {
     );
 
     dispatch(setToastObj(null));
-  }, [toastObj]);
+  }, [toastObj, dispatch]);
 
   return <Toaster richColors />;
 };
