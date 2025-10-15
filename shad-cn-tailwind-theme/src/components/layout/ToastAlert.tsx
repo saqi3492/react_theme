@@ -15,7 +15,6 @@ const SEVERITY_CLASSES = {
 const ToastAlert = () => {
   const dispatch = useDispatch();
   const toastObj = useAppSelector(state => state.alerts.toastObj);
-
   useEffect(() => {
     if (!toastObj) return;
 
