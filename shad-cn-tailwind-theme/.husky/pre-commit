@@ -1,0 +1,13 @@
+#!/usr/bin/env sh
+
+cd "$(dirname "$0")/.."
+
+# Run linter
+echo "Running ESLint..."
+npm run lint || exit 1
+
+# Run formatter check
+echo "Running Prettier check..."
+npx prettier --check . || exit 1
+
+echo "Pre-commit checks passed!"
