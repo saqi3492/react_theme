@@ -4,7 +4,7 @@ cd "$(dirname "$0")/.."
 
 # Run linter
 echo "Running ESLint..."
-npm run lint || exit 1
+npx eslint . --max-warnings 0 || exit 1
 
 # Run formatter check
 echo "Running Prettier check..."
