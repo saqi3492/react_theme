@@ -54,6 +54,13 @@ const SidebarAccordion = props => {
 
   const { name, icon, iconText, badge } = item;
 
+  const handleClick = () => {
+    componentHeight.current = 0;
+    calcaulateHeight(elementRef.current);
+    setHeight(componentHeight.current);
+    setCollapsed(!collapsed);
+  };
+
   const calcaulateHeight = useCallback(function innercalcaulateHeight(node) {
     if (node.name !== 'child') {
       for (let child of node.children) {
@@ -66,12 +73,6 @@ const SidebarAccordion = props => {
 
     return;
   }, []);
-  const handleClick = () => {
-    componentHeight.current = 0;
-    calcaulateHeight(elementRef.current);
-    setHeight(componentHeight.current);
-    setCollapsed(!collapsed);
-  };
 
   useEffect(() => {
     if (!elementRef) return;
