@@ -54,17 +54,10 @@ const SidebarAccordion = props => {
 
   const { name, icon, iconText, badge } = item;
 
-  const handleClick = () => {
-    componentHeight.current = 0;
-    calcaulateHeight(elementRef.current);
-    setHeight(componentHeight.current);
-    setCollapsed(!collapsed);
-  };
-
-  const calcaulateHeight = useCallback(node => {
+  const calcaulateHeight = useCallback(function innercalcaulateHeight(node) {
     if (node.name !== 'child') {
       for (let child of node.children) {
-        calcaulateHeight(child);
+        innercalcaulateHeight(child);
       }
     }
 
@@ -73,6 +66,12 @@ const SidebarAccordion = props => {
 
     return;
   }, []);
+  const handleClick = () => {
+    componentHeight.current = 0;
+    calcaulateHeight(elementRef.current);
+    setHeight(componentHeight.current);
+    setCollapsed(!collapsed);
+  };
 
   useEffect(() => {
     if (!elementRef) return;
@@ -90,7 +89,7 @@ const SidebarAccordion = props => {
       setHasActive(false);
     };
   }, [calcaulateHeight, pathname, item.children]);
-  
+
   return (
     <NavExpandRoot className="subMenu">
       <NavItemButton sx={{ padding: '0 12px', justifyContent: 'space-between' }} onClick={handleClick} active={hasActive ? 1 : 0}>
