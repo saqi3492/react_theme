@@ -1,6 +1,6 @@
 import { dispatch, getState } from '@/store/store';
 import { setSnackbarObj } from '@/store/reducers/alertsSlice';
-// import axios from 'axios';
+import axios from 'axios';
 import { setUserDetail } from '@/store/reducers/userSlice';
 import { getLocalStorageItem, handleCatchError, handleErrorMessages, handleLogout, setItemInLocalStorage } from '@/utils/helpers';
 
@@ -83,6 +83,21 @@ export const getUserByAuthToken = async () => {
     handleCatchError(error);
   } finally {
     if (!isValidUser) handleLogout();
+  }
+};
+
+export const handleOAuthCallback = async code => {
+  try {
+    const response = await axios.get(`/auth/oauth/callback?code=${code}`);
+    if (response.status && response.data?.token) {
+      setItemInLocalStorage('authentication_token', response.data.token);
+      formatAndSetUserDetail(response.data.user);
+      dispatch(setSnackbarObj({ message: 'Google signup successful. Thank you for joining!', severity: 'success' }));
+      return true;
+    }
+    handleErrorMessages(response.errors);
+  } catch (error) {
+    handleCatchError(error);
   }
 };
 

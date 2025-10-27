@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 import { handleSignIn } from '../auth/AuthApiCalls';
 import PasswordInputField from '@/shared/PasswordInputField';
 import InputField from '@/shared/InputField';
+import ContinueWithGoogle from './ContinueWithGoogle';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().email('Invalid email address').required('Email is required'),
@@ -44,6 +45,7 @@ const SignInForm = () => {
         <Button size="large" type="submit" fullWidth variant="contained" sx={{ my: 2 }}>
           Sign In
         </Button>
+        <ContinueWithGoogle />
         <Typography variant="body2" color="textSecondary" align="center" mt={2}>
           New on our platform? <CustomLink to="/sign-up">Create a New Account</CustomLink>
         </Typography>

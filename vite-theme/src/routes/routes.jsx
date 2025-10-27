@@ -11,6 +11,7 @@ const Incidents = lazy(() => import('@/pages/incidents'));
 const SignIn = lazy(() => import('@/pages/signIn/SignIn'));
 const SignUp = lazy(() => import('@/pages/signUp/SignUp'));
 const ForgotPassword = lazy(() => import('@/pages/resetPassword/ForgotPassword'));
+const OAuthCallback = lazy(() => import('@/pages/oauthCallback/OAuthCallback'));
 
 const Routes = () => {
   const routes = useRoutes([
@@ -33,6 +34,7 @@ const Routes = () => {
         { path: '/sign-in', element: <SignIn /> },
         { path: '/sign-up', element: <SignUp /> },
         { path: '/forgot-password', element: <ForgotPassword /> },
+        { path: '/oauth-callback', element: <OAuthCallback /> },
       ],
     },
     { path: '*', element: <Navigate to="/" /> },

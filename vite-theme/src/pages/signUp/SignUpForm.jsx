@@ -8,6 +8,7 @@ import InputField from '@/shared/InputField';
 import InputDropdownField from '@/shared/InputDropdownField';
 import { useSelector } from 'react-redux';
 import PasswordInputField from '@/shared/PasswordInputField';
+import ContinueWithGoogle from '../signIn/ContinueWithGoogle';
 
 const validationSchema = Yup.object().shape({
   firstName: Yup.string().required('First Name is required'),
@@ -91,9 +92,11 @@ const SignUpForm = () => {
 
         <InputDropdownField formik={formik} items={specialities} name="speciality" label="Speciality" />
 
-        <Button size="large" type="submit" fullWidth variant="contained" sx={{ my: 3 }} loading={formik.isSubmitting}>
+        <Button size="large" type="submit" fullWidth variant="contained" sx={{ my: 2 }} loading={formik.isSubmitting}>
           Sign Up
         </Button>
+
+        <ContinueWithGoogle />
 
         <Typography variant="body2" color="textSecondary" align="center" mt={2}>
           Already have an account? <CustomLink to="/sign-in">Sign In</CustomLink>
