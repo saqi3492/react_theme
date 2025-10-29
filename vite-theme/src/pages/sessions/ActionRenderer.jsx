@@ -5,7 +5,7 @@ import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import SessionDeleteDialog from './SessionDeleteDialog';
 import EditIcon from '@mui/icons-material/Edit';
 import { useNavigate } from 'react-router-dom';
-import CreateSession from './CreateSession';
+import SessionForm from './SessionForm';
 
 const ActionRenderer = ({ data }) => {
   const navigate = useNavigate();
@@ -30,7 +30,7 @@ const ActionRenderer = ({ data }) => {
         </IconButton>
       </Tooltip>
       {open ? <SessionDeleteDialog closeDialog={() => setOpen(false)} data={data} /> : null}
-      {isEditOpen ? <CreateSession onClose={() => setIsEditOpen(false)} sessionData={data} /> : null}
+      {isEditOpen ? <SessionForm onClose={() => setIsEditOpen(false)} sessionData={data} /> : null}
     </>
   );
 };

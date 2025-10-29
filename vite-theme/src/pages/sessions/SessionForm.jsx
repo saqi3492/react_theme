@@ -18,7 +18,7 @@ const durationOptions = [
   { value: 120, label: '2 hours' },
 ];
 
-const CreateSession = ({ onClose, sessionData = null }) => {
+const SessionForm = ({ onClose, sessionData = null }) => {
   const formik = useFormik({
     initialValues: {
       patientName: sessionData?.patientName || '',
@@ -47,7 +47,7 @@ const CreateSession = ({ onClose, sessionData = null }) => {
 
           <InputDropdownField formik={formik} items={durationOptions} name="duration" label="Duration" />
 
-          <Button size="large" type="submit" fullWidth variant="contained" sx={{ my: 1 }} loading={formik.isSubmitting}>
+          <Button size="small" type="submit" fullWidth variant="contained" sx={{ my: 1 }} loading={formik.isSubmitting}>
             {sessionData ? 'Update Session' : 'Create Session'}
           </Button>
         </form>
@@ -56,4 +56,4 @@ const CreateSession = ({ onClose, sessionData = null }) => {
   );
 };
 
-export default CreateSession;
+export default SessionForm;

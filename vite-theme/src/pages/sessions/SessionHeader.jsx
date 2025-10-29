@@ -1,7 +1,7 @@
 import { Typography, Stack, Button } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import { useState } from 'react';
-import CreateSession from './CreateSession';
+import CreateSession from './SessionForm';
 
 const SessionHeader = () => {
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
@@ -19,7 +19,7 @@ const SessionHeader = () => {
         <Typography variant="h6" fontWeight="500">
           Previous Sessions
         </Typography>
-        <Button variant="contained" onClick={handleStartSession} startIcon={<AddIcon />}>
+        <Button size="small" variant="contained" onClick={handleStartSession} startIcon={<AddIcon />}>
           Create Session
         </Button>
       </Stack>
