@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  sessions: null,
+  sessions: [],
 };
 
 const sessionSlice = createSlice({
@@ -11,14 +11,13 @@ const sessionSlice = createSlice({
     setSessions(state, action) {
       state.sessions = action.payload;
     },
-    createNewSessionAction(state, action) {
-      state.sessions = [action.payload, ...(state.sessions || [])];
+    createSessionAction(state, action) {
+      state.sessions.unshift(action.payload);
     },
     updateSessionAction(state, action) {
-      const { id, patientName, sessionDuration } = action.payload;
-      const index = state.sessions.findIndex(session => session.id === id);
+      const index = state.sessions.findIndex(session => session.id === action.payload.id);
       if (index !== -1) {
-        state.sessions[index] = { ...state.sessions[index], patientName, duration: `${sessionDuration} mins` };
+        state.sessions[index] = action.payload;
       }
     },
     deleteSessionAction(state, action) {
@@ -28,5 +27,5 @@ const sessionSlice = createSlice({
   },
 });
 
-export const { setSessions, createNewSessionAction, deleteSessionAction, updateSessionAction } = sessionSlice.actions;
+export const { setSessions, createSessionAction, deleteSessionAction, updateSessionAction } = sessionSlice.actions;
 export default sessionSlice.reducer;

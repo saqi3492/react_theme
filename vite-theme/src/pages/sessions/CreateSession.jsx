@@ -4,7 +4,7 @@ import { Box, Button, Typography } from '@mui/material';
 import AppDialog from '@/components/AppDialog';
 import InputField from '@/shared/InputField';
 import InputDropdownField from '@/shared/InputDropdownField';
-import { createNewSession, UpdateSessionById } from './SessionsApiCalls';
+import { createSession, updateSession } from './SessionsApiCalls';
 const validationSchema = Yup.object().shape({
   patientName: Yup.string().required('Patient Name is required'),
   duration: Yup.number().positive('Duration must be a positive number').required('Duration is required'),
@@ -19,9 +19,9 @@ const CreateSession = ({ onClose, isEdit = false, sessionData = null }) => {
     validationSchema: validationSchema,
     onSubmit: async values => {
       if (isEdit && sessionData) {
-        await UpdateSessionById(sessionData.id, values);
+        await updateSession(sessionData.id, values);
       } else {
-        await createNewSession(values);
+        await createSession(values);
       }
       onClose();
     },
