@@ -1,7 +1,7 @@
 // import axios from 'axios';
 import { setSnackbarObj } from '@/store/reducers/alertsSlice';
 import { setSessions, deleteSessionAction, createSessionAction, updateSessionAction } from '@/store/reducers/sessionSlice';
-import { dispatch, getState } from '@/store/store';
+import { dispatch } from '@/store/store';
 import { getFormattedDate, handleCatchError, handleErrorMessages } from '@/utils/helpers';
 
 const getFormattedSession = session => {
@@ -14,12 +14,11 @@ const getFormattedSession = session => {
   };
 };
 
-export const fetchSessions = async () => {
-  if (getState().Session.sessions.length) return;
-
+export const fetchSessions = async (filter = '') => {
   try {
     await new Promise(resolve => setTimeout(resolve, 1000));
     // const response = await axios.post('/sessions/list', { page_size: 2000 });
+
     const response = {
       status: true,
       data: {
@@ -41,13 +40,29 @@ export const fetchSessions = async () => {
             updatedAt: '2024-12-13T13:06:29.000+00:00',
             transcriptionUsage: null,
           },
+          {
+            id: 428,
+            sessionId: '57169cc8-e375-4b4b-962ha-a67a26c45454581d98',
+            patientPseudoName: 'Aqib',
+            providerId: 41,
+            sessionDuration: 0,
+            doctorNote: null,
+            transcription: null,
+            createdAt: '2024-12-13T13:06:29.000+00:00',
+            updatedAt: '2024-12-13T13:06:29.000+00:00',
+            transcriptionUsage: null,
+          },
         ],
       },
       message: ' Session List',
     };
 
+    const filteredData = filter
+      ? response.data.data.filter(session => session.patientPseudoName.toLowerCase().includes(filter.toLowerCase()))
+      : response.data.data;
+
     if (response?.status && response.data?.data) {
-      dispatch(setSessions(response.data.data.map(getFormattedSession)));
+      dispatch(setSessions(filteredData.map(getFormattedSession)));
     } else {
       handleErrorMessages(response.errors);
     }

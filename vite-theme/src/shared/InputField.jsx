@@ -9,7 +9,7 @@ const InputField = ({ formik, name, label, onChange }) => {
       <TextField
         fullWidth
         name={name}
-        placeholder={label}
+        placeholder={name}
         size="small"
         sx={{ mb: 1 }}
         value={formik.values[name]}
