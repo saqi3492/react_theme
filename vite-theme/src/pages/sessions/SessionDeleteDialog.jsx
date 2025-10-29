@@ -1,14 +1,13 @@
 import { useState } from 'react';
 import { Button, DialogContent, DialogActions, Typography, Divider } from '@mui/material';
 import AppDialog from '@/components/AppDialog';
-import { deleteSessionById } from '@/pages/sessions/SessionsApiCalls';
 
-const SessionDeleteDialog = ({ closeDialog, data }) => {
+const SessionDeleteDialog = ({ closeDialog, handleDelete }) => {
   const [loading, setLoading] = useState(false);
 
-  const handleDelete = async () => {
+  const onDelete = async () => {
     setLoading(true);
-    await deleteSessionById(data.sessionId);
+    await handleDelete();
     closeDialog();
     setLoading(false);
   };
@@ -26,7 +25,7 @@ const SessionDeleteDialog = ({ closeDialog, data }) => {
         <Button fullWidth variant="outlined" onClick={closeDialog}>
           No
         </Button>
-        <Button loading={loading} fullWidth variant="contained" onClick={handleDelete}>
+        <Button loading={loading} fullWidth variant="contained" onClick={onDelete}>
           Yes
         </Button>
       </DialogActions>

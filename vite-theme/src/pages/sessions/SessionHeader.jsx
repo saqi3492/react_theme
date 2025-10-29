@@ -1,16 +1,16 @@
 import { Typography, Stack, Button } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import CreateSession from './SessionForm';
 
 const SessionHeader = () => {
-  const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
+  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
 
-  const handleStartSession = async () => {
-    setLoading(true);
-    navigate('/training');
-    setLoading(false);
+  const handleStartSession = () => {
+    setIsCreateDialogOpen(true);
+  };
+  const handleCloseCreateDialog = () => {
+    setIsCreateDialogOpen(false);
   };
 
   return (
@@ -19,10 +19,11 @@ const SessionHeader = () => {
         <Typography variant="h6" fontWeight="500">
           Previous Sessions
         </Typography>
-        <Button variant="contained" onClick={handleStartSession} startIcon={<AddIcon />} loading={loading}>
-          Start Session
+        <Button size="small" variant="contained" onClick={handleStartSession} startIcon={<AddIcon />}>
+          Create Session
         </Button>
       </Stack>
+      {isCreateDialogOpen ? <CreateSession onClose={handleCloseCreateDialog} /> : null}
     </>
   );
 };

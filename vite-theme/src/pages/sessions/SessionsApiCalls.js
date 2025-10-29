@@ -1,10 +1,10 @@
 // import axios from 'axios';
-import { setHideBeatLoader, setShowBeatLoader, setSnackbarObj } from '@/store/reducers/alertsSlice';
-import { setSessions, deleteSessionAction } from '@/store/reducers/sessionSLice';
+import { setSnackbarObj } from '@/store/reducers/alertsSlice';
+import { setSessions, deleteSessionAction, createSessionAction, updateSessionAction } from '@/store/reducers/sessionSlice';
 import { dispatch, getState } from '@/store/store';
 import { getFormattedDate, handleCatchError, handleErrorMessages } from '@/utils/helpers';
 
-const getFormattedSessionData = session => {
+const getFormattedSession = session => {
   return {
     id: session.id,
     sessionId: session.sessionId,
@@ -14,12 +14,11 @@ const getFormattedSessionData = session => {
   };
 };
 
-export const fetchSessionData = async () => {
-  if (getState().Session.sessions) return;
+export const fetchSessions = async () => {
+  if (getState().Session.sessions.length) return;
 
   try {
-    dispatch(setShowBeatLoader());
-
+    await new Promise(resolve => setTimeout(resolve, 1000));
     // const response = await axios.post('/sessions/list', { page_size: 2000 });
     const response = {
       status: true,
@@ -32,19 +31,7 @@ export const fetchSessionData = async () => {
         data: [
           {
             id: 425,
-            sessionId: '57169cc8-e375-4b4b-962a-a67a26c81d98',
-            patientPseudoName: 'Daniel',
-            providerId: 41,
-            sessionDuration: 0,
-            doctorNote: null,
-            transcription: null,
-            createdAt: '2024-12-13T13:06:29.000+00:00',
-            updatedAt: '2024-12-13T13:06:29.000+00:00',
-            transcriptionUsage: null,
-          },
-          {
-            id: 4,
-            sessionId: '57169cc8-e375-4b4b-962a-a67a26c81d98',
+            sessionId: '57169cc8-e375-4b4b-962a-a67a26c45454581d98',
             patientPseudoName: 'Daniel',
             providerId: 41,
             sessionDuration: 0,
@@ -60,25 +47,87 @@ export const fetchSessionData = async () => {
     };
 
     if (response?.status && response.data?.data) {
-      dispatch(setSessions(response.data.data.map(getFormattedSessionData)));
+      dispatch(setSessions(response.data.data.map(getFormattedSession)));
     } else {
       handleErrorMessages(response.errors);
     }
   } catch (error) {
     handleCatchError(error);
-  } finally {
-    dispatch(setHideBeatLoader());
   }
 };
 
-export const deleteSessionById = async sessionId => {
+export const createSession = async sessionData => {
+  try {
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    // const response = await axios.post('/sessions/create', sessionData);
+    const response = {
+      status: true,
+      data: {
+        id: 429,
+        sessionId: '57169cc8-e375-4b4b-962a-a67a26c81d98',
+        patientPseudoName: sessionData.patientName,
+        providerId: 41,
+        sessionDuration: sessionData.duration,
+        doctorNote: null,
+        transcription: null,
+        createdAt: '2024-12-13T13:06:29.000+00:00',
+        updatedAt: '2024-12-13T13:06:29.000+00:00',
+        transcriptionUsage: null,
+      },
+      message: 'Session Created successfully.',
+    };
+    if (response.status && response.data) {
+      dispatch(createSessionAction(getFormattedSession(response.data)));
+      dispatch(setSnackbarObj({ message: 'Session created successfully.', severity: 'success' }));
+    } else {
+      handleErrorMessages(response.errors);
+    }
+  } catch (error) {
+    handleCatchError(error);
+  }
+};
+
+export const updateSession = async (id, sessionData) => {
+  try {
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    // const response = await axios.put(`/sessions/${sessionId}`, sessionData);
+    const response = {
+      status: true,
+      data: {
+        id: id,
+        sessionId: sessionData.sessionId,
+        patientPseudoName: sessionData.patientName,
+        providerId: sessionData.providerId,
+        sessionDuration: sessionData.duration,
+        doctorNote: sessionData.doctorNote,
+        transcription: sessionData.transcription,
+        createdAt: sessionData.createdAt,
+        updatedAt: '2024-12-13T13:06:29.000+00:00',
+        transcriptionUsage: sessionData.transcriptionUsage,
+      },
+      message: 'Session Created successfully.',
+    };
+    if (response.status && response.data) {
+      dispatch(updateSessionAction(getFormattedSession(response.data)));
+      dispatch(setSnackbarObj({ message: 'Session updated successfully.', severity: 'success' }));
+    } else {
+      handleErrorMessages(response.errors);
+    }
+  } catch (error) {
+    handleCatchError(error);
+  }
+};
+
+export const deleteSession = async sessionId => {
   try {
     // const response = await axios.delete(`/sessions/${sessionId}`);
-    const response = { status: true, data: true, message: 'Session deleted successfully.' };
+    await new Promise(resolve => setTimeout(resolve, 1000));
+
+    const response = { status: true, message: 'Session deleted successfully.' };
 
     if (response.status) {
       dispatch(deleteSessionAction(sessionId));
-      dispatch(setSnackbarObj({ message: 'Session  deleted successfully.', severity: 'success' }));
+      dispatch(setSnackbarObj({ message: 'Session deleted successfully.', severity: 'success' }));
     } else {
       handleErrorMessages(response.errors);
     }
