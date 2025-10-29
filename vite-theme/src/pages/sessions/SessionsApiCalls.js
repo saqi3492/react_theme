@@ -60,7 +60,7 @@ export const createSession = async sessionData => {
     const response = {
       status: true,
       data: {
-        id: 425,
+        id: 429,
         sessionId: '57169cc8-e375-4b4b-962a-a67a26c81d98',
         patientPseudoName: sessionData.patientName,
         providerId: 41,
@@ -86,16 +86,24 @@ export const createSession = async sessionData => {
 export const updateSession = async (id, sessionData) => {
   try {
     // const response = await axios.put(`/sessions/${sessionId}`, sessionData);
-    const response = { status: true, data: true, message: 'Session updated successfully.' };
-
-    if (response.status) {
-      dispatch(
-        updateSessionAction({
-          id: id,
-          patientName: sessionData.patientName,
-          sessionDuration: sessionData.duration,
-        })
-      );
+    const response = {
+      status: true,
+      data: {
+        id: id,
+        sessionId: sessionData.sessionId,
+        patientPseudoName: sessionData.patientName,
+        providerId: sessionData.providerId,
+        sessionDuration: sessionData.duration,
+        doctorNote: sessionData.doctorNote,
+        transcription: sessionData.transcription,
+        createdAt: sessionData.createdAt,
+        updatedAt: '2024-12-13T13:06:29.000+00:00',
+        transcriptionUsage: sessionData.transcriptionUsage,
+      },
+      message: 'Session Created successfully.',
+    };
+    if (response.status && response.data) {
+      dispatch(updateSessionAction(getFormattedSession(response.data)));
       dispatch(setSnackbarObj({ message: 'Session updated successfully.', severity: 'success' }));
     } else {
       handleErrorMessages(response.errors);

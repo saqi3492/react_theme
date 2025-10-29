@@ -5,12 +5,20 @@ import AppDialog from '@/components/AppDialog';
 import InputField from '@/shared/InputField';
 import InputDropdownField from '@/shared/InputDropdownField';
 import { createSession, updateSession } from './SessionsApiCalls';
+
 const validationSchema = Yup.object().shape({
   patientName: Yup.string().required('Patient Name is required'),
   duration: Yup.number().positive('Duration must be a positive number').required('Duration is required'),
 });
 
-const CreateSession = ({ onClose, isEdit = false, sessionData = null }) => {
+const durationOptions = [
+  { value: 30, label: '30 minutes' },
+  { value: 60, label: '1 hour' },
+  { value: 90, label: '1.5 hours' },
+  { value: 120, label: '2 hours' },
+];
+
+const CreateSession = ({ onClose, sessionData = null }) => {
   const formik = useFormik({
     initialValues: {
       patientName: sessionData?.patientName || '',
@@ -18,7 +26,7 @@ const CreateSession = ({ onClose, isEdit = false, sessionData = null }) => {
     },
     validationSchema: validationSchema,
     onSubmit: async values => {
-      if (isEdit && sessionData) {
+      if (sessionData) {
         await updateSession(sessionData.id, values);
       } else {
         await createSession(values);
@@ -27,27 +35,20 @@ const CreateSession = ({ onClose, isEdit = false, sessionData = null }) => {
     },
   });
 
-  const durationOptions = [
-    { value: 30, label: '30 minutes' },
-    { value: 60, label: '1 hour' },
-    { value: 90, label: '1.5 hours' },
-    { value: 120, label: '2 hours' },
-  ];
-
   return (
     <AppDialog onClose={onClose} maxWidth="sm">
-      <Box sx={{ p: { xs: 2, lg: 4 }, width: '100%' }}>
+      <Box>
         <Typography fontWeight="500" fontSize={24} gutterBottom>
-          Create New Session
+          {sessionData ? 'Update Session' : 'Create New Session'}
         </Typography>
 
-        <form onSubmit={formik.handleSubmit} noValidate autoComplete="off" style={{ marginTop: '20px' }}>
+        <form onSubmit={formik.handleSubmit} noValidate autoComplete="off" style={{ marginTop: '5px' }}>
           <InputField formik={formik} name="patientName" label="Patient Name" />
 
           <InputDropdownField formik={formik} items={durationOptions} name="duration" label="Duration" />
 
-          <Button size="large" type="submit" fullWidth variant="contained" sx={{ my: 3 }} loading={formik.isSubmitting}>
-            Create Session
+          <Button size="large" type="submit" fullWidth variant="contained" sx={{ my: 1 }} loading={formik.isSubmitting}>
+            {sessionData ? 'Update Session' : 'Create Session'}
           </Button>
         </form>
       </Box>

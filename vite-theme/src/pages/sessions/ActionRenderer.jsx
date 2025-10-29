@@ -30,7 +30,7 @@ const ActionRenderer = ({ data }) => {
         </IconButton>
       </Tooltip>
       {open ? <SessionDeleteDialog closeDialog={() => setOpen(false)} data={data} /> : null}
-      {isEditOpen && <CreateSession onClose={() => setIsEditOpen(false)} isEdit={true} sessionData={data} />}
+      {isEditOpen ? <CreateSession onClose={() => setIsEditOpen(false)} sessionData={data} /> : null}
     </>
   );
 };

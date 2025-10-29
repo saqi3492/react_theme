@@ -23,7 +23,7 @@ const SessionHeader = () => {
           Create Session
         </Button>
       </Stack>
-      {isCreateDialogOpen && <CreateSession onClose={handleCloseCreateDialog} />}
+      {isCreateDialogOpen ? <CreateSession onClose={handleCloseCreateDialog} /> : null}
     </>
   );
 };
