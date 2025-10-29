@@ -18,6 +18,7 @@ export const fetchSessions = async () => {
   if (getState().Session.sessions.length) return;
 
   try {
+    await new Promise(resolve => setTimeout(resolve, 1000));
     // const response = await axios.post('/sessions/list', { page_size: 2000 });
     const response = {
       status: true,
@@ -54,8 +55,10 @@ export const fetchSessions = async () => {
     handleCatchError(error);
   }
 };
+
 export const createSession = async sessionData => {
   try {
+    await new Promise(resolve => setTimeout(resolve, 1000));
     // const response = await axios.post('/sessions/create', sessionData);
     const response = {
       status: true,
@@ -83,8 +86,10 @@ export const createSession = async sessionData => {
     handleCatchError(error);
   }
 };
+
 export const updateSession = async (id, sessionData) => {
   try {
+    await new Promise(resolve => setTimeout(resolve, 1000));
     // const response = await axios.put(`/sessions/${sessionId}`, sessionData);
     const response = {
       status: true,
@@ -112,9 +117,12 @@ export const updateSession = async (id, sessionData) => {
     handleCatchError(error);
   }
 };
-export const deleteSessionById = async sessionId => {
+
+export const deleteSession = async sessionId => {
   try {
     // const response = await axios.delete(`/sessions/${sessionId}`);
+    await new Promise(resolve => setTimeout(resolve, 1000));
+
     const response = { status: true, message: 'Session deleted successfully.' };
 
     if (response.status) {

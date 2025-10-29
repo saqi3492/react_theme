@@ -6,11 +6,16 @@ import SessionDeleteDialog from './SessionDeleteDialog';
 import EditIcon from '@mui/icons-material/Edit';
 import { useNavigate } from 'react-router-dom';
 import SessionForm from './SessionForm';
+import { deleteSession } from './SessionsApiCalls';
 
 const ActionRenderer = ({ data }) => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
+
+  const handleDelete = async () => {
+    await deleteSession(data.sessionId);
+  };
 
   return (
     <>
@@ -29,7 +34,7 @@ const ActionRenderer = ({ data }) => {
           <DeleteIcon />
         </IconButton>
       </Tooltip>
-      {open ? <SessionDeleteDialog closeDialog={() => setOpen(false)} data={data} /> : null}
+      {open ? <SessionDeleteDialog closeDialog={() => setOpen(false)} handleDelete={handleDelete} /> : null}
       {isEditOpen ? <SessionForm onClose={() => setIsEditOpen(false)} sessionData={data} /> : null}
     </>
   );
