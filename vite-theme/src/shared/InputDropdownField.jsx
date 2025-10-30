@@ -3,7 +3,7 @@ import { Autocomplete, TextField, Typography } from '@mui/material';
 const InputDropdownField = ({ items = [], name, label, formik, multiSelect = false, onChange, disabled = false }) => {
   return (
     <>
-      <Typography color={disabled ? 'textSecondary' : 'textPrimary'} fontSize={14} fontWeight="500" mb="4px">
+      <Typography color={disabled ? 'textSecondary' : 'textPrimary'} fontSize={14} fontWeight="500">
         {label}
       </Typography>
       <Autocomplete

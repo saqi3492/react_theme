@@ -1,14 +1,17 @@
+import { useState, useRef, useEffect } from 'react';
 import { Typography, Stack, Box } from '@mui/material';
-import { useState, useMemo, useEffect } from 'react';
 import CreateSession from './SessionForm';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { debounce } from 'lodash';
 import InputField from '@/shared/InputField';
 import { fetchSessions } from './SessionsApiCalls';
+import { useFormik } from 'formik';
 
 const SessionHeader = () => {
+  const fetchSessionsRef = useRef(debounce(fetchSessions, 500));
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
-  const [filter, setFilter] = useState('');
+
+  const formik = useFormik({ initialValues: { searchedText: '' } });
 
   const handleStartSession = () => {
     setIsCreateDialogOpen(true);
@@ -18,12 +21,9 @@ const SessionHeader = () => {
     setIsCreateDialogOpen(false);
   };
 
-  const debouncedFetchSession = useMemo(() => debounce(fetchSessions, 500), []);
   useEffect(() => {
-    debouncedFetchSession(filter);
-  }, [filter, debouncedFetchSession]);
-
-  const handleSearchChange = e => setFilter(e.target.value);
+    fetchSessionsRef.current(formik.values.searchedText);
+  }, [formik.values.searchedText]);
 
   return (
     <>
@@ -36,11 +36,7 @@ const SessionHeader = () => {
           <AddCircleOutlineIcon cursor="pointer" onClick={handleStartSession} color="primary" />
         </Box>
         <Box sx={{ width: '250px' }}>
-          <InputField
-            name="Search"
-            label=""
-            formik={{ values: { search: filter }, handleChange: handleSearchChange, touched: {}, errors: {} }}
-          />
+          <InputField name="searchedText" placeholder="Enter Search Text" formik={formik} />
         </Box>
       </Stack>
       {isCreateDialogOpen ? <CreateSession onClose={handleCloseCreateDialog} /> : null}
