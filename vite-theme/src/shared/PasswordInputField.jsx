@@ -8,7 +8,7 @@ const PasswordInputField = ({ formik, label, name, onChange, size = 'small', sx 
 
   return (
     <>
-      <Typography fontSize={14} fontWeight="500" mb="4px">
+      <Typography fontSize={14} fontWeight="500">
         {label}
       </Typography>
       <TextField
