@@ -37,7 +37,7 @@ const response = {
       {
         id: 428,
         sessionId: '57169cc8-e375-4b4b-962ha-a67a26c45454581d98',
-        patientPseudoName: 'Aqib',
+        patientPseudoName: 'User Test',
         providerId: 41,
         sessionDuration: 0,
         doctorNote: null,
