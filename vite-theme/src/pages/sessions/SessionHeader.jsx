@@ -1,15 +1,17 @@
-import { useState, useRef, useEffect } from 'react';
-import { Typography, Stack, Box } from '@mui/material';
-import CreateSession from './SessionForm';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import { debounce } from 'lodash';
 import InputField from '@/shared/InputField';
-import { fetchSessions } from './SessionsApiCalls';
+import { setSearchSessionText } from '@/store/reducers/sessionSlice';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import { Box, Stack, Typography } from '@mui/material';
 import { useFormik } from 'formik';
+import { debounce } from 'lodash';
+import { useEffect, useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import CreateSession from './SessionForm';
 
 const SessionHeader = () => {
-  const fetchSessionsRef = useRef(debounce(fetchSessions, 500));
+  const dispatch = useDispatch();
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
+  const fetchSessionsRef = useRef(debounce(value => dispatch(setSearchSessionText(value)), 500));
 
   const formik = useFormik({ initialValues: { searchedText: '' } });
 
