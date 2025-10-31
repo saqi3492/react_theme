@@ -16,12 +16,29 @@ const ActionRenderer = ({ data }) => {
   const [isEditOpen, setIsEditOpen] = useState(false);
 
   const mutation = useMutation({
-    mutationFn: () => deleteSession(data.id),
-    onSuccess: () => queryClient.invalidateQueries(['sessions']),
+    mutationFn: id => deleteSession(id),
+    onSuccess: async (_, id) => {
+      await queryClient.cancelQueries({ queryKey: ['sessions'] });
+
+      const queryCache = queryClient.getQueryCache();
+      const sessionQueries = queryCache.findAll({ queryKey: ['sessions'] });
+      const previousData = new Map();
+
+      for (const query of sessionQueries) {
+        const oldData = query.state.data;
+        if (oldData && Array.isArray(oldData) && oldData.some(session => session.id === id)) {
+          previousData.set(query.queryKey, oldData);
+          queryClient.setQueryData(
+            query.queryKey,
+            oldData.filter(session => session.id !== id)
+          );
+        }
+      }
+    },
   });
 
   const handleDelete = async () => {
-    await mutation.mutateAsync();
+    await mutation.mutateAsync(data.id);
   };
 
   return (
@@ -37,7 +54,7 @@ const ActionRenderer = ({ data }) => {
         </IconButton>
       </Tooltip>
       <Tooltip title="Delete">
-        <IconButton onClick={() => setOpen(true)} disabled={mutation.isLoading}>
+        <IconButton onClick={() => setOpen(true)} disabled={mutation.isSuccess}>
           {mutation.isLoading ? '...' : <DeleteIcon />}
         </IconButton>
       </Tooltip>

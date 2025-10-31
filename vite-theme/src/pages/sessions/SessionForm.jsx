@@ -24,8 +24,27 @@ const SessionForm = ({ onClose, sessionData = null }) => {
 
   const mutation = useMutation({
     mutationFn: values => (sessionData ? updateSession(sessionData.id, values) : createSession(values)),
-    onSuccess: () => {
-      queryClient.invalidateQueries(['sessions']);
+
+    onSuccess: async newSession => {
+      await queryClient.cancelQueries({ queryKey: ['sessions'] });
+
+      const queryCache = queryClient.getQueryCache();
+      const sessionQueries = queryCache.findAll({ queryKey: ['sessions'] });
+
+      for (const query of sessionQueries) {
+        const oldData = query.state.data;
+
+        if (Array.isArray(oldData)) {
+          if (sessionData) {
+            queryClient.setQueryData(
+              query.queryKey,
+              oldData.map(s => (s.id === sessionData.id ? newSession : s))
+            );
+          } else {
+            queryClient.setQueryData(query.queryKey, [...oldData, newSession]);
+          }
+        }
+      }
     },
   });
 
