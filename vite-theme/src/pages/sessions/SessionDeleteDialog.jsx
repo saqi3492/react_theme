@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import { Button, DialogContent, DialogActions, Typography, Divider } from '@mui/material';
 import AppDialog from '@/components/AppDialog';
+import { Button, DialogActions, DialogContent, Divider, Typography } from '@mui/material';
+import { useState } from 'react';
 
 const SessionDeleteDialog = ({ closeDialog, handleDelete }) => {
   const [loading, setLoading] = useState(false);
@@ -11,7 +11,6 @@ const SessionDeleteDialog = ({ closeDialog, handleDelete }) => {
     closeDialog();
     setLoading(false);
   };
-
   return (
     <AppDialog onClose={closeDialog}>
       <DialogContent sx={{ p: '30px 10px', textAlign: 'center' }}>

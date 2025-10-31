@@ -1,23 +1,19 @@
-import { useEffect, useState } from 'react';
-import { fetchSessions } from './SessionsApiCalls';
-import { AgGridReact } from 'ag-grid-react';
 import { defaultColDef, sessionsColDefs } from '@/utils/constants';
-import ActionRenderer from './ActionRenderer';
+import { useQuery } from '@tanstack/react-query';
+import { AgGridReact } from 'ag-grid-react';
 import { useSelector } from 'react-redux';
-
+import ActionRenderer from './ActionRenderer';
+import { fetchSessions } from './SessionsApiCalls';
 const renderers = { ActionRenderer };
 
 const SessionsTable = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const sessions = useSelector(state => state.Session.sessions);
-
-  useEffect(() => {
-    (async () => {
-      setIsLoading(true);
-      await fetchSessions();
-      setIsLoading(false);
-    })();
-  }, []);
+  const searchText = useSelector(state => state.Session.searchSessionText);
+  const { data: sessions = [], isLoading } = useQuery({
+    queryKey: ['sessions', searchText],
+    queryFn: () => fetchSessions(searchText),
+    staleTime: 5 * 60 * 1000, // cache for 5 minutes
+    refetchOnWindowFocus: false,
+  });
 
   return (
     <div style={{ flex: 1 }}>

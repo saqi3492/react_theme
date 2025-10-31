@@ -1,11 +1,11 @@
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import PeopleIcon from '@mui/icons-material/People';
 import AssignmentIcon from '@mui/icons-material/Assignment';
-import TableChartIcon from '@mui/icons-material/TableChart';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import ChatIcon from '@mui/icons-material/Chat';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import DashboardIcon from '@mui/icons-material/Dashboard';
 import LockIcon from '@mui/icons-material/Lock';
+import PeopleIcon from '@mui/icons-material/People';
+import TableChartIcon from '@mui/icons-material/TableChart';
 
 // Define the navigation items with icons
 export const navItems = [
@@ -17,6 +17,11 @@ export const navItems = [
     name: 'Sessions',
     path: '/sessions',
     icon: DashboardIcon,
+  },
+  {
+    name: 'Training',
+    path: '/training',
+    icon: TableChartIcon,
   },
   {
     type: 'label',

@@ -1,9 +1,10 @@
+import AppDialog from '@/components/AppDialog';
+import InputDropdownField from '@/shared/InputDropdownField';
+import InputField from '@/shared/InputField';
+import { Box, Button, Typography } from '@mui/material';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { Box, Button, Typography } from '@mui/material';
-import AppDialog from '@/components/AppDialog';
-import InputField from '@/shared/InputField';
-import InputDropdownField from '@/shared/InputDropdownField';
 import { createSession, updateSession } from './SessionsApiCalls';
 
 const validationSchema = Yup.object().shape({
@@ -19,6 +20,34 @@ const durationOptions = [
 ];
 
 const SessionForm = ({ onClose, sessionData = null }) => {
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: values => (sessionData ? updateSession(sessionData.id, values) : createSession(values)),
+
+    onSuccess: async newSession => {
+      await queryClient.cancelQueries({ queryKey: ['sessions'] });
+
+      const queryCache = queryClient.getQueryCache();
+      const sessionQueries = queryCache.findAll({ queryKey: ['sessions'] });
+
+      for (const query of sessionQueries) {
+        const oldData = query.state.data;
+
+        if (Array.isArray(oldData)) {
+          if (sessionData) {
+            queryClient.setQueryData(
+              query.queryKey,
+              oldData.map(s => (s.id === sessionData.id ? newSession : s))
+            );
+          } else {
+            queryClient.setQueryData(query.queryKey, [...oldData, newSession]);
+          }
+        }
+      }
+    },
+  });
+
   const formik = useFormik({
     initialValues: {
       patientName: sessionData?.patientName || '',
@@ -26,11 +55,8 @@ const SessionForm = ({ onClose, sessionData = null }) => {
     },
     validationSchema: validationSchema,
     onSubmit: async values => {
-      if (sessionData) {
-        await updateSession(sessionData.id, values);
-      } else {
-        await createSession(values);
-      }
+      await mutation.mutateAsync(values);
+
       onClose();
     },
   });
@@ -47,7 +73,7 @@ const SessionForm = ({ onClose, sessionData = null }) => {
 
           <InputDropdownField formik={formik} items={durationOptions} name="duration" label="Duration" />
 
-          <Button size="small" type="submit" fullWidth variant="contained" sx={{ my: 1 }} loading={formik.isSubmitting}>
+          <Button size="small" type="submit" fullWidth variant="contained" sx={{ my: 1 }} loading={mutation.isPending}>
             {sessionData ? 'Update Session' : 'Create Session'}
           </Button>
         </form>
