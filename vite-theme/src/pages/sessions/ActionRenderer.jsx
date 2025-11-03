@@ -1,16 +1,19 @@
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import OpenInNewIcon from '@mui/icons-material/OpenInNew';
-import { IconButton, Tooltip } from '@mui/material';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { IconButton, Tooltip } from '@mui/material';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import SessionDeleteDialog from './SessionDeleteDialog';
+import EditIcon from '@mui/icons-material/Edit';
+import { useNavigate } from 'react-router-dom';
 import SessionForm from './SessionForm';
 import { deleteSession } from './SessionsApiCalls';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useDispatch } from 'react-redux';
+import { setSessionsAction } from '@/store/reducers/sessionSlice';
 
 const ActionRenderer = ({ data }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const queryClient = useQueryClient();
   const [open, setOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
@@ -32,6 +35,7 @@ const ActionRenderer = ({ data }) => {
             query.queryKey,
             oldData.filter(session => session.id !== id)
           );
+          dispatch(setSessionsAction(oldData.filter(session => session.id !== id)));
         }
       }
     },

@@ -1,12 +1,12 @@
-import InputField from '@/shared/InputField';
-import { setSearchSessionText } from '@/store/reducers/sessionSlice';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import { Box, Stack, Typography } from '@mui/material';
-import { useFormik } from 'formik';
-import { debounce } from 'lodash';
-import { useEffect, useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useState, useRef, useEffect } from 'react';
+import { Typography, Stack, Box } from '@mui/material';
 import CreateSession from './SessionForm';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import { debounce } from 'lodash';
+import InputField from '@/shared/InputField';
+import { useFormik } from 'formik';
+import { useDispatch } from 'react-redux';
+import { setSearchSessionText } from '@/store/reducers/sessionSlice';
 
 const SessionHeader = () => {
   const dispatch = useDispatch();

@@ -1,11 +1,13 @@
-import AppDialog from '@/components/AppDialog';
-import InputDropdownField from '@/shared/InputDropdownField';
-import InputField from '@/shared/InputField';
-import { Box, Button, Typography } from '@mui/material';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { Box, Button, Typography } from '@mui/material';
+import AppDialog from '@/components/AppDialog';
+import InputField from '@/shared/InputField';
+import InputDropdownField from '@/shared/InputDropdownField';
 import { createSession, updateSession } from './SessionsApiCalls';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useDispatch } from 'react-redux';
+import { setSessionsAction } from '@/store/reducers/sessionSlice';
 
 const validationSchema = Yup.object().shape({
   patientName: Yup.string().required('Patient Name is required'),
@@ -21,6 +23,7 @@ const durationOptions = [
 
 const SessionForm = ({ onClose, sessionData = null }) => {
   const queryClient = useQueryClient();
+  const dispatch = useDispatch();
 
   const mutation = useMutation({
     mutationFn: values => (sessionData ? updateSession(sessionData.id, values) : createSession(values)),
@@ -43,6 +46,7 @@ const SessionForm = ({ onClose, sessionData = null }) => {
           } else {
             queryClient.setQueryData(query.queryKey, [...oldData, newSession]);
           }
+          dispatch(setSessionsAction(newSession));
         }
       }
     },
