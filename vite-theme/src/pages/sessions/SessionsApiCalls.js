@@ -89,7 +89,6 @@ export const fetchSessions = async (filter = '') => {
   };
 
   try {
-    console.log('.....');
     await new Promise(resolve => setTimeout(resolve, 1000));
     // const response = await axios.post('/sessions/list', { page_size: 2000 });
 
