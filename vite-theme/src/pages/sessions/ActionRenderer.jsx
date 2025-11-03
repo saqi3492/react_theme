@@ -55,7 +55,7 @@ const ActionRenderer = ({ data }) => {
       </Tooltip>
       <Tooltip title="Delete">
         <IconButton onClick={() => setOpen(true)} disabled={mutation.isSuccess}>
-          {mutation.isLoading ? '...' : <DeleteIcon />}
+          <DeleteIcon />
         </IconButton>
       </Tooltip>
       {open ? <SessionDeleteDialog closeDialog={() => setOpen(false)} handleDelete={handleDelete} /> : null}
