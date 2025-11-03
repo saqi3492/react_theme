@@ -77,7 +77,7 @@ const SessionForm = ({ onClose, sessionData = null }) => {
 
           <InputDropdownField formik={formik} items={durationOptions} name="duration" label="Duration" />
 
-          <Button size="small" type="submit" fullWidth variant="contained" sx={{ my: 1 }} loading={mutation.isPending}>
+          <Button size="small" type="submit" fullWidth variant="contained" sx={{ my: 1 }} loading={formik.isSubmitting}>
             {sessionData ? 'Update Session' : 'Create Session'}
           </Button>
         </form>
