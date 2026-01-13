@@ -26,7 +26,7 @@ const Login = () => {
       password: Yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
     }),
     onSubmit: async () => {
-      const isSuccess = await handleSignIn();
+      const isSuccess = await handleSignIn({ email: formik.values.email, password: formik.values.password });
       if (isSuccess) navigate('/dashboard');
     },
   });
