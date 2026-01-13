@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, DialogContent, DialogActions, Typography, Divider } from '@mui/material';
+import { Button, DialogActions, DialogContent, Divider, Typography } from '@mui/material';
 import AppDialog from '@/components/AppDialog';
 
 const SessionDeleteDialog = ({ closeDialog, handleDelete }) => {

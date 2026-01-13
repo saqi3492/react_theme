@@ -7,7 +7,6 @@ import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import ChatIcon from '@mui/icons-material/Chat';
 import LockIcon from '@mui/icons-material/Lock';
 
-// Define the navigation items with icons
 export const navItems = [
   {
     type: 'label',
@@ -17,6 +16,11 @@ export const navItems = [
     name: 'Sessions',
     path: '/sessions',
     icon: DashboardIcon,
+  },
+  {
+    name: 'Training',
+    path: '/training',
+    icon: TableChartIcon,
   },
   {
     type: 'label',

@@ -5,6 +5,9 @@ import AppDialog from '@/components/AppDialog';
 import InputField from '@/shared/InputField';
 import InputDropdownField from '@/shared/InputDropdownField';
 import { createSession, updateSession } from './SessionsApiCalls';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useDispatch } from 'react-redux';
+import { setSessionsAction } from '@/store/reducers/sessionSlice';
 
 const validationSchema = Yup.object().shape({
   patientName: Yup.string().required('Patient Name is required'),
@@ -19,6 +22,36 @@ const durationOptions = [
 ];
 
 const SessionForm = ({ onClose, sessionData = null }) => {
+  const queryClient = useQueryClient();
+  const dispatch = useDispatch();
+
+  const mutation = useMutation({
+    mutationFn: values => (sessionData ? updateSession(sessionData.id, values) : createSession(values)),
+
+    onSuccess: async newSession => {
+      await queryClient.cancelQueries({ queryKey: ['sessions'] });
+
+      const queryCache = queryClient.getQueryCache();
+      const sessionQueries = queryCache.findAll({ queryKey: ['sessions'] });
+
+      for (const query of sessionQueries) {
+        const oldData = query.state.data;
+
+        if (Array.isArray(oldData)) {
+          if (sessionData) {
+            queryClient.setQueryData(
+              query.queryKey,
+              oldData.map(s => (s.id === sessionData.id ? newSession : s))
+            );
+          } else {
+            queryClient.setQueryData(query.queryKey, [...oldData, newSession]);
+          }
+          dispatch(setSessionsAction(newSession));
+        }
+      }
+    },
+  });
+
   const formik = useFormik({
     initialValues: {
       patientName: sessionData?.patientName || '',
@@ -26,11 +59,8 @@ const SessionForm = ({ onClose, sessionData = null }) => {
     },
     validationSchema: validationSchema,
     onSubmit: async values => {
-      if (sessionData) {
-        await updateSession(sessionData.id, values);
-      } else {
-        await createSession(values);
-      }
+      await mutation.mutateAsync(values);
+
       onClose();
     },
   });

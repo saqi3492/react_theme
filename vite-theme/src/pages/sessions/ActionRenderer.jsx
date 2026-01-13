@@ -7,14 +7,42 @@ import EditIcon from '@mui/icons-material/Edit';
 import { useNavigate } from 'react-router-dom';
 import SessionForm from './SessionForm';
 import { deleteSession } from './SessionsApiCalls';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useDispatch } from 'react-redux';
+import { setSessionsAction } from '@/store/reducers/sessionSlice';
 
 const ActionRenderer = ({ data }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const queryClient = useQueryClient();
   const [open, setOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
 
+  const mutation = useMutation({
+    mutationFn: id => deleteSession(id),
+    onSuccess: async (_, id) => {
+      await queryClient.cancelQueries({ queryKey: ['sessions'] });
+
+      const queryCache = queryClient.getQueryCache();
+      const sessionQueries = queryCache.findAll({ queryKey: ['sessions'] });
+      const previousData = new Map();
+
+      for (const query of sessionQueries) {
+        const oldData = query.state.data;
+        if (oldData && Array.isArray(oldData) && oldData.some(session => session.id === id)) {
+          previousData.set(query.queryKey, oldData);
+          queryClient.setQueryData(
+            query.queryKey,
+            oldData.filter(session => session.id !== id)
+          );
+          dispatch(setSessionsAction(oldData.filter(session => session.id !== id)));
+        }
+      }
+    },
+  });
+
   const handleDelete = async () => {
-    await deleteSession(data.sessionId);
+    await mutation.mutateAsync(data.id);
   };
 
   return (
@@ -29,8 +57,8 @@ const ActionRenderer = ({ data }) => {
           <EditIcon />
         </IconButton>
       </Tooltip>
-      <Tooltip title="Delete" placement="right">
-        <IconButton onClick={() => setOpen(true)}>
+      <Tooltip title="Delete">
+        <IconButton onClick={() => setOpen(true)} disabled={mutation.isSuccess}>
           <DeleteIcon />
         </IconButton>
       </Tooltip>
