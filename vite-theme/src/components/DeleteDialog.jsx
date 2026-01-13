@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Button, DialogContent, DialogActions, Typography, Divider } from '@mui/material';
 import AppDialog from '@/components/AppDialog';
 
-const SessionDeleteDialog = ({ closeDialog, handleDelete }) => {
+const DeleteDialog = ({ closeDialog, handleDelete, Value }) => {
   const [loading, setLoading] = useState(false);
 
   const onDelete = async () => {
@@ -18,7 +18,7 @@ const SessionDeleteDialog = ({ closeDialog, handleDelete }) => {
         <Typography variant="h6" gutterBottom>
           Confirmation
         </Typography>
-        <Typography variant="body2">Are you sure you want to delete this session?</Typography>
+        <Typography variant="body2">Are you sure you want to delete this {Value}?</Typography>
       </DialogContent>
       <Divider sx={{ mb: 2 }} />
       <DialogActions>
@@ -33,4 +33,4 @@ const SessionDeleteDialog = ({ closeDialog, handleDelete }) => {
   );
 };
 
-export default SessionDeleteDialog;
+export default DeleteDialog;

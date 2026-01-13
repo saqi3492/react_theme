@@ -33,3 +33,26 @@ export const sessionsColDefs = [
     cellRenderer: 'ActionRenderer',
   },
 ];
+export const TrainingColDefs = [
+  {
+    headerName: 'Training Name',
+    colId: 'trainingName',
+    field: 'trainingName',
+  },
+  {
+    headerName: 'Date & Time',
+    colId: 'createdAt',
+    field: 'createdAt',
+  },
+  {
+    headerName: 'Duration',
+    colId: 'duration',
+    field: 'duration',
+  },
+  {
+    headerName: 'Action',
+    colId: 'action',
+    field: 'TrainingId',
+    cellRenderer: 'ActionRenderer',
+  },
+];

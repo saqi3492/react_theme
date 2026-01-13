@@ -2,7 +2,7 @@ import { useState } from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { IconButton, Tooltip } from '@mui/material';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
-import SessionDeleteDialog from './SessionDeleteDialog';
+import DeleteDialog from '../../components/DeleteDialog';
 import EditIcon from '@mui/icons-material/Edit';
 import { useNavigate } from 'react-router-dom';
 import SessionForm from './SessionForm';
@@ -34,7 +34,7 @@ const ActionRenderer = ({ data }) => {
           <DeleteIcon />
         </IconButton>
       </Tooltip>
-      {open ? <SessionDeleteDialog closeDialog={() => setOpen(false)} handleDelete={handleDelete} /> : null}
+      {open ? <DeleteDialog closeDialog={() => setOpen(false)} handleDelete={handleDelete} Value={'session'} /> : null}
       {isEditOpen ? <SessionForm onClose={() => setIsEditOpen(false)} sessionData={data} /> : null}
     </>
   );

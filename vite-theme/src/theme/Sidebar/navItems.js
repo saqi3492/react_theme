@@ -19,6 +19,11 @@ export const navItems = [
     icon: DashboardIcon,
   },
   {
+    name: 'Training',
+    path: '/training',
+    icon: TableChartIcon,
+  },
+  {
     type: 'label',
     label: 'Management',
   },
