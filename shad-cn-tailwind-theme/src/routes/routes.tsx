@@ -3,8 +3,6 @@ import { Navigate, useRoutes } from 'react-router-dom';
 import AuthGuard from './AuthGuard';
 import PublicGuard from './PublicGuard';
 
-const MainLayout = lazy(() => import('@/components/layout/MainLayout'));
-const SimpleLayout = lazy(() => import('@/theme/simpleLayout/SimpleLayout'));
 const Login = lazy(() => import('@/pages/auth/Login'));
 const Signup = lazy(() => import('@/pages/auth/Signup'));
 const Dashboard = lazy(() => import('@/pages/dashboard/Dashboard'));
@@ -13,11 +11,7 @@ const Routes = () => {
   const routes = useRoutes([
     {
       path: '/',
-      element: (
-        <AuthGuard>
-          <MainLayout />
-        </AuthGuard>
-      ),
+      element: <AuthGuard />,
       children: [
         { index: true, element: <Navigate to="/dashboard" replace /> },
         { path: 'dashboard', element: <Dashboard /> },
@@ -32,11 +26,7 @@ const Routes = () => {
     },
     {
       path: '/',
-      element: (
-        <PublicGuard>
-          <SimpleLayout />
-        </PublicGuard>
-      ),
+      element: <PublicGuard />,
       children: [
         { path: 'login', element: <Login /> },
         { path: 'signup', element: <Signup /> },

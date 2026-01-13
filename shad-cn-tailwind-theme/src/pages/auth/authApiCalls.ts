@@ -1,72 +1,75 @@
-import { AxiosError } from 'axios';
+import axios, { AxiosError } from 'axios';
 import { handleCatchMessages, setLocalStorageItem } from '@/utils/helper';
 import { showToast } from '../../lib/toast';
-import { setHideBeatLoader, setShowBeatLoader } from '@/store/slices/alertsSlice';
 import { dispatch } from '@/store/store';
+import { setUser } from '@/store/slices/userSlice';
 
-export const API_ENDPOINTS = {
-  LOGOUT: '/auth/logout',
+const getFormattedUser = (userData: any) => {
+  return {
+    id: userData.id,
+    name: userData.fullName,
+    email: userData.email,
+  };
 };
 
-interface ApiResponse {
-  status: boolean;
-  message?: string;
-  errors?: Record<string, string[]>;
-}
+export const handleSignIn = async (payload: { email: string; password: string }): Promise<boolean> => {
+  try {
+    const response = await axios.post('/api/login', payload);
 
-const delay = (ms: number) =>
-  new Promise(resolve => {
-    setTimeout(resolve, ms);
-  });
+    if (response.status && response.data?.token?.token) {
+      setLocalStorageItem('authentication_token', response.data.token.token);
+      dispatch(setUser(getFormattedUser(response.data.user)));
+      return true;
+    }
+    showToast.error('Login failed! Please check your credentials and try again.');
+    return false;
+  } catch (error: any) {
+    handleCatchMessages(error);
+    return false;
+  }
+};
+
+export const handleSignUp = async (payload: { fullName: string; email: string; password: string }): Promise<boolean> => {
+  try {
+    const response = await axios.post('/api/register', payload);
+
+    if (response.status && response.data?.token?.token) {
+      setLocalStorageItem('authentication_token', response.data.token.token);
+      dispatch(setUser(getFormattedUser(response.data.user)));
+      return true;
+    }
+    showToast.error('Sign up failed! Please check your credentials and try again.');
+    return false;
+  } catch (error: any) {
+    handleCatchMessages(error);
+    return false;
+  }
+};
+
+export const fetchUserByAuthToken = async (): Promise<boolean> => {
+  try {
+    const response = await axios.get('/api/me');
+    if (response.status && response.data) {
+      dispatch(setUser(getFormattedUser(response.data)));
+      return true;
+    }
+    return false;
+  } catch (error) {
+    handleCatchMessages(error as AxiosError<{ message?: string }>);
+    return false;
+  }
+};
 
 export const logoutUser = async (): Promise<boolean> => {
   try {
-    await delay(2000);
-
-    const response: ApiResponse = { status: true, message: 'Logged out successfully' };
+    const response = { status: true }; //await axios.post('/api/logout');
 
     if (response.status) {
-      showToast.success('Logged Out Successfully!');
       return true;
     }
     return false;
   } catch (error: unknown) {
     handleCatchMessages(error as AxiosError<{ message?: string }>);
     return false;
-  }
-};
-
-export const handleSignIn = async (): Promise<boolean> => {
-  dispatch(setShowBeatLoader());
-  await delay(1000);
-
-  try {
-    // const response = await axios.post('/login', {
-    //   email: 'adnanafzal7111@gmail.com',
-    //   password: 'experts@123',
-    // });
-    const response = {
-      status: true,
-      data: {
-        token: { type: 'bearer', token: 'oat_MjU5.enk2YzNxb' },
-        id: 41,
-        fullName: 'Saqlain Ali',
-        email: 'imhassan66@gmail.com',
-      },
-      message: 'Logged In Successfully',
-    };
-
-    if (response.status && response.data?.token?.token) {
-      setLocalStorageItem('authentication_token', response.data.token.token);
-      showToast.success('Login successful! Welcome back.');
-
-      return true;
-    }
-    return false;
-  } catch (error: any) {
-    handleCatchMessages(error);
-    return false;
-  } finally {
-    dispatch(setHideBeatLoader());
   }
 };
