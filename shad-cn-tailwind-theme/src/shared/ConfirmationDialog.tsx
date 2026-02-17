@@ -36,7 +36,7 @@ export default ConfirmationDialog;
 export interface ConfirmationDialogProps {
   isOpen: boolean;
   isLoading?: boolean;
-  onOpenChange: (open: boolean) => void;
+  onOpenChange: (_open: boolean) => void;
   onConfirm: () => void;
   title: string;
   description: string;
