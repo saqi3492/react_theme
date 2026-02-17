@@ -3,7 +3,6 @@ import { Navigate, useRoutes } from 'react-router-dom';
 import { ClimbingLoader } from '@/theme/Loader/Loader';
 import AuthGuard from '@/components/AuthGuard';
 import PublicLayout from '@/components/PublicLayout';
-import MainTheme from '@/theme/mainTheme/MainTheme';
 
 const Sessions = lazy(() => import('@/pages/sessions'));
 const Training = lazy(() => import('@/pages/training'));
@@ -15,11 +14,7 @@ const ForgotPassword = lazy(() => import('@/pages/resetPassword/ForgotPassword')
 const Routes = () => {
   const routes = useRoutes([
     {
-      element: (
-        <AuthGuard>
-          <MainTheme />
-        </AuthGuard>
-      ),
+      element: <AuthGuard />,
       children: [
         { element: <Navigate to="/sessions" />, index: true },
         { path: '/sessions', element: <Sessions /> },

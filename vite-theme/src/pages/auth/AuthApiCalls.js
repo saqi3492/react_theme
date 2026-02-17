@@ -1,8 +1,8 @@
-import { dispatch, getState } from '@/store/store';
+import { dispatch } from '@/store/store';
 import { setSnackbarObj } from '@/store/reducers/alertsSlice';
 // import axios from 'axios';
 import { setUserDetail } from '@/store/reducers/userSlice';
-import { getLocalStorageItem, handleCatchError, handleErrorMessages, handleLogout, setItemInLocalStorage } from '@/utils/helpers';
+import { handleCatchError, handleErrorMessages, setItemInLocalStorage } from '@/utils/helpers';
 
 export const resetPassword = async () => {};
 
@@ -64,25 +64,19 @@ export const handleSignIn = async () => {
   }
 };
 
-export const getUserByAuthToken = async () => {
-  if (getState().User.userDetail) return true; // AuthGuard's useEffect execute only once still this is needed otherwise following call will run again after sign-in/sign-up
-  let isValidUser = false;
+export const fetchUserByAuthToken = async () => {
   try {
-    if (getLocalStorageItem('authentication_token')) {
-      // const response = await axios.get('/me');
-      const response = { status: true, data: { id: 41, fullName: 'Saqlain Ali', email: 'imhassan66@gmail.com' }, message: '' };
-      if (response.status && response.data) {
-        formatAndSetUserDetail(response.data);
-        isValidUser = true;
-        return true;
-      } else {
-        handleErrorMessages(response.errors);
-      }
+    // const response = await axios.get('/api/me');
+    const response = {
+      status: true,
+      data: { id: 41, fullName: 'Saqlain Ali', email: 'imhassan66@gmail.com' },
+    };
+    if (response.status && response.data) {
+      formatAndSetUserDetail(response.data);
+      return true;
     }
   } catch (error) {
     handleCatchError(error);
-  } finally {
-    if (!isValidUser) handleLogout();
   }
 };
 
