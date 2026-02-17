@@ -5,6 +5,7 @@ import SharedButton from '@/shared/GenericButton';
 import InputField from '@/shared/InputField';
 import { createUserApi, updateUserApi } from './usersApiCalls';
 import type { User } from '@/store/slices/usersSlice';
+import { USER_ROLE_OPTIONS, USER_ROLE_LABELS, UserRole } from '@/types/userRole';
 
 interface UserFormProps {
   isOpen: boolean;
@@ -15,16 +16,14 @@ interface UserFormProps {
 interface UserFormValues {
   name: string;
   email: string;
-  role: string;
+  role: UserRole | '';
 }
 
 const validationSchema = Yup.object({
   name: Yup.string().min(2, 'Name must be at least 2 characters').required('Name is required'),
   email: Yup.string().email('Invalid email address').required('Email is required'),
-  role: Yup.string().required('Role is required'),
+  role: Yup.string().oneOf(USER_ROLE_OPTIONS, 'Invalid role selected').required('Role is required'),
 });
-
-const roleOptions = ['Admin', 'User', 'Manager', 'Editor'];
 
 const UserForm = ({ isOpen, onClose, userData }: UserFormProps) => {
   const formik = useFormik<UserFormValues>({
@@ -36,10 +35,21 @@ const UserForm = ({ isOpen, onClose, userData }: UserFormProps) => {
     validationSchema,
     enableReinitialize: true,
     onSubmit: async values => {
+      if (!values.role) {
+        formik.setFieldError('role', 'Role is required');
+        return;
+      }
+
+      const userPayload = {
+        name: values.name,
+        email: values.email,
+        role: values.role,
+      };
+
       if (userData) {
-        await updateUserApi(userData.id, values);
+        await updateUserApi(userData.id, userPayload);
       } else {
-        await createUserApi(values);
+        await createUserApi(userPayload);
       }
       onClose();
       formik.resetForm();
@@ -68,18 +78,16 @@ const UserForm = ({ isOpen, onClose, userData }: UserFormProps) => {
             <select
               id="role"
               {...formik.getFieldProps('role')}
-              className="border-input bg-background ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring flex h-10 w-full rounded-xl border px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+              className="border-input bg-background ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring flex h-10 w-full rounded-xl border px-3 py-2 text-sm focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
             >
               <option value="">Select a role</option>
-              {roleOptions.map(role => (
+              {USER_ROLE_OPTIONS.map(role => (
                 <option key={role} value={role}>
-                  {role}
+                  {USER_ROLE_LABELS[role]}
                 </option>
               ))}
             </select>
-            {formik.touched.role && formik.errors.role && (
-              <div className="mt-1 text-sm text-red-500">{formik.errors.role}</div>
-            )}
+            {formik.touched.role && formik.errors.role && <div className="mt-1 text-sm text-red-500">{formik.errors.role}</div>}
           </div>
           <DialogFooter>
             <SharedButton type="button" variant="outline" onClick={handleClose}>

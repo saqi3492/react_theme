@@ -4,6 +4,7 @@ import { setUsers, createUser, updateUser, deleteUser } from '@/store/slices/use
 import { handleCatchMessages } from '@/utils/helper'; // Used in commented axios examples
 import { showToast } from '@/lib/toast';
 import type { User } from '@/store/slices/usersSlice';
+import { UserRoleId } from '@/types/userRole';
 // import axios from 'axios';
 
 // Dummy data
@@ -12,7 +13,7 @@ const dummyUsers: User[] = [
     id: 1,
     name: 'John Doe',
     email: 'john.doe@example.com',
-    role: 'Admin',
+    role: UserRoleId.Admin,
     createdAt: '2024-01-15T10:30:00.000Z',
     updatedAt: '2024-01-15T10:30:00.000Z',
   },
@@ -20,7 +21,7 @@ const dummyUsers: User[] = [
     id: 2,
     name: 'Jane Smith',
     email: 'jane.smith@example.com',
-    role: 'User',
+    role: UserRoleId.User,
     createdAt: '2024-01-16T11:20:00.000Z',
     updatedAt: '2024-01-16T11:20:00.000Z',
   },
@@ -28,7 +29,7 @@ const dummyUsers: User[] = [
     id: 3,
     name: 'Bob Johnson',
     email: 'bob.johnson@example.com',
-    role: 'Manager',
+    role: UserRoleId.Manager,
     createdAt: '2024-01-17T09:15:00.000Z',
     updatedAt: '2024-01-17T09:15:00.000Z',
   },
@@ -98,12 +99,16 @@ export const updateUserApi = async (id: number, userData: Partial<Omit<User, 'id
     const state = getState();
     const currentUser = state.users.users.find((u: User) => u.id === id);
 
+    if (!currentUser) {
+      throw new Error('User not found');
+    }
+
     const updatedUser: User = {
       id,
-      name: userData.name || currentUser?.name || '',
-      email: userData.email || currentUser?.email || '',
-      role: userData.role || currentUser?.role || '',
-      createdAt: currentUser?.createdAt || new Date().toISOString(),
+      name: userData.name || currentUser.name || '',
+      email: userData.email || currentUser.email || '',
+      role: userData.role || currentUser.role,
+      createdAt: currentUser.createdAt,
       updatedAt: new Date().toISOString(),
     };
 

@@ -1,10 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { UserRole } from '@/types/userRole';
 
 export interface User {
   id: number;
   name: string;
   email: string;
-  role: string;
+  role: UserRole;
   createdAt: string;
   updatedAt: string;
 }

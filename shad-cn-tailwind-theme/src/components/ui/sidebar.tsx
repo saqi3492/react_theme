@@ -24,9 +24,9 @@ const SIDEBAR_KEYBOARD_SHORTCUT = 'b';
 type SidebarContextProps = {
   state: 'expanded' | 'collapsed';
   open: boolean;
-  setOpen: (_open: boolean) => void;
+  setOpen: (open: boolean) => void;
   openMobile: boolean;
-  setOpenMobile: (_open: boolean) => void;
+  setOpenMobile: (pen: boolean) => void;
   isMobile: boolean;
   toggleSidebar: () => void;
 };
@@ -53,7 +53,7 @@ function SidebarProvider({
 }: React.ComponentProps<'div'> & {
   defaultOpen?: boolean;
   open?: boolean;
-  onOpenChange?: (_open: boolean) => void;
+  onOpenChange?: (open: boolean) => void;
 }) {
   const isMobile = useIsMobile();
   const [openMobile, setOpenMobile] = React.useState(false);
@@ -63,8 +63,8 @@ function SidebarProvider({
   const [_open, _setOpen] = React.useState(defaultOpen);
   const open = openProp ?? _open;
   const setOpen = React.useCallback(
-    (newValue: boolean | ((prevValue: boolean) => boolean)) => {
-      const openState = typeof newValue === 'function' ? newValue(open) : newValue;
+    (value: boolean | ((value: boolean) => boolean)) => {
+      const openState = typeof value === 'function' ? value(open) : value;
       if (setOpenProp) {
         setOpenProp(openState);
       } else {
@@ -509,7 +509,7 @@ function SidebarMenuSkeleton({
 }: React.ComponentProps<'div'> & {
   showIcon?: boolean;
 }) {
-  // Fixed width for skeleton (using a stable value instead of random)
+  // Random width between 50 to 90%.
   const width = React.useMemo(() => {
     // Use a stable value based on component instance
     return '70%';
