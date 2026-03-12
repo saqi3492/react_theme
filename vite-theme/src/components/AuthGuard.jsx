@@ -21,7 +21,7 @@ const AuthGuard = () => {
   }, [authToken]);
 
   if (!authToken) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/sign-in" replace />;
   }
 
   return isVerifying ? <ClimbingLoader /> : <MainTheme />;
