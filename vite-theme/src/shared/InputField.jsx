@@ -3,7 +3,7 @@ import { TextField, Typography } from '@mui/material';
 const InputField = ({ formik, name, label, placeholder, onChange, type = 'text' }) => {
   return (
     <>
-      <Typography fontSize={14} fontWeight="500">
+      <Typography sx={{ fontSize: 14, fontWeight: 500 }}>
         {label}
       </Typography>
       <TextField

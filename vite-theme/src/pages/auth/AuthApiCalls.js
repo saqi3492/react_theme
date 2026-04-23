@@ -1,28 +1,38 @@
 import { dispatch } from '@/store/store';
 import { setSnackbarObj } from '@/store/reducers/alertsSlice';
-// import axios from 'axios';
+import axios from 'axios';
 import { setUserDetail } from '@/store/reducers/userSlice';
 import { handleCatchError, handleErrorMessages, setItemInLocalStorage } from '@/utils/helpers';
 
-export const resetPassword = async () => {};
-
-export const forgotPassword = async () => {};
-
-export const handleSignUp = async () => {
+export const resetPassword = async (token, newPassword) => {
   try {
-    // const response = await axios.post('/register', {
-    //   firstName: userDetails.firstName,
-    //   lastName: userDetails.lastName,
-    //   email: userDetails.email,
-    //   password: userDetails.password,
-    //   confirmPassword: userDetails.confirmPassword,
-    //   zipCode: userDetails.zipCode,
-    //   phoneNumber: userDetails.phone,
-    //   countryId: userDetails.country,
-    //   speciality_Ids: [userDetails.speciality],
-    // });
+    const response = await axios.post('/reset-password', { token, newPassword });
+    if (response.status) {
+      dispatch(setSnackbarObj({ message: 'Password reset successful. Please login with your new password.', severity: 'success' }));
+      return true;
+    }
+    handleErrorMessages(response.errors);
+  } catch (error) {
+    handleCatchError(error);
+  }
+};
 
-    const response = { status: true, data: { token: { token: 'oat_MjU5.enk2YzNx' } } };
+export const forgotPassword = async email => {
+  try {
+    const response = await axios.post('/forgot-password', { email });
+    if (response.status) {
+      dispatch(setSnackbarObj({ message: 'Password reset email sent. Please check your email.', severity: 'success' }));
+      return true;
+    }
+    handleErrorMessages(response.errors);
+  } catch (error) {
+    handleCatchError(error);
+  }
+};
+
+export const handleSignUp = async userDetails => {
+  try {
+    const response = await axios.post('/register', userDetails);
 
     if (response.status && response.data?.token?.token) {
       dispatch(setSnackbarObj({ message: 'Sign-up successful. Thank you for joining!', severity: 'success' }));
@@ -40,19 +50,9 @@ const formatAndSetUserDetail = data => {
   dispatch(setUserDetail({ id: data.id, name: data.fullName, email: data.email }));
 };
 
-export const handleSignIn = async () => {
+export const handleSignIn = async userDetails => {
   try {
-    // const response = await axios.post('/login', { email: userDetails.email, password: userDetails.password });
-    const response = {
-      status: true,
-      data: {
-        token: { type: 'bearer', token: 'oat_MjU5.enk2YzNxb' },
-        id: 41,
-        fullName: 'Saqlain Ali',
-        email: 'imhassan66@gmail.com',
-      },
-      message: 'Logged In Successfully',
-    };
+    const response = await axios.post('/login', { email: userDetails.email, password: userDetails.password });
     if (response.status && response.data?.token?.token) {
       setItemInLocalStorage('authentication_token', response.data.token.token);
       formatAndSetUserDetail(response.data);
@@ -66,11 +66,8 @@ export const handleSignIn = async () => {
 
 export const fetchUserByAuthToken = async () => {
   try {
-    // const response = await axios.get('/api/me');
-    const response = {
-      status: true,
-      data: { id: 41, fullName: 'Saqlain Ali', email: 'imhassan66@gmail.com' },
-    };
+    const response = await axios.get('/me');
+
     if (response.status && response.data) {
       formatAndSetUserDetail(response.data);
       return true;

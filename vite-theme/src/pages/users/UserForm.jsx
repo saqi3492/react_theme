@@ -62,7 +62,7 @@ const UserForm = ({ onClose, userData = null }) => {
   return (
     <AppDialog onClose={onClose} maxWidth="sm">
       <Box>
-        <Typography fontWeight="500" fontSize={24} gutterBottom>
+        <Typography gutterBottom sx={{ fontWeight: 500, fontSize: 24 }}>
           {userData ? 'Update User' : 'Create New User'}
         </Typography>
 

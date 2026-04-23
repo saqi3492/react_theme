@@ -10,8 +10,8 @@ const Training = lazy(() => import('@/pages/training'));
 const Incidents = lazy(() => import('@/pages/incidents'));
 const SignIn = lazy(() => import('@/pages/signIn/SignIn'));
 const SignUp = lazy(() => import('@/pages/signUp/SignUp'));
-const ForgotPassword = lazy(() => import('@/pages/resetPassword/ForgotPassword'));
-
+const ForgotPassword = lazy(() => import('@/pages/forgotPassword/ForgotPassword'));
+const ResetPassword = lazy(() => import('@/pages/resetPassword/ResetPassword'));
 const Routes = () => {
   const routes = useRoutes([
     {
@@ -30,6 +30,7 @@ const Routes = () => {
         { path: '/sign-in', element: <SignIn /> },
         { path: '/sign-up', element: <SignUp /> },
         { path: '/forgot-password', element: <ForgotPassword /> },
+        { path: '/reset-password', element: <ResetPassword /> },
       ],
     },
     { path: '*', element: <Navigate to="/" /> },

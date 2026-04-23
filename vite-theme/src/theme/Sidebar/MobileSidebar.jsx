@@ -15,8 +15,8 @@ const MobileSidebar = () => {
   };
 
   return (
-    <Drawer anchor="left" open={!sidebarCompact} onClose={closeSidebar} PaperProps={{ sx: { width: SIDEBAR_WIDTH } }}>
-      <Box height="100%" width="inherit" sx={{ position: 'fixed', overflow: 'hidden', zIndex: theme.zIndex.drawer + 3 }}>
+    <Drawer anchor="left" open={!sidebarCompact} onClose={closeSidebar} slotProps={{ paper: { sx: { width: SIDEBAR_WIDTH } } }}>
+      <Box sx={{ height: '100%', width: 'inherit', position: 'fixed', overflow: 'hidden', zIndex: theme.zIndex.drawer + 3 }}>
         <HeaderLogo />
         <MultiLevelMenu />
       </Box>

@@ -94,7 +94,7 @@ const SidebarAccordion = props => {
   return (
     <NavExpandRoot className="subMenu">
       <NavItemButton sx={{ padding: '0 12px', justifyContent: 'space-between' }} onClick={handleClick} active={hasActive ? 1 : 0}>
-        <Box pl="7px" display="flex" alignItems="center">
+        <Box sx={{ pl: '7px', display: 'flex', alignItems: 'center' }}>
           {icon && (
             <item.icon
               sx={{

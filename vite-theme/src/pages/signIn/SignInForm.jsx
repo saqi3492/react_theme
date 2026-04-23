@@ -20,31 +20,31 @@ const SignInForm = () => {
     validationSchema: validationSchema,
     onSubmit: async values => {
       const isSuccess = await handleSignIn(values);
-      if (isSuccess) navigate('/sessions', { replace: true });
+      if (isSuccess) navigate('/users', { replace: true });
     },
   });
 
   return (
     <Box sx={{ p: { xs: 5, lg: 12 }, width: '100%', maxWidth: '800px' }}>
-      <Typography fontWeight="500" fontSize={28} gutterBottom>
+      <Typography sx={{ fontWeight: '500', fontSize: '28px' }} gutterBottom>
         Welcome back
       </Typography>
-      <Typography fontWeight="400" fontSize={16} color="textSecondary" mb={3}>
+      <Typography sx={{ fontWeight: '400', fontSize: '16px', color: 'text.secondary', mb: 3 }}>
         Please sign-in to your account and start the adventure.
       </Typography>
 
       <form onSubmit={formik.handleSubmit} noValidate autoComplete="off" style={{ marginTop: '20px' }}>
         <InputField formik={formik} name="email" label="Email Address" />
         <PasswordInputField formik={formik} name="password" label="Password" size="small" />
-        <Box display="flex" justifyContent="flex-end" mt={1}>
+        <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 1 }}>
           <CustomLink to="/forgot-password" sx={{ fontSize: '13px', fontWeight: 500 }}>
             Forgot Password?
           </CustomLink>
         </Box>
-        <Button size="large" type="submit" fullWidth variant="contained" sx={{ my: 2 }}>
+        <Button size="large" type="submit" fullWidth variant="contained" sx={{ my: 2 }} loading={formik.isSubmitting}>
           Sign In
         </Button>
-        <Typography variant="body2" color="textSecondary" align="center" mt={2}>
+        <Typography variant="body2" sx={{ color: 'text.secondary', textAlign: 'center', mt: 2 }}>
           New on our platform? <CustomLink to="/sign-up">Create a New Account</CustomLink>
         </Typography>
       </form>

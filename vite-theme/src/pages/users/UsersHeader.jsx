@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect } from 'react';
 import { Typography, Stack, Box } from '@mui/material';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import { debounce } from 'lodash';
 import { useFormik } from 'formik';
 import InputField from '@/shared/InputField';
@@ -31,12 +31,12 @@ const UsersHeader = ({ searchedText, setSearchedText }) => {
 
   return (
     <>
-      <Stack direction="row" alignItems="center" justifyContent="space-between" mt={1.5} mb={2.5}>
-        <Box direction="row" alignItems="center" display="flex" gap={1}>
-          <Typography variant="h6" fontWeight="500">
+      <Stack direction="row" sx={{ alignItems: 'center', justifyContent: 'space-between', mt: 1.5, mb: 2.5 }}>
+        <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 1 }}>
+          <Typography variant="h6" sx={{ fontWeight: 500 }}>
             Users
           </Typography>
-          <AddCircleOutlineIcon cursor="pointer" onClick={handleStartUser} color="primary" />
+          <AddCircleOutlineOutlinedIcon cursor="pointer" onClick={handleStartUser} color="primary" />
         </Box>
         <Box sx={{ width: '250px' }}>
           <InputField name="searchedText" placeholder="Search by email" formik={formik} />

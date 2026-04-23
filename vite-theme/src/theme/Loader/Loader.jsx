@@ -1,5 +1,5 @@
 import { styled, useTheme } from '@mui/material/styles';
-import ClimbingBoxLoader from 'react-spinners/ClimbingBoxLoader';
+import { ClimbingBoxLoader } from 'react-spinners';
 
 const LoaderWrapper = styled('div')(() => ({
   position: 'fixed',

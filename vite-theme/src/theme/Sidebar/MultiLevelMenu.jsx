@@ -77,7 +77,7 @@ const MultiLevelMenu = ({ sidebarCompact = false }) => {
                 {item.name}
               </StyledText>
 
-              <Box mx="auto" />
+              <Box sx={{ mx: 'auto' }} />
 
               {item.badge && <BadgeValue compact={COMPACT}>{item.badge.value}</BadgeValue>}
             </NavItemButton>
@@ -88,7 +88,7 @@ const MultiLevelMenu = ({ sidebarCompact = false }) => {
   };
 
   return (
-    <Stack direction="column" justifyContent="space-between" height={`calc(100vh - ${SIDEBAR_TOP_HEADER_AREA}px)`}>
+    <Stack direction="column" sx={{ justifyContent: 'space-between', height: `calc(100vh - ${SIDEBAR_TOP_HEADER_AREA}px)` }}>
       <SimpleBar style={{ maxHeight: '100%', overflowX: 'hidden' }}>
         <Box sx={{ p: '0 5px' }}>{renderLevels(navItems)}</Box>
       </SimpleBar>

@@ -8,7 +8,7 @@ const PasswordInputField = ({ formik, label, name, onChange, size = 'small', sx 
 
   return (
     <>
-      <Typography fontSize={14} fontWeight="500">
+      <Typography sx={{ fontSize: 14, fontWeight: 500 }}>
         {label}
       </Typography>
       <TextField
@@ -21,14 +21,16 @@ const PasswordInputField = ({ formik, label, name, onChange, size = 'small', sx 
         error={Boolean(touched && error)}
         helperText={touched && error}
         type={showPassword ? 'text' : 'password'}
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="end">
-              <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
-                {showPassword ? <VisibilityOffOutlined fontSize="small" /> : <VisibilityOutlined fontSize="small" />}
-              </IconButton>
-            </InputAdornment>
-          ),
+        slotProps={{
+          input: {
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
+                  {showPassword ? <VisibilityOffOutlined fontSize="small" /> : <VisibilityOutlined fontSize="small" />}
+                </IconButton>
+              </InputAdornment>
+            ),
+          },
         }}
         sx={{ mb: 1, '& .MuiOutlinedInput-root': { borderRadius: 1 }, ...sx }}
       />

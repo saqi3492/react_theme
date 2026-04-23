@@ -8,7 +8,7 @@ import { fetchUserDetail } from './UsersApiCalls';
 
 const DetailRow = ({ label, value }) => (
   <Stack direction="row" spacing={1}>
-    <Typography fontWeight={600}>{label}:</Typography>
+    <Typography sx={{ fontWeight: 600 }}>{label}:</Typography>
     <Typography>{value || '-'}</Typography>
   </Stack>
 );
@@ -27,18 +27,18 @@ const UserDetails = () => {
 
   return (
     <PaperBox sx={{ p: 2 }}>
-      <Stack direction="row" alignItems="center" spacing={1.5} mb={2}>
+      <Stack direction="row" spacing={1.5} sx={{ alignItems: 'center', mb: 2 }}>
         <BackButton handleBack={() => navigate(-1)} />
         <Typography variant="h6">User Details</Typography>
       </Stack>
 
       {!isValidUserId ? (
-        <Typography color="error" textAlign="center">
+        <Typography sx={{ color: 'error.main', textAlign: 'center' }}>
           Invalid user id.
         </Typography>
       ) : null}
-      {isValidUserId && isLoading ? <Typography textAlign="center">Loading user details...</Typography> : null}
-      {isValidUserId && !isLoading && !user ? <Typography textAlign="center">User not found.</Typography> : null}
+      {isValidUserId && isLoading ? <Typography sx={{ textAlign: 'center' }}>Loading user details...</Typography> : null}
+      {isValidUserId && !isLoading && !user ? <Typography sx={{ textAlign: 'center' }}>User not found.</Typography> : null}
 
       {user ? (
         <Box>
@@ -46,8 +46,8 @@ const UserDetails = () => {
             <DetailRow label="ID" value={user.id} />
             <DetailRow label="Full Name" value={user.fullName} />
             <DetailRow label="Email" value={user.email} />
-            <Stack direction="row" spacing={1} alignItems="center">
-              <Typography fontWeight={600}>Status:</Typography>
+            <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
+              <Typography sx={{ fontWeight: 600 }}>Status:</Typography>
               <Chip size="small" label={user.isActive ? 'Active' : 'Inactive'} color={user.isActive ? 'success' : 'default'} />
             </Stack>
             <DetailRow label="Created At" value={user.createdAt} />

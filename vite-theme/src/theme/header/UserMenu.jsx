@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Typography, useMediaQuery, Stack, useTheme, Popover, MenuItem, Paper, Divider } from '@mui/material';
+import { Typography, useMediaQuery, Stack, useTheme, Menu, MenuItem, Divider } from '@mui/material';
 import StyledAvatar from './StyledAvatar';
 import { useSelector } from 'react-redux';
 import { handleLogout } from '@/utils/helpers';
@@ -15,20 +15,18 @@ const UserMenu = () => {
     <>
       <Stack
         direction="row"
-        alignItems="center"
         spacing={2}
-        px="10px"
-        sx={{ cursor: 'pointer', '&:hover': { backgroundColor: theme.palette.action.hover } }}
+        sx={{ alignItems: 'center', px: '10px', cursor: 'pointer', '&:hover': { backgroundColor: theme.palette.action.hover } }}
         onClick={event => setAnchorEl(event.currentTarget)}
       >
         <StyledAvatar />
         {downMd ? null : (
           <>
             <Stack>
-              <Typography variant="body2" fontWeight="bold" color="textPrimary">
+              <Typography variant="body2" sx={{ fontWeight: 'bold', color: 'text.primary' }}>
                 {userDetail.name}
               </Typography>
-              <Typography variant="body2" color="text.secondary">
+              <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                 {userDetail.email}
               </Typography>
             </Stack>
@@ -37,31 +35,36 @@ const UserMenu = () => {
         {anchorEl ? <ExpandLess sx={{ color: 'black' }} /> : <ExpandMore sx={{ color: 'black' }} />}
       </Stack>
 
-      <Popover
+      <Menu
         open={Boolean(anchorEl)}
         anchorEl={anchorEl}
         onClose={() => setAnchorEl(null)}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-        sx={{ marginLeft: '10px' }}
-        disableAutoFocus
+        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+        slotProps={{ paper: { sx: { mt: 1, minWidth: 260 } } }}
       >
-        <Paper sx={{ pt: 2, minWidth: 260 }}>
-          <Stack alignItems="center">
+        <MenuItem disabled sx={{ opacity: '1 !important', cursor: 'default', '&.Mui-disabled': { opacity: 1 } }}>
+          <Stack sx={{ alignItems: 'center' }}>
             <StyledAvatar />
-            <Typography variant="body2" fontWeight="bold" mt={1}>
+            <Typography variant="body2" sx={{ fontWeight: 'bold', mt: 1 }}>
               {userDetail.name}
             </Typography>
-            <Typography variant="body2" color="text.secondary">
+            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
               {userDetail.email}
             </Typography>
           </Stack>
-          <Divider sx={{ borderWidth: '1px', marginTop: '8px' }} />
-
-          <MenuItem sx={{ px: 3, py: 2 }} onClick={handleLogout}>
-            Sign Out
-          </MenuItem>
-        </Paper>
-      </Popover>
+        </MenuItem>
+        <Divider />
+        <MenuItem
+          sx={{ px: 3, py: 2 }}
+          onClick={() => {
+            setAnchorEl(null);
+            handleLogout();
+          }}
+        >
+          Sign Out
+        </MenuItem>
+      </Menu>
     </>
   );
 };

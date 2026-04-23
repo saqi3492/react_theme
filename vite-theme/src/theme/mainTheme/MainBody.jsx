@@ -9,11 +9,11 @@ const MainBody = () => {
 
   return (
     <Box
-      ml={{ xs: 0, md: (sidebarCompact ? COLLAPSED_SIDEBAR_WIDTH : SIDEBAR_WIDTH) + 'px' }}
-      mt={HEADER_HEIGHT + 'px'}
-      p={{ xs: '10px', md: '10px 20px' }}
-      height={`calc(100vh - ${HEADER_HEIGHT}px)`}
       sx={{
+        ml: { xs: 0, md: (sidebarCompact ? COLLAPSED_SIDEBAR_WIDTH : SIDEBAR_WIDTH) + 'px' },
+        mt: HEADER_HEIGHT + 'px',
+        p: { xs: '10px', md: '10px 20px' },
+        height: `calc(100vh - ${HEADER_HEIGHT}px)`,
         transition: theme.transitions.create(['width', 'margin'], {
           easing: theme.transitions.easing.sharp,
           duration: theme.transitions.duration.enteringScreen,

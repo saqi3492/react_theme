@@ -5,7 +5,7 @@ import HeaderLogo from './HeaderLogo';
 
 const HeaderContent = () => {
   return (
-    <Stack direction="row" justifyContent="space-between">
+    <Stack direction="row" sx={{ justifyContent: 'space-between' }}>
       <HeaderLogo />
       <UserMenu />
     </Stack>

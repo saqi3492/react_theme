@@ -16,14 +16,10 @@ const getNormalizedUser = user => ({
 
 export const fetchUsers = async ({ filter = '', page = 1, pageSize = 10 } = {}) => {
   try {
-    const requestBody = {
-      page,
-      pageSize,
-      sorts: [{ columnName: 'id', orderBy: 'desc' }],
-    };
+    const requestBody = { page, pageSize };
 
     if (filter?.trim()) {
-      requestBody.filters = [{ columnName: 'email', type: 'like', value: filter.trim() }];
+      requestBody.filters = [{ type: 'like', value: filter.trim() }];
     }
 
     const response = await axios.post('/users/listing', requestBody);

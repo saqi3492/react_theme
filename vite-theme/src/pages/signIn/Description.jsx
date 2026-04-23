@@ -6,7 +6,7 @@ const Description = () => {
       <Typography sx={{ fontSize: { xs: 25, md: 40 }, fontWeight: '600' }} gutterBottom>
         Revolutionising Clinical Note Creation
       </Typography>
-      <Typography fontSize={18} fontWeight="400" color="textSecondary">
+      <Typography sx={{ fontSize: 18, fontWeight: 400, color: 'text.secondary' }}>
         In todays fast-paced healthcare environment accurate and efficient documentation is critical. ConvoNote transforms the way
         healthcare professionals handle documentation offering a powerful and intuitive platform designed to meet the unique needs of modern
         medical practices. Our solution simplifies the complexities of note-taking allowing you to seamlessly manage patient notes with
