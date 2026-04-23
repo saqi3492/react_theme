@@ -4,7 +4,8 @@ import { ClimbingLoader } from '@/theme/Loader/Loader';
 import AuthGuard from '@/components/AuthGuard';
 import PublicLayout from '@/components/PublicLayout';
 
-const Sessions = lazy(() => import('@/pages/sessions'));
+const Users = lazy(() => import('@/pages/users/Users'));
+const UserDetails = lazy(() => import('@/pages/users/UserDetails'));
 const Training = lazy(() => import('@/pages/training'));
 const Incidents = lazy(() => import('@/pages/incidents'));
 const SignIn = lazy(() => import('@/pages/signIn/SignIn'));
@@ -16,8 +17,9 @@ const Routes = () => {
     {
       element: <AuthGuard />,
       children: [
-        { element: <Navigate to="/sessions" />, index: true },
-        { path: '/sessions', element: <Sessions /> },
+        { element: <Navigate to="/users" />, index: true },
+        { path: '/users', element: <Users /> },
+        { path: '/users/details/:userId', element: <UserDetails /> },
         { path: '/training', element: <Training /> },
         { path: '/incidents', element: <Incidents /> },
       ],

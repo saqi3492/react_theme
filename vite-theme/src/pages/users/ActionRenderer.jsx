@@ -2,25 +2,28 @@ import { useState } from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { IconButton, Tooltip } from '@mui/material';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
-import SessionDeleteDialog from './SessionDeleteDialog';
 import EditIcon from '@mui/icons-material/Edit';
 import { useNavigate } from 'react-router-dom';
-import SessionForm from './SessionForm';
-import { deleteSession } from './SessionsApiCalls';
+import { useQueryClient } from '@tanstack/react-query';
+import UserDeleteDialog from './UserDeleteDialog';
+import UserForm from './UserForm';
+import { deleteUser } from './UsersApiCalls';
 
 const ActionRenderer = ({ data }) => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const [open, setOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
 
   const handleDelete = async () => {
-    await deleteSession(data.sessionId);
+    await deleteUser(data.id);
+    queryClient.invalidateQueries({ queryKey: ['users'] });
   };
 
   return (
     <>
       <Tooltip title="Show Details" placement="left">
-        <IconButton onClick={() => navigate(`/sessions/details/${data.sessionId}`)}>
+        <IconButton onClick={() => navigate(`/users/details/${data.id}`)}>
           <OpenInNewIcon />
         </IconButton>
       </Tooltip>
@@ -34,8 +37,8 @@ const ActionRenderer = ({ data }) => {
           <DeleteIcon />
         </IconButton>
       </Tooltip>
-      {open ? <SessionDeleteDialog closeDialog={() => setOpen(false)} handleDelete={handleDelete} /> : null}
-      {isEditOpen ? <SessionForm onClose={() => setIsEditOpen(false)} sessionData={data} /> : null}
+      {open ? <UserDeleteDialog closeDialog={() => setOpen(false)} handleDelete={handleDelete} /> : null}
+      {isEditOpen ? <UserForm onClose={() => setIsEditOpen(false)} userData={data} /> : null}
     </>
   );
 };

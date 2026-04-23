@@ -10,26 +10,32 @@ export const defaultColDef = {
   // cellStyle: { textAlign: 'center' },
 };
 
-export const sessionsColDefs = [
+export const usersColDefs = [
   {
-    headerName: 'Patient Name',
-    colId: 'patientName',
-    field: 'patientName',
+    headerName: 'Full Name',
+    colId: 'fullName',
+    field: 'fullName',
   },
   {
-    headerName: 'Date & Time',
+    headerName: 'Email',
+    colId: 'email',
+    field: 'email',
+  },
+  {
+    headerName: 'Status',
+    colId: 'isActive',
+    field: 'isActive',
+    cellRenderer: 'StatusRenderer',
+  },
+  {
+    headerName: 'Created At',
     colId: 'createdAt',
     field: 'createdAt',
   },
   {
-    headerName: 'Duration',
-    colId: 'duration',
-    field: 'duration',
-  },
-  {
     headerName: 'Action',
     colId: 'action',
-    field: 'sessionId',
+    field: 'id',
     cellRenderer: 'ActionRenderer',
   },
 ];
