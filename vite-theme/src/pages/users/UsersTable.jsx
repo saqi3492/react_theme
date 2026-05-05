@@ -11,13 +11,7 @@ const UsersTable = ({ isLoading }) => {
 
   return (
     <div style={{ flex: 1 }}>
-      <AgGridReact
-        loading={isLoading}
-        rowData={users}
-        columnDefs={usersColDefs}
-        defaultColDef={defaultColDef}
-        components={renderers}
-      />
+      <AgGridReact loading={isLoading} rowData={users} columnDefs={usersColDefs} defaultColDef={defaultColDef} components={renderers} />
     </div>
   );
 };

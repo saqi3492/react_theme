@@ -32,11 +32,7 @@ const UserDetails = () => {
         <Typography variant="h6">User Details</Typography>
       </Stack>
 
-      {!isValidUserId ? (
-        <Typography sx={{ color: 'error.main', textAlign: 'center' }}>
-          Invalid user id.
-        </Typography>
-      ) : null}
+      {!isValidUserId ? <Typography sx={{ color: 'error.main', textAlign: 'center' }}>Invalid user id.</Typography> : null}
       {isValidUserId && isLoading ? <Typography sx={{ textAlign: 'center' }}>Loading user details...</Typography> : null}
       {isValidUserId && !isLoading && !user ? <Typography sx={{ textAlign: 'center' }}>User not found.</Typography> : null}
 
