@@ -36,7 +36,7 @@ const UsersHeader = ({ refetch, isFetching }) => {
 
   return (
     <>
-      <Stack direction="row" sx={{ alignItems: 'center', justifyContent: 'space-between', m: 1.5 }}>
+      <Stack direction={{ xs: 'column', sm: 'row' }} sx={{ justifyContent: 'space-between', m: 1.5, gap: 1 }}>
         <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 1 }}>
           <Typography variant="h6" sx={{ fontWeight: 500 }}>
             Users
@@ -54,9 +54,9 @@ const UsersHeader = ({ refetch, isFetching }) => {
             <AddCircleOutlineOutlinedIcon />
           </IconButton>
         </Box>
-        <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 1 }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
           <InputField placeholder="Search here..." value={value} onChange={e => setValue(e.target.value)} fullWidth={false} />
-          <Button variant="contained" size="small" onClick={handleReset} sx={{ width: { xs: '100%', sm: 'auto' } }}>
+          <Button variant="contained" size="small" onClick={handleReset}>
             Reset Filters
           </Button>
         </Box>
