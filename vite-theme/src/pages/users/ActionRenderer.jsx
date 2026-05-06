@@ -2,40 +2,39 @@ import { useState } from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { IconButton, Tooltip } from '@mui/material';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
-import SessionDeleteDialog from './SessionDeleteDialog';
 import EditIcon from '@mui/icons-material/Edit';
 import { useNavigate } from 'react-router-dom';
-import SessionForm from './SessionForm';
-import { deleteSession } from './SessionsApiCalls';
+import UserDeleteDialog from './UserDeleteDialog';
+import UserForm from './UserForm';
+import { deleteUser } from './UsersApiCalls';
 
 const ActionRenderer = ({ data }) => {
   const navigate = useNavigate();
-  const [open, setOpen] = useState(false);
-  const [isEditOpen, setIsEditOpen] = useState(false);
+  const [dialog, setDialog] = useState(null);
 
   const handleDelete = async () => {
-    await deleteSession(data.sessionId);
+    await deleteUser(data.id);
   };
 
   return (
     <>
       <Tooltip title="Show Details" placement="left">
-        <IconButton onClick={() => navigate(`/sessions/details/${data.sessionId}`)}>
+        <IconButton onClick={() => navigate(`/users/details/${data.id}`)}>
           <OpenInNewIcon />
         </IconButton>
       </Tooltip>
       <Tooltip title="Edit" placement="top">
-        <IconButton onClick={() => setIsEditOpen(true)}>
+        <IconButton onClick={() => setDialog('edit')}>
           <EditIcon />
         </IconButton>
       </Tooltip>
       <Tooltip title="Delete" placement="right">
-        <IconButton onClick={() => setOpen(true)}>
+        <IconButton onClick={() => setDialog('delete')}>
           <DeleteIcon />
         </IconButton>
       </Tooltip>
-      {open ? <SessionDeleteDialog closeDialog={() => setOpen(false)} handleDelete={handleDelete} /> : null}
-      {isEditOpen ? <SessionForm onClose={() => setIsEditOpen(false)} sessionData={data} /> : null}
+      {dialog === 'edit' ? <UserForm onClose={() => setDialog(null)} userData={data} /> : null}
+      {dialog === 'delete' ? <UserDeleteDialog closeDialog={() => setDialog(null)} handleDelete={handleDelete} /> : null}
     </>
   );
 };

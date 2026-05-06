@@ -1,7 +1,10 @@
+import { config } from '@/config/config';
+
 export const HEADER_HEIGHT = 60;
 export const SIDEBAR_WIDTH = 230;
 export const COLLAPSED_SIDEBAR_WIDTH = 75;
 export const SIDEBAR_TOP_HEADER_AREA = 70;
+export const PAGE_SIZE_OPTIONS = [10, config.defaultPageSize, 50, 100, 200, 500];
 
 export const defaultColDef = {
   filter: false,
@@ -10,26 +13,32 @@ export const defaultColDef = {
   // cellStyle: { textAlign: 'center' },
 };
 
-export const sessionsColDefs = [
+export const usersColDefs = [
   {
-    headerName: 'Patient Name',
-    colId: 'patientName',
-    field: 'patientName',
+    headerName: 'Full Name',
+    colId: 'fullName',
+    field: 'fullName',
   },
   {
-    headerName: 'Date & Time',
+    headerName: 'Email',
+    colId: 'email',
+    field: 'email',
+  },
+  {
+    headerName: 'Status',
+    colId: 'isActive',
+    field: 'isActive',
+    cellRenderer: 'StatusRenderer',
+  },
+  {
+    headerName: 'Created At',
     colId: 'createdAt',
     field: 'createdAt',
   },
   {
-    headerName: 'Duration',
-    colId: 'duration',
-    field: 'duration',
-  },
-  {
     headerName: 'Action',
     colId: 'action',
-    field: 'sessionId',
+    field: 'id',
     cellRenderer: 'ActionRenderer',
   },
 ];

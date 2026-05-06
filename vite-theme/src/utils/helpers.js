@@ -38,4 +38,5 @@ export const handleErrorMessages = errors => {
 
 export const handleCatchError = error => {
   console.log('error', error);
+  dispatch(setSnackbarObj({ message: error.message, severity: 'error' }));
 };

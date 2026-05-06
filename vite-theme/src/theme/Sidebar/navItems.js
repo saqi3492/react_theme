@@ -1,4 +1,3 @@
-import DashboardIcon from '@mui/icons-material/Dashboard';
 import PeopleIcon from '@mui/icons-material/People';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import TableChartIcon from '@mui/icons-material/TableChart';
@@ -14,9 +13,9 @@ export const navItems = [
     label: 'Dashboard',
   },
   {
-    name: 'Sessions',
-    path: '/sessions',
-    icon: DashboardIcon,
+    name: 'Users',
+    path: '/users',
+    icon: PeopleIcon,
   },
   {
     type: 'label',

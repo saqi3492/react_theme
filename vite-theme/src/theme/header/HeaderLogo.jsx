@@ -12,7 +12,7 @@ const HeaderLogo = () => {
   const sidebarCompact = useSelector(state => state.ThemeOptions.sidebarCompact);
 
   return (
-    <Stack direction="row" alignItems="center" spacing={3} pl={'10px'} height={HEADER_HEIGHT}>
+    <Stack direction="row" spacing={3} sx={{ alignItems: 'center', pl: '10px', height: HEADER_HEIGHT }}>
       <img src={Logo} alt="logo" width={130} />
       <IconButton onClick={() => dispatch(setSidebarCompact())} sx={{ color: 'black' }}>
         {sidebarCompact ? <MenuIcon /> : <MenuOpenIcon />}

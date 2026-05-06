@@ -6,7 +6,7 @@ import reactRefresh from 'eslint-plugin-react-refresh';
 import reactCompiler from 'eslint-plugin-react-compiler';
 
 export default [
-  { ignores: ['dist'] },
+  { ignores: ['dist', 'build'] },
   {
     files: ['**/*.{js,jsx}'],
     languageOptions: {

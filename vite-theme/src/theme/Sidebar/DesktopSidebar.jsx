@@ -11,12 +11,15 @@ const DesktopSidebar = () => {
 
   return (
     <Box
-      height="100%"
-      width={sidebarCompact ? COLLAPSED_SIDEBAR_WIDTH : SIDEBAR_WIDTH}
-      zIndex={theme.zIndex.drawer}
-      backgroundColor={theme.palette.background.paper}
-      position="fixed"
-      sx={{ transition: 'all .2s ease', '&:hover': sidebarCompact && { width: SIDEBAR_WIDTH } }}
+      sx={{
+        height: '100%',
+        width: sidebarCompact ? COLLAPSED_SIDEBAR_WIDTH : SIDEBAR_WIDTH,
+        zIndex: theme.zIndex.drawer,
+        backgroundColor: theme.palette.background.paper,
+        position: 'fixed',
+        transition: 'all .2s ease',
+        '&:hover': sidebarCompact && { width: SIDEBAR_WIDTH },
+      }}
       onMouseEnter={() => setOnHover(true)}
       onMouseLeave={() => setOnHover(false)}
     >

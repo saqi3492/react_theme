@@ -12,20 +12,20 @@ const OtpVerification = ({ formik }) => {
 
   return (
     <Box sx={{ p: { xs: 5, lg: 12 }, width: '100%', maxWidth: '800px' }}>
-      <Typography fontSize={28} fontWeight="500" gutterBottom>
+      <Typography gutterBottom sx={{ fontSize: 28, fontWeight: 500 }}>
         Enter Verification Code
       </Typography>
-      <Typography fontSize={16} fontWeight="400" color="textSecondary" mb={4}>
+      <Typography sx={{ fontSize: 16, fontWeight: 400, color: 'text.secondary', mb: 4 }}>
         Weve sent a verification code to your registered email address. Please enter the code to continue.
       </Typography>
 
-      <Box display="flex" alignItems="center" justifyContent="center" gap={3} mb={4}>
+      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 3, mb: 4 }}>
         <OTPInput
           value={otp}
           onChange={handleChange}
           numInputs={4}
           renderSeparator={
-            <Box component="span" mx={1}>
+            <Box component="span" sx={{ mx: 1 }}>
               -
             </Box>
           }
@@ -50,7 +50,7 @@ const OtpVerification = ({ formik }) => {
         />
       </Box>
       {formik.touched.otpCode && formik.errors.otpCode && (
-        <Typography color="error" variant="body2" mb={2}>
+        <Typography variant="body2" sx={{ color: 'error.main', mb: 2 }}>
           {formik.errors.otpCode}
         </Typography>
       )}
