@@ -1,12 +1,12 @@
 import axios from 'axios';
+import queryClient from '@/lib/queryClient';
 import { setSnackbarObj } from '@/store/reducers/alertsSlice';
-import { deleteUserAction, createUserAction, updateUserAction } from '@/store/reducers/usersSlice';
 import { dispatch } from '@/store/store';
 import { getFormattedDate, handleCatchError, handleErrorMessages } from '@/utils/helpers';
 
-const isSuccessResponse = response => response?.status === undefined || Boolean(response?.status);
+const refreshUsers = () => queryClient.invalidateQueries({ queryKey: ['users'] });
 
-const getNormalizedUser = user => ({
+const getFormattedUser = user => ({
   id: user.id,
   fullName: user.fullName || '',
   email: user.email || '',
@@ -14,40 +14,28 @@ const getNormalizedUser = user => ({
   createdAt: getFormattedDate(user.createdAt, '', true),
 });
 
-export const fetchUsers = async ({ filter = '', page = 1, pageSize = 10 } = {}) => {
+export const fetchUsers = async ({ searchedText, pageSize, page } = {}) => {
   try {
-    const requestBody = { page, pageSize };
+    const payload = { page, pageSize };
 
-    if (filter?.trim()) {
-      requestBody.filters = [{ type: 'like', value: filter.trim() }];
+    if (searchedText) {
+      payload.filters = [
+        { columnName: 'email', type: 'like', value: searchedText },
+        { columnName: 'full_name', type: 'like', value: searchedText },
+      ];
     }
 
-    const response = await axios.post('/users/listing', requestBody);
-    const payload = response?.data || {};
-    const users = Array.isArray(payload?.data) ? payload.data : [];
-    const pagination = {
-      count: payload?.count ?? users.length,
-      totalCount: payload?.total_count ?? users.length,
-      totalPageCount: payload?.total_page_count ?? 1,
-      page: payload?.page ?? page,
-      pageSize: payload?.page_size ?? pageSize,
-    };
+    const response = await axios.post('/users/listing', payload);
 
-    if (isSuccessResponse(response)) {
-      return {
-        rows: users.map(getNormalizedUser),
-        pagination,
-      };
+    if (response.status && response.data.data) {
+      return { users: response.data.data.map(getFormattedUser), totalPages: response.data.total_page_count };
     }
 
     handleErrorMessages(response?.errors);
-    return { rows: [], pagination };
+    return { logs: [], totalPages: 0 };
   } catch (error) {
     handleCatchError(error);
-    return {
-      rows: [],
-      pagination: { count: 0, totalCount: 0, totalPageCount: 1, page, pageSize },
-    };
+    throw error;
   }
 };
 
@@ -55,35 +43,29 @@ export const createUser = async userData => {
   try {
     const response = await axios.post('/users', userData);
 
-    if (isSuccessResponse(response) && response.data) {
-      dispatch(createUserAction(getNormalizedUser(response.data)));
+    if (response.status) {
       dispatch(setSnackbarObj({ message: 'User created successfully.', severity: 'success' }));
-      return response.data;
+      refreshUsers();
+      return true;
     }
-
     handleErrorMessages(response?.errors);
-    return null;
   } catch (error) {
     handleCatchError(error);
-    return null;
   }
 };
 
-export const updateUser = async (userId, userData) => {
+export const updateUser = async (userId, payload) => {
   try {
-    const response = await axios.patch(`/users/${userId}`, userData);
+    const response = await axios.patch(`/users/${userId}`, payload);
 
-    if (isSuccessResponse(response) && response.data) {
-      dispatch(updateUserAction(getNormalizedUser(response.data)));
+    if (response.status) {
       dispatch(setSnackbarObj({ message: 'User updated successfully.', severity: 'success' }));
-      return response.data;
+      refreshUsers();
+      return true;
     }
-
     handleErrorMessages(response?.errors);
-    return null;
   } catch (error) {
     handleCatchError(error);
-    return null;
   }
 };
 
@@ -91,30 +73,26 @@ export const deleteUser = async userId => {
   try {
     const response = await axios.delete(`/users/${userId}`);
 
-    if (isSuccessResponse(response)) {
-      dispatch(deleteUserAction(userId));
+    if (response.status) {
       dispatch(setSnackbarObj({ message: 'User deleted successfully.', severity: 'success' }));
+      refreshUsers();
       return true;
     }
 
     handleErrorMessages(response?.errors);
-    return false;
   } catch (error) {
     handleCatchError(error);
-    return false;
   }
 };
 
 export const fetchUserDetail = async userId => {
   try {
     const response = await axios.get(`/users/${userId}`);
-    if (isSuccessResponse(response) && response.data) {
-      return getNormalizedUser(response.data);
+    if (response.status && response.data) {
+      return getFormattedUser(response.data);
     }
     handleErrorMessages(response?.errors);
-    return null;
   } catch (error) {
     handleCatchError(error);
-    return null;
   }
 };

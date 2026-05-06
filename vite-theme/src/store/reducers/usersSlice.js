@@ -1,31 +1,38 @@
+import { config } from '@/config/config';
+import { PAGE_SIZE_OPTIONS } from '@/utils/constants';
+import { getLocalStorageItem, setItemInLocalStorage } from '@/utils/helpers';
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = {
-  users: [],
-};
+const getInitialState = () => ({
+  page: 1,
+  pageSize: PAGE_SIZE_OPTIONS.includes(Number(getLocalStorageItem('pageSize')))
+    ? Number(getLocalStorageItem('pageSize'))
+    : config.defaultPageSize,
+  searchedText: '',
+});
 
 const usersSlice = createSlice({
   name: 'users',
-  initialState,
+  initialState: { ...getInitialState() },
   reducers: {
-    setUsers(state, action) {
-      state.users = action.payload;
+    setPage(state, action) {
+      state.page = action.payload;
     },
-    createUserAction(state, action) {
-      state.users.unshift(action.payload);
+    setPageSize(state, action) {
+      state.page = 1;
+      state.pageSize = action.payload;
+      setItemInLocalStorage('pageSize', action.payload);
     },
-    updateUserAction(state, action) {
-      const index = state.users.findIndex(user => user.id === action.payload.id);
-      if (index !== -1) {
-        state.users[index] = action.payload;
-      }
+    setSearchedText(state, action) {
+      state.page = 1;
+      state.searchedText = action.payload;
     },
-    deleteUserAction(state, action) {
-      const index = state.users.findIndex(user => user.id === action.payload);
-      if (index !== -1) state.users.splice(index, 1);
+    resetFiltersAction: () => {
+      localStorage.removeItem('pageSize');
+      return getInitialState();
     },
   },
 });
 
-export const { setUsers, createUserAction, deleteUserAction, updateUserAction } = usersSlice.actions;
+export const { setPage, setPageSize, setSearchedText, resetFiltersAction } = usersSlice.actions;
 export default usersSlice.reducer;

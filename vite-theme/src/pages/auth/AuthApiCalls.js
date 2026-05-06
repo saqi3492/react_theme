@@ -2,7 +2,7 @@ import { dispatch } from '@/store/store';
 import { setSnackbarObj } from '@/store/reducers/alertsSlice';
 import axios from 'axios';
 import { setUserDetail } from '@/store/reducers/userSlice';
-import { handleCatchError, handleErrorMessages, setItemInLocalStorage } from '@/utils/helpers';
+import { handleCatchError, handleErrorMessages, handleLogout, setItemInLocalStorage } from '@/utils/helpers';
 
 export const resetPassword = async (token, newPassword) => {
   try {
@@ -72,8 +72,10 @@ export const fetchUserByAuthToken = async () => {
       formatAndSetUserDetail(response.data);
       return true;
     }
+    handleLogout();
   } catch (error) {
     handleCatchError(error);
+    handleLogout();
   }
 };
 

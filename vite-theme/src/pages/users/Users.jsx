@@ -1,67 +1,36 @@
-import { useCallback, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import PaperBox from '@/components/PaperBox';
-import AppPagination from '@/shared/AppPagination';
-import { setUsers } from '@/store/reducers/usersSlice';
+import GridPagination from '@/shared/GridPagination';
+import { setPage, setPageSize } from '@/store/reducers/usersSlice';
 import UsersHeader from './UsersHeader';
 import UsersTable from './UsersTable';
 import { fetchUsers } from './UsersApiCalls';
-import { DEFAULT_PAGE_SIZE } from '@/utils/constants';
 
 const Users = () => {
   const dispatch = useDispatch();
-  const [searchedText, setSearchedText] = useState('');
-  const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(DEFAULT_PAGE_SIZE);
+  const page = useSelector(state => state.Users.page);
+  const pageSize = useSelector(state => state.Users.pageSize);
+  const searchedText = useSelector(state => state.Users.searchedText);
 
-  const handleSearchTextChange = useCallback(value => {
-    const normalizedValue = value || '';
-    setSearchedText(prev => {
-      if (prev === normalizedValue) return prev;
-      setPage(1);
-      return normalizedValue;
-    });
-  }, []);
-
-  const handlePageChange = useCallback(nextPage => {
-    setPage(nextPage);
-  }, []);
-
-  const handlePageSizeChange = useCallback(nextPageSize => {
-    setPageSize(prev => {
-      if (prev === nextPageSize) return prev;
-      return nextPageSize;
-    });
-    setPage(1);
-  }, []);
-
-  const { data, isLoading } = useQuery({
-    queryKey: ['users', searchedText, page, pageSize],
-    queryFn: async ({ queryKey }) => {
-      const [, filter, currentPage, currentPageSize] = queryKey;
-      const result = await fetchUsers({ filter, page: currentPage, pageSize: currentPageSize });
-      dispatch(setUsers(result.rows));
-      return result;
-    },
-    staleTime: 0,
-    refetchOnMount: 'always',
+  const { data, isLoading, isRefetching, refetch } = useQuery({
+    queryKey: ['users', { searchedText, pageSize, page }],
+    queryFn: () => fetchUsers({ searchedText, pageSize, page }),
   });
 
-  const pagination = data?.pagination || { totalCount: 0, totalPageCount: 1 };
+  const handlePageChange = (_, value) => dispatch(setPage(value));
+  const handlePageSizeChange = e => dispatch(setPageSize(Number(e.target.value)));
 
   return (
     <PaperBox sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-      <UsersHeader searchedText={searchedText} setSearchedText={handleSearchTextChange} />
-      <UsersTable isLoading={isLoading} />
-      <AppPagination
+      <UsersHeader refetch={refetch} isFetching={isRefetching || isLoading} />
+      <UsersTable isLoading={isLoading} users={data?.users || []} />
+      <GridPagination
+        totalPages={data?.totalPages || 0}
         page={page}
         pageSize={pageSize}
-        totalCount={pagination.totalCount}
-        totalPageCount={pagination.totalPageCount}
-        onPageChange={handlePageChange}
-        onPageSizeChange={handlePageSizeChange}
-        disabled={isLoading}
+        handlePageChange={handlePageChange}
+        handlePageSizeChange={handlePageSizeChange}
       />
     </PaperBox>
   );

@@ -9,6 +9,7 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           textTransform: 'none',
+          borderRadius: '6px',
           // '&.Mui-disabled': {
           //   background: 'rgba(0, 0, 0, 0.12)'
           // }

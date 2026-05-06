@@ -1,7 +1,6 @@
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Box, Button, Typography } from '@mui/material';
-// import { useQueryClient } from '@tanstack/react-query';
 import AppDialog from '@/components/AppDialog';
 import InputField from '@/shared/InputField';
 import InputDropdownField from '@/shared/InputDropdownField';
@@ -22,40 +21,30 @@ const activeOptions = [
   { value: false, label: 'Inactive' },
 ];
 
-const UserForm = ({ onClose, userData = null }) => {
-  const isEdit = Boolean(userData);
-  // const queryClient = useQueryClient();
+const UserForm = ({ onClose, userData = null, refetch }) => {
   const formik = useFormik({
     initialValues: {
       fullName: userData?.fullName || '',
       email: userData?.email || '',
       password: '',
       isActive: userData?.isActive ?? true,
-      isEdit,
+      isEdit: Boolean(userData),
     },
     validationSchema: validationSchema,
     onSubmit: async values => {
+      let isSuccess = false;
+      const { fullName, email, password, isActive } = values;
       if (userData) {
-        const res = await updateUser(userData.id, {
-          fullName: values.fullName,
-          email: values.email,
-          isActive: values.isActive,
-        });
-        if (res) {
-          onClose();
-        }
+        const payload = { fullName, email, isActive };
+        isSuccess = await updateUser(userData.id, payload);
       } else {
-        const res = await createUser({
-          fullName: values.fullName,
-          email: values.email,
-          password: values.password,
-          isActive: values.isActive,
-        });
-        if (res) {
-          onClose();
-        }
+        const payload = { fullName, email, password, isActive };
+        isSuccess = await createUser(payload);
       }
-      // queryClient.invalidateQueries({ queryKey: ['users'] });
+      if (isSuccess) {
+        onClose();
+        refetch();
+      }
     },
   });
 

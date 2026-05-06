@@ -12,6 +12,7 @@ const SignIn = lazy(() => import('@/pages/signIn/SignIn'));
 const SignUp = lazy(() => import('@/pages/signUp/SignUp'));
 const ForgotPassword = lazy(() => import('@/pages/forgotPassword/ForgotPassword'));
 const ResetPassword = lazy(() => import('@/pages/resetPassword/ResetPassword'));
+
 const Routes = () => {
   const routes = useRoutes([
     {

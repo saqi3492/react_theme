@@ -1,48 +1,67 @@
-import { useState, useMemo, useEffect } from 'react';
-import { Typography, Stack, Box } from '@mui/material';
+import { useState, useEffect, useRef } from 'react';
+import { Typography, Stack, Box, IconButton, Button, Tooltip } from '@mui/material';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
+import RefreshIcon from '@mui/icons-material/Refresh';
 import { debounce } from 'lodash';
-import { useFormik } from 'formik';
 import InputField from '@/shared/InputField';
 import UserForm from './UserForm';
+import { useDispatch, useSelector } from 'react-redux';
+import { resetFiltersAction, setSearchedText } from '@/store/reducers/usersSlice';
 
-const UsersHeader = ({ searchedText, setSearchedText }) => {
-  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
-  const debouncedSetSearchedText = useMemo(() => debounce(setSearchedText, 500), [setSearchedText]);
-  const formik = useFormik({ initialValues: { searchedText } });
+const UsersHeader = ({ refetch, isFetching }) => {
+  const dispatch = useDispatch();
+  const [isCreateDialog, setIsCreateDialog] = useState(false);
+  const searchedText = useSelector(state => state.Users.searchedText);
+  const [value, setValue] = useState(searchedText);
 
-  const handleStartUser = () => {
-    setIsCreateDialogOpen(true);
-  };
-
-  const handleCloseCreateDialog = () => {
-    setIsCreateDialogOpen(false);
-  };
-
-  useEffect(() => {
-    debouncedSetSearchedText(formik.values.searchedText);
-  }, [formik.values.searchedText, debouncedSetSearchedText]);
+  const throttledScroll = useRef(
+    debounce(text => {
+      dispatch(setSearchedText(text));
+    }, 500)
+  );
 
   useEffect(() => {
-    return () => {
-      debouncedSetSearchedText.cancel();
-    };
-  }, [debouncedSetSearchedText]);
+    throttledScroll.current(value);
+  }, [value]);
+
+  const handleReset = () => {
+    throttledScroll.current.cancel();
+    setValue('');
+    dispatch(resetFiltersAction());
+  };
+
+  const handleRefresh = () => {
+    if (!isFetching) refetch();
+  };
 
   return (
     <>
-      <Stack direction="row" sx={{ alignItems: 'center', justifyContent: 'space-between', mt: 1.5, mb: 2.5 }}>
+      <Stack direction="row" sx={{ alignItems: 'center', justifyContent: 'space-between', m: 1.5 }}>
         <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 1 }}>
           <Typography variant="h6" sx={{ fontWeight: 500 }}>
             Users
           </Typography>
-          <AddCircleOutlineOutlinedIcon cursor="pointer" onClick={handleStartUser} color="primary" />
+          <Tooltip title={isFetching ? 'Getting Fresh Users...' : 'Refresh Users'} arrow>
+            <IconButton color="info" onClick={handleRefresh} sx={{ bgcolor: 'action.hover', '&:hover': { bgcolor: 'action.selected' } }}>
+              <RefreshIcon />
+            </IconButton>
+          </Tooltip>
+          <IconButton
+            color="primary"
+            onClick={() => setIsCreateDialog(true)}
+            sx={{ bgcolor: 'action.hover', '&:hover': { bgcolor: 'action.selected' } }}
+          >
+            <AddCircleOutlineOutlinedIcon />
+          </IconButton>
         </Box>
-        <Box sx={{ width: '250px' }}>
-          <InputField name="searchedText" placeholder="Search by email" formik={formik} />
+        <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 1 }}>
+          <InputField placeholder="Search here..." value={value} onChange={e => setValue(e.target.value)} fullWidth={false} />
+          <Button variant="contained" size="small" onClick={handleReset} sx={{ width: { xs: '100%', sm: 'auto' } }}>
+            Reset Filters
+          </Button>
         </Box>
       </Stack>
-      {isCreateDialogOpen ? <UserForm onClose={handleCloseCreateDialog} /> : null}
+      {isCreateDialog ? <UserForm onClose={() => setIsCreateDialog(false)} /> : null}
     </>
   );
 };
