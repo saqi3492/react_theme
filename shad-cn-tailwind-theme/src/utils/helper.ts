@@ -1,5 +1,7 @@
 import axios, { AxiosError } from 'axios';
+import dayjs from 'dayjs';
 import { showToast } from '@/lib/toast';
+import { config } from '@/config/config';
 
 export interface ErrorMessage {
   message: string;
@@ -34,11 +36,23 @@ export const setLocalStorageItem = (key: string, value: unknown): void => {
 
 export const handleCatchMessages = (error: unknown): void => {
   if (axios.isCancel(error)) return;
-  const axiosError = error as AxiosError<{ message?: string }>;
+  const axiosError = error as AxiosError<{ message?: string; errors?: ErrorMessage[] }>;
 
-  const message = axiosError.response?.data?.message || axiosError.message || 'Oops! Something went wrong.';
+  let message = 'Oops! Something went wrong.';
+
+  if (axiosError.response?.data) {
+    const responseData = axiosError.response.data;
+    if (responseData.message) {
+      message = responseData.message;
+    } else if (responseData.errors && Array.isArray(responseData.errors) && responseData.errors.length > 0) {
+      message = responseData.errors.map((e: ErrorMessage) => e.message).join('\n');
+    }
+  } else if (axiosError.message) {
+    message = axiosError.message;
+  }
 
   console.error('API Error:', message);
+  showToast.error(message);
 };
 
 export const handleErrorMessages = (errors?: ErrorMessage[]): void => {
@@ -46,4 +60,13 @@ export const handleErrorMessages = (errors?: ErrorMessage[]): void => {
     const message = errors.map(e => e.message).join('\n') || 'Oops! Something went wrong.';
     showToast.error(message);
   }
+};
+
+export const getFormattedDate = (isoDate: string | Date | null | undefined, defaultValue = '', isTime = false): string => {
+  if (!isoDate) return defaultValue;
+  const dateObj = dayjs(isoDate);
+  if (dateObj.isValid()) {
+    return dateObj.format(`${config.dateFormat} ${isTime ? config.timeFormat : ''}`).trim();
+  }
+  return defaultValue;
 };
