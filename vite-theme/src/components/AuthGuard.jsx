@@ -1,30 +1,29 @@
 import { Navigate } from 'react-router-dom';
-import { getLocalStorageItem } from '@/utils/helpers';
-import { useEffect, useState } from 'react';
-import { fetchUserByAuthToken } from '@/pages/auth/AuthApiCalls';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { loadCurrentUser } from '@/pages/auth/AuthApiCalls';
 import { ClimbingLoader } from '@/theme/Loader/Loader';
 import MainTheme from '@/theme/mainTheme/MainTheme';
 
 const AuthGuard = () => {
-  const authToken = getLocalStorageItem('authentication_token');
-  const [isVerifying, setIsVerifying] = useState(true);
+  const status = useSelector(state => state.User.status);
 
   useEffect(() => {
-    (async () => {
-      if (authToken) {
-        const isValidUser = await fetchUserByAuthToken();
-        if (isValidUser) {
-          setIsVerifying(false);
-        }
-      }
-    })();
-  }, [authToken]);
+    // Probe the session cookie once; result lands in the Redux auth slice.
+    if (status === 'loading') {
+      loadCurrentUser();
+    }
+  }, [status]);
 
-  if (!authToken) {
+  if (status === 'loading') {
+    return <ClimbingLoader />;
+  }
+
+  if (status === 'unauthenticated') {
     return <Navigate to="/sign-in" replace />;
   }
 
-  return isVerifying ? <ClimbingLoader /> : <MainTheme />;
+  return <MainTheme />;
 };
 
 export default AuthGuard;

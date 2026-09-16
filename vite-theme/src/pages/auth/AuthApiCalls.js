@@ -1,8 +1,8 @@
 import { dispatch } from '@/store/store';
 import { setSnackbarObj } from '@/store/reducers/alertsSlice';
 import axios from 'axios';
-import { setUserDetail } from '@/store/reducers/userSlice';
-import { handleCatchError, handleErrorMessages, handleLogout, setItemInLocalStorage } from '@/utils/helpers';
+import { setAuthUser } from '@/store/reducers/userSlice';
+import { handleCatchError, handleErrorMessages, handleLogout } from '@/utils/helpers';
 
 export const resetPassword = async (token, newPassword) => {
   try {
@@ -32,12 +32,16 @@ export const forgotPassword = async email => {
 
 export const handleSignUp = async userDetails => {
   try {
-    const response = await axios.post('/register', userDetails);
+    const response = await axios.post('/auth/signup', {
+      fullName: userDetails.fullName,
+      email: userDetails.email,
+      password: userDetails.password,
+      passwordConfirmation: userDetails.password,
+    });
 
-    if (response.status && response.data?.token?.token) {
+    if (response.status && response.data?.user) {
       dispatch(setSnackbarObj({ message: 'Sign-up successful. Thank you for joining!', severity: 'success' }));
-      setItemInLocalStorage('authentication_token', response.data.token.token);
-      formatAndSetUserDetail(response.data);
+      formatAndSetUserDetail(response.data.user);
       return true;
     }
     handleErrorMessages(response.errors);
@@ -47,15 +51,14 @@ export const handleSignUp = async userDetails => {
 };
 
 const formatAndSetUserDetail = data => {
-  dispatch(setUserDetail({ id: data.id, name: data.fullName, email: data.email }));
+  dispatch(setAuthUser({ id: data.id, name: data.fullName, email: data.email }));
 };
 
 export const handleSignIn = async userDetails => {
   try {
-    const response = await axios.post('/login', { email: userDetails.email, password: userDetails.password });
-    if (response.status && response.data?.token?.token) {
-      setItemInLocalStorage('authentication_token', response.data.token.token);
-      formatAndSetUserDetail(response.data);
+    const response = await axios.post('/auth/login', { email: userDetails.email, password: userDetails.password });
+    if (response.status && response.data?.user) {
+      formatAndSetUserDetail(response.data.user);
       return true;
     }
     handleErrorMessages(response.errors);
@@ -64,18 +67,30 @@ export const handleSignIn = async userDetails => {
   }
 };
 
-export const fetchUserByAuthToken = async () => {
+export const handleSignOut = async () => {
   try {
-    const response = await axios.get('/me');
-
-    if (response.status && response.data) {
-      formatAndSetUserDetail(response.data);
-      return true;
-    }
-    handleLogout();
+    await axios.post('/auth/logout');
   } catch (error) {
     handleCatchError(error);
+  } finally {
     handleLogout();
+  }
+};
+
+// Probes the AdonisJS session cookie against the backend and pushes the result into
+// the Redux auth slice. This is the sole source of truth for "am I logged in" -
+// auth state is never mirrored into localStorage. Failure just means "not logged in",
+// so it stays silent instead of surfacing an error toast or forcing a logout redirect.
+export const loadCurrentUser = async () => {
+  try {
+    const response = await axios.get('/account/profile');
+    if (response.status && response.data) {
+      formatAndSetUserDetail(response.data);
+      return;
+    }
+    dispatch(setAuthUser(null));
+  } catch {
+    dispatch(setAuthUser(null));
   }
 };
 
