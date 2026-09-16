@@ -6,36 +6,65 @@ import { getFormattedDate, handleCatchError, handleErrorMessages } from '@/utils
 
 const refreshUsers = () => queryClient.invalidateQueries({ queryKey: ['users'] });
 
-const getFormattedUser = user => ({
-  id: user.id,
-  fullName: user.fullName || '',
-  email: user.email || '',
-  isActive: Boolean(user.isActive),
-  createdAt: getFormattedDate(user.createdAt, '', true),
+const getFormattedUser = todo => ({
+  id: todo.id,
+  headline: todo.headline || '',
+  description: todo.description || '',
+  ageOfWork: todo.ageOfWork ?? '',
+  createdAt: getFormattedDate(todo.createdAt, '', true),
 });
 
-export const fetchUsers = async ({ searchedText, pageSize, page } = {}) => {
+export const fetchUsers = async ({ searchedText } = {}) => {
   try {
-    const payload = { page, pageSize };
+    const response = await axios.get('/todos');
 
-    if (searchedText) {
-      payload.filters = [
-        { columnName: 'email', type: 'like', value: searchedText },
-        { columnName: 'full_name', type: 'like', value: searchedText },
-      ];
-    }
+    if (response.status && response.data) {
+      let todos = response.data;
 
-    const response = await axios.post('/users/listing', payload);
+      if (searchedText) {
+        const search = searchedText.toLowerCase();
+        todos = todos.filter(todo => todo.headline?.toLowerCase().includes(search) || todo.description?.toLowerCase().includes(search));
+      }
 
-    if (response.status && response.data.data) {
-      return { users: response.data.data.map(getFormattedUser), totalPages: response.data.total_page_count };
+      return { users: todos.map(getFormattedUser), totalPages: 1 };
     }
 
     handleErrorMessages(response?.errors);
-    return { logs: [], totalPages: 0 };
+    return { users: [], totalPages: 0 };
   } catch (error) {
     handleCatchError(error);
     throw error;
+  }
+};
+
+export const deleteTodo = async todoId => {
+  try {
+    const response = await axios.delete(`/todos/${todoId}`);
+
+    if (response.status) {
+      dispatch(setSnackbarObj({ message: 'Todo deleted successfully.', severity: 'success' }));
+      refreshUsers();
+      return true;
+    }
+
+    handleErrorMessages(response?.errors);
+  } catch (error) {
+    handleCatchError(error);
+  }
+};
+
+export const createTodo = async todoData => {
+  try {
+    const response = await axios.post('/todos', todoData);
+
+    if (response.status) {
+      dispatch(setSnackbarObj({ message: 'Todo created successfully.', severity: 'success' }));
+      refreshUsers();
+      return true;
+    }
+    handleErrorMessages(response?.errors);
+  } catch (error) {
+    handleCatchError(error);
   }
 };
 
