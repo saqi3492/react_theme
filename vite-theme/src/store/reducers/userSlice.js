@@ -11,7 +11,6 @@ const userSlice = createSlice({
     // Records the result of a session probe: a user object, or null when signed out.
     setUserDetail(state, actions) {
       state.userDetail = actions.payload;
-      state.status = actions.payload ? 'authenticated' : 'unauthenticated';
     },
   },
 });

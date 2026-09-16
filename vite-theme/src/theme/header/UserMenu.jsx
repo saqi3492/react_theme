@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { Typography, useMediaQuery, Stack, useTheme, Menu, MenuItem, Divider } from '@mui/material';
 import StyledAvatar from './StyledAvatar';
 import { useSelector } from 'react-redux';
-import { ExpandLess, ExpandMore } from '@mui/icons-material';
 import { handleLogout } from '@/utils/helpers';
+import { ExpandLess, ExpandMore } from '@mui/icons-material';
 
 const UserMenu = () => {
   const theme = useTheme();

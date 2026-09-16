@@ -1,8 +1,8 @@
 import { Box, Divider } from '@mui/material';
 import { iconStyle, StyledText } from './MultiLevelMenu';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { NavItemButton } from './SidebarComponents';
 import { handleLogout } from '@/utils/helpers';
+import { NavItemButton } from './SidebarComponents';
 
 const LogoutBox = ({ isCompact }) => {
   return (

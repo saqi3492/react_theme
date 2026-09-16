@@ -9,7 +9,6 @@ const AuthGuard = () => {
   useEffect(() => {
     (async () => {
       const isValidUser = await fetchUserByAuthToken();
-
       if (isValidUser) {
         setIsVerifying(false);
       }
