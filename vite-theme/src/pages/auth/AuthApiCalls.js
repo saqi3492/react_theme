@@ -1,7 +1,7 @@
 import { dispatch } from '@/store/store';
 import { setSnackbarObj } from '@/store/reducers/alertsSlice';
 import axios from 'axios';
-import { setAuthUser } from '@/store/reducers/userSlice';
+import { setUserDetail } from '@/store/reducers/userSlice';
 import { handleCatchError, handleErrorMessages, handleLogout } from '@/utils/helpers';
 
 export const resetPassword = async (token, newPassword) => {
@@ -51,7 +51,7 @@ export const handleSignUp = async userDetails => {
 };
 
 const formatAndSetUserDetail = data => {
-  dispatch(setAuthUser({ id: data.id, name: data.fullName, email: data.email }));
+  dispatch(setUserDetail({ id: data.id, name: data.fullName, email: data.email }));
 };
 
 export const handleSignIn = async userDetails => {
@@ -67,30 +67,17 @@ export const handleSignIn = async userDetails => {
   }
 };
 
-export const handleSignOut = async () => {
+export const fetchUserByAuthToken = async () => {
   try {
-    await axios.post('/auth/logout');
-  } catch (error) {
-    handleCatchError(error);
-  } finally {
-    handleLogout();
-  }
-};
-
-// Probes the AdonisJS session cookie against the backend and pushes the result into
-// the Redux auth slice. This is the sole source of truth for "am I logged in" -
-// auth state is never mirrored into localStorage. Failure just means "not logged in",
-// so it stays silent instead of surfacing an error toast or forcing a logout redirect.
-export const loadCurrentUser = async () => {
-  try {
-    const response = await axios.get('/account/profile');
+    const response = await axios.get('/auth/me');
     if (response.status && response.data) {
       formatAndSetUserDetail(response.data);
-      return;
+      return true;
     }
-    dispatch(setAuthUser(null));
-  } catch {
-    dispatch(setAuthUser(null));
+    handleLogout();
+  } catch (error) {
+    handleCatchError(error);
+    handleLogout();
   }
 };
 

@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { Typography, useMediaQuery, Stack, useTheme, Menu, MenuItem, Divider } from '@mui/material';
 import StyledAvatar from './StyledAvatar';
 import { useSelector } from 'react-redux';
-import { handleSignOut } from '@/pages/auth/AuthApiCalls';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
+import { handleLogout } from '@/utils/helpers';
 
 const UserMenu = () => {
   const theme = useTheme();
@@ -59,7 +59,7 @@ const UserMenu = () => {
           sx={{ px: 3, py: 2 }}
           onClick={() => {
             setAnchorEl(null);
-            handleSignOut();
+            handleLogout();
           }}
         >
           Sign Out

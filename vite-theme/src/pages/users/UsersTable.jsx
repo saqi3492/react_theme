@@ -1,8 +1,9 @@
 import { AgGridReact } from 'ag-grid-react';
 import { defaultColDef, usersColDefs } from '@/utils/constants';
 import ActionRenderer from './ActionRenderer';
+import StatusRenderer from './StatusRenderer';
 
-const renderers = { ActionRenderer };
+const renderers = { ActionRenderer, StatusRenderer };
 
 const UsersTable = ({ isLoading, users }) => {
   return (
