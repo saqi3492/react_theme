@@ -8,7 +8,6 @@ const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    // Records the result of a session probe: a user object, or null when signed out.
     setUserDetail(state, actions) {
       state.userDetail = actions.payload;
     },
