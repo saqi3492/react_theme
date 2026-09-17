@@ -67,6 +67,32 @@ export const handleSignIn = async userDetails => {
   }
 };
 
+export const requestLoginOtp = async email => {
+  try {
+    const response = await axios.post('/auth/otp/request', { email });
+    if (response.status) {
+      dispatch(setSnackbarObj({ message: response.message || 'We sent a login code to your email.', severity: 'success' }));
+      return true;
+    }
+    handleErrorMessages(response.errors);
+  } catch (error) {
+    handleCatchError(error);
+  }
+};
+
+export const verifyLoginOtp = async (email, otp) => {
+  try {
+    const response = await axios.post('/auth/otp/verify', { email, otp });
+    if (response.status && response.data?.user) {
+      formatAndSetUserDetail(response.data.user);
+      return true;
+    }
+    handleErrorMessages(response.errors);
+  } catch (error) {
+    handleCatchError(error);
+  }
+};
+
 export const fetchUserByAuthToken = async () => {
   try {
     const response = await axios.get('/auth/me');
