@@ -4,7 +4,7 @@ import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOu
 import RefreshIcon from '@mui/icons-material/Refresh';
 import { debounce } from 'lodash';
 import InputField from '@/shared/InputField';
-import UserForm from './UserForm';
+import TodoForm from './TodoForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetFiltersAction, setSearchedText } from '@/store/reducers/usersSlice';
 
@@ -61,7 +61,7 @@ const UsersHeader = ({ refetch, isFetching }) => {
           </Button>
         </Box>
       </Stack>
-      {isCreateDialog ? <UserForm onClose={() => setIsCreateDialog(false)} /> : null}
+      {isCreateDialog ? <TodoForm onClose={() => setIsCreateDialog(false)} /> : null}
     </>
   );
 };

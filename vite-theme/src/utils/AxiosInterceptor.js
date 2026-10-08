@@ -1,16 +1,14 @@
 import axios from 'axios';
 import { config } from '@/config/config';
-import { getLocalStorageItem, handleLogout } from './helpers';
+import { handleLogout } from './helpers';
 
 const AxiosInterceptor = {
   initialize: () => {
     axios.defaults.baseURL = config.backendUrl;
+    // Adonis backend uses session-cookie auth, so cookies must be sent on every request.
+    axios.defaults.withCredentials = true;
     axios.interceptors.request.use(
       axiosConfig => {
-        const authToken = getLocalStorageItem('authentication_token');
-        if (authToken && !axiosConfig.ignoreToken) {
-          axiosConfig.headers['Authorization'] = `Bearer ${authToken}`;
-        }
         if (!axiosConfig.rawHeader) {
           axiosConfig.headers['Content-Type'] = 'application/json';
         }

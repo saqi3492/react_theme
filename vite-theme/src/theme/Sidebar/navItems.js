@@ -5,6 +5,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import ChatIcon from '@mui/icons-material/Chat';
 import LockIcon from '@mui/icons-material/Lock';
+import SensorsIcon from '@mui/icons-material/Sensors';
 
 // Define the navigation items with icons
 export const navItems = [
@@ -16,6 +17,11 @@ export const navItems = [
     name: 'Users',
     path: '/users',
     icon: PeopleIcon,
+  },
+  {
+    name: 'SSE',
+    path: '/sse',
+    icon: SensorsIcon,
   },
   {
     type: 'label',
