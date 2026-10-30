@@ -1,43 +1,59 @@
-import { Autocomplete, TextField, Typography } from '@mui/material';
+import { Autocomplete, TextField } from '@mui/material';
+import FormField from './FormField';
 
-const InputDropdownField = ({ items = [], name, label, formik, multiSelect = false, onChange, disabled = false }) => {
+// Works with formik (pass `formik` + `name`) or standalone (pass `value` + `onChange`). Explicit props win over formik.
+// `value` / `onChange` use the option's `value` (an array of values when `multiSelect`), not the whole option object.
+const InputDropdownField = ({
+  items = [],
+  formik,
+  name,
+  label,
+  placeholder,
+  value,
+  onChange,
+  error,
+  helperText,
+  multiSelect = false,
+  disabled = false,
+  sx,
+}) => {
+  const formikError = formik?.touched[name] && formik?.errors[name];
+  const selectedValue = value !== undefined ? value : formik?.values[name];
+
+  const handleChange = (e, newValue) => {
+    const updatedValue = multiSelect ? newValue.map(option => option.value) : (newValue?.value ?? null);
+    if (onChange) onChange(updatedValue);
+    else formik?.setFieldValue(name, updatedValue);
+  };
+
   return (
-    <>
-      <Typography sx={{ color: disabled ? 'text.secondary' : 'text.primary', fontSize: 14, fontWeight: 500 }}>{label}</Typography>
+    <FormField label={label} disabled={disabled} sx={sx}>
       <Autocomplete
         multiple={multiSelect}
         options={items}
         getOptionLabel={option => option.label}
+        isOptionEqualToValue={(option, selected) => option.value === selected.value}
         disableCloseOnSelect={multiSelect}
         disabled={disabled}
         value={
           multiSelect
-            ? items.filter(item => formik.values[name]?.includes(item.value))
-            : items.find(item => item.value === formik.values[name]) || null
+            ? items.filter(item => selectedValue?.includes(item.value))
+            : (items.find(item => item.value === selectedValue) ?? null)
         }
-        onChange={(e, newValue) => {
-          const updatedValue = multiSelect ? newValue?.map(option => option.value) : (newValue?.value ?? null);
-          if (onChange) {
-            onChange(updatedValue);
-          } else {
-            formik.setFieldValue(name, updatedValue);
-          }
-        }}
+        onChange={handleChange}
         renderInput={params => (
           <TextField
             {...params}
             name={name}
             fullWidth
             size="small"
-            error={formik.touched[name] && Boolean(formik.errors[name])}
-            helperText={formik.touched[name] && formik.errors[name]}
-            placeholder={`Select ${label}`}
-            variant="outlined"
-            sx={{ mb: 1 }}
+            placeholder={placeholder ?? (label ? `Select ${label}` : undefined)}
+            error={error ?? Boolean(formikError)}
+            helperText={helperText ?? (formikError || undefined)}
           />
         )}
       />
-    </>
+    </FormField>
   );
 };
 

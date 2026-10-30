@@ -69,24 +69,12 @@ const UserForm = ({ onClose, userData = null, refetch }) => {
       </Stack>
 
       <form onSubmit={formik.handleSubmit} noValidate autoComplete="off">
-        <Stack spacing={1}>
-          <Box>
-            <InputField formik={formik} name="fullName" label="Full Name" />
-          </Box>
-          <Box>
-            <InputField formik={formik} name="email" label="Email" type="email" />
-          </Box>
-          {!userData ? (
-            <Box>
-              <PasswordInputField formik={formik} name="password" label="Password" sx={{ mb: 0 }} />
-            </Box>
-          ) : null}
-          <Box>
-            <InputDropdownField formik={formik} items={activeOptions} name="isActive" label="Status" />
-          </Box>
-        </Stack>
+        <InputField formik={formik} name="fullName" label="Full Name" />
+        <InputField formik={formik} name="email" label="Email" type="email" />
+        {!userData ? <PasswordInputField formik={formik} name="password" label="Password" /> : null}
+        <InputDropdownField formik={formik} items={activeOptions} name="isActive" label="Status" />
 
-        <Stack direction="row" spacing={1.5} sx={{ justifyContent: 'flex-end', mt: 3 }}>
+        <Stack direction="row" spacing={1.5} sx={{ justifyContent: 'flex-end', mt: 1 }}>
           <Button variant="outlined" color="inherit" onClick={onClose} sx={{ borderColor: 'divider', px: 3 }}>
             Cancel
           </Button>
