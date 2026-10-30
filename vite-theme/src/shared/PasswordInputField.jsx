@@ -30,7 +30,7 @@ const PasswordInputField = ({ formik, label, name, onChange, size = 'small', sx 
             ),
           },
         }}
-        sx={{ mb: 1, '& .MuiOutlinedInput-root': { borderRadius: 1 }, ...sx }}
+        sx={{ mb: 1, ...sx }}
       />
     </>
   );

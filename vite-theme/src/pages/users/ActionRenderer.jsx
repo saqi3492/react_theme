@@ -1,15 +1,12 @@
 import { useState } from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { IconButton, Tooltip } from '@mui/material';
-import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import EditIcon from '@mui/icons-material/Edit';
-import { useNavigate } from 'react-router-dom';
-import UserDeleteDialog from './UserDeleteDialog';
+import ConfirmDialog from '@/shared/ConfirmDialog';
 import UserForm from './UserForm';
 import { deleteUser } from './UsersApiCalls';
 
 const ActionRenderer = ({ data }) => {
-  const navigate = useNavigate();
   const [dialog, setDialog] = useState(null);
 
   const handleDelete = async () => {
@@ -18,23 +15,29 @@ const ActionRenderer = ({ data }) => {
 
   return (
     <>
-      <Tooltip title="Show Details" placement="left">
-        <IconButton onClick={() => navigate(`/users/details/${data.id}`)}>
-          <OpenInNewIcon />
-        </IconButton>
-      </Tooltip>
-      <Tooltip title="Edit" placement="top">
+      <Tooltip title="Edit">
         <IconButton onClick={() => setDialog('edit')}>
           <EditIcon />
         </IconButton>
       </Tooltip>
-      <Tooltip title="Delete" placement="right">
-        <IconButton onClick={() => setDialog('delete')}>
+      <Tooltip title="Delete">
+        <IconButton color="error" onClick={() => setDialog('delete')}>
           <DeleteIcon />
         </IconButton>
       </Tooltip>
       {dialog === 'edit' ? <UserForm onClose={() => setDialog(null)} userData={data} /> : null}
-      {dialog === 'delete' ? <UserDeleteDialog closeDialog={() => setDialog(null)} handleDelete={handleDelete} /> : null}
+      {dialog === 'delete' ? (
+        <ConfirmDialog
+          onClose={() => setDialog(null)}
+          onConfirm={handleDelete}
+          title="Delete user?"
+          message={
+            <>
+              <strong>{data.fullName}</strong> will be permanently removed. This action can’t be undone.
+            </>
+          }
+        />
+      ) : null}
     </>
   );
 };

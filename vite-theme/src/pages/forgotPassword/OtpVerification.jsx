@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, Typography, useTheme } from '@mui/material';
 import OTPInput from 'react-otp-input';
 
 const OtpVerification = ({ formik }) => {
+  const theme = useTheme();
   const [otp, setOtp] = useState('');
 
   const handleChange = otpValue => {
@@ -43,7 +44,8 @@ const OtpVerification = ({ formik }) => {
                 border: '1px solid #ccc',
                 outline: 'none',
               }}
-              onFocus={e => (e.target.style.borderColor = 'green')}
+              onFocus={e => (e.target.style.borderColor = theme.palette.primary.main)}
+              onBlur={e => (e.target.style.borderColor = '#ccc')}
             />
           )}
           shouldAutoFocus

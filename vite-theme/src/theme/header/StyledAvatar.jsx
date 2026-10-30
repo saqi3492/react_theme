@@ -2,10 +2,10 @@ import { styled } from '@mui/material/styles';
 import { Avatar, Badge } from '@mui/material';
 import UserImg from '@/assets/user.jpg';
 
-const StyledAvatar = ({ imgUrl }) => {
+const StyledAvatar = ({ imgUrl, size = 40 }) => {
   return (
     <StyledBadge overlap="circular" anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} variant="dot">
-      <Avatar alt="User Avatar" src={imgUrl ?? UserImg} />
+      <Avatar alt="User Avatar" src={imgUrl ?? UserImg} sx={{ width: size, height: size }} />
     </StyledBadge>
   );
 };
