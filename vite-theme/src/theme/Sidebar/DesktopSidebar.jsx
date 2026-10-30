@@ -16,9 +16,10 @@ const DesktopSidebar = () => {
         width: sidebarCompact ? COLLAPSED_SIDEBAR_WIDTH : SIDEBAR_WIDTH,
         zIndex: theme.zIndex.drawer,
         backgroundColor: theme.palette.background.paper,
+        borderRight: `1px solid ${theme.palette.divider}`,
         position: 'fixed',
         transition: 'all .2s ease',
-        '&:hover': sidebarCompact && { width: SIDEBAR_WIDTH },
+        '&:hover': sidebarCompact && { width: SIDEBAR_WIDTH, boxShadow: '8px 0 24px rgba(16, 24, 40, 0.08)' },
       }}
       onMouseEnter={() => setOnHover(true)}
       onMouseLeave={() => setOnHover(false)}

@@ -1,7 +1,23 @@
-import { TextField, Typography } from '@mui/material';
+import { TextField } from '@mui/material';
+import FormField from './FormField';
 
-const InputField = ({ formik, fullWidth = true, name, label, placeholder, value, onChange, type = 'text' }) => {
-  const fieldValue = formik ? (formik.values[name] ?? '') : value;
+// Works with formik (pass `formik` + `name`) or standalone (pass `value` + `onChange`). Explicit props win over formik.
+const InputField = ({
+  formik,
+  name,
+  label,
+  placeholder,
+  value,
+  onChange,
+  error,
+  helperText,
+  type = 'text',
+  fullWidth = true,
+  disabled = false,
+  sx,
+}) => {
+  const formikError = formik?.touched[name] && formik?.errors[name];
+  const fieldValue = value ?? formik?.values[name] ?? '';
 
   const fieldOnChange = e => {
     e.target.value = e.target.value.trimStart();
@@ -9,21 +25,20 @@ const InputField = ({ formik, fullWidth = true, name, label, placeholder, value,
   };
 
   return (
-    <>
-      {label ? <Typography sx={{ fontSize: 14, fontWeight: 500 }}>{label}</Typography> : null}
+    <FormField label={label} disabled={disabled} sx={sx}>
       <TextField
         fullWidth={fullWidth}
         name={name}
         type={type}
         placeholder={placeholder || label}
         size="small"
-        sx={{ mb: label ? 1 : 0 }}
+        disabled={disabled}
         value={fieldValue}
         onChange={fieldOnChange}
-        error={formik && formik.touched[name] && Boolean(formik.errors[name])}
-        helperText={formik && formik.touched[name] && formik.errors[name]}
+        error={error ?? Boolean(formikError)}
+        helperText={helperText ?? (formikError || undefined)}
       />
-    </>
+    </FormField>
   );
 };
 

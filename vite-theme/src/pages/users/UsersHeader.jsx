@@ -1,9 +1,8 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useCallback } from 'react';
 import { Typography, Stack, Box, IconButton, Button, Tooltip } from '@mui/material';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import RefreshIcon from '@mui/icons-material/Refresh';
-import { debounce } from 'lodash';
-import InputField from '@/shared/InputField';
+import SearchField from '@/shared/SearchField';
 import UserForm from './UserForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetFiltersAction, setSearchedText } from '@/store/reducers/usersSlice';
@@ -12,21 +11,12 @@ const UsersHeader = ({ refetch, isFetching }) => {
   const dispatch = useDispatch();
   const [isCreateDialog, setIsCreateDialog] = useState(false);
   const searchedText = useSelector(state => state.Users.searchedText);
-  const [value, setValue] = useState(searchedText);
+  const [searchKey, setSearchKey] = useState(0);
 
-  const throttledScroll = useRef(
-    debounce(text => {
-      dispatch(setSearchedText(text));
-    }, 500)
-  );
-
-  useEffect(() => {
-    throttledScroll.current(value);
-  }, [value]);
+  const handleSearch = useCallback(text => dispatch(setSearchedText(text)), [dispatch]);
 
   const handleReset = () => {
-    throttledScroll.current.cancel();
-    setValue('');
+    setSearchKey(key => key + 1);
     dispatch(resetFiltersAction());
   };
 
@@ -41,7 +31,7 @@ const UsersHeader = ({ refetch, isFetching }) => {
           <Typography variant="h6" sx={{ fontWeight: 500 }}>
             Users
           </Typography>
-          <Tooltip title={isFetching ? 'Getting Fresh Users...' : 'Refresh Users'} arrow>
+          <Tooltip title={isFetching ? 'Getting Fresh Users...' : 'Refresh Users'}>
             <IconButton color="info" onClick={handleRefresh} sx={{ bgcolor: 'action.hover', '&:hover': { bgcolor: 'action.selected' } }}>
               <RefreshIcon />
             </IconButton>
@@ -55,9 +45,9 @@ const UsersHeader = ({ refetch, isFetching }) => {
           </IconButton>
         </Box>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-          <InputField placeholder="Search here..." value={value} onChange={e => setValue(e.target.value)} fullWidth={false} />
+          <SearchField key={searchKey} value={searchedText} onSearch={handleSearch} placeholder="Search users..." />
           <Button variant="contained" size="small" onClick={handleReset}>
-            Reset Filters
+            Reset
           </Button>
         </Box>
       </Stack>

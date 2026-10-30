@@ -23,6 +23,19 @@ const theme = createTheme({
         },
       },
     },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          borderRadius: '8px',
+        },
+      },
+    },
+    MuiTooltip: {
+      defaultProps: {
+        arrow: true,
+        placement: 'top',
+      },
+    },
     MuiTab: {
       styleOverrides: {
         root: {

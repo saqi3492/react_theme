@@ -50,6 +50,7 @@
     "globals": "^17.5.0",
     "prettier": "^3.8.3",
     "vite": "^8.0.10",
-    "vite-plugin-eslint": "^1.8.1"
+    "vite-plugin-eslint": "^1.8.1",
+    "zod-validation-error": "^4.0.0"
   }
 }

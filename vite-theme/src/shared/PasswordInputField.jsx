@@ -1,14 +1,14 @@
 import { VisibilityOffOutlined, VisibilityOutlined } from '@mui/icons-material';
-import { IconButton, InputAdornment, TextField, Typography } from '@mui/material';
+import { IconButton, InputAdornment, TextField } from '@mui/material';
 import { useState } from 'react';
+import FormField from './FormField';
 
 const PasswordInputField = ({ formik, label, name, onChange, size = 'small', sx = {} }) => {
   const [showPassword, setShowPassword] = useState(false);
   const { touched, error, value } = formik.getFieldMeta(name);
 
   return (
-    <>
-      <Typography sx={{ fontSize: 14, fontWeight: 500 }}>{label}</Typography>
+    <FormField label={label} sx={sx}>
       <TextField
         fullWidth
         name={name}
@@ -30,9 +30,8 @@ const PasswordInputField = ({ formik, label, name, onChange, size = 'small', sx 
             ),
           },
         }}
-        sx={{ mb: 1, '& .MuiOutlinedInput-root': { borderRadius: 1 }, ...sx }}
       />
-    </>
+    </FormField>
   );
 };
 
