@@ -7,9 +7,14 @@ export interface ErrorMessage {
   code?: string;
 }
 
+const PUBLIC_PATHS = ['/login', '/signup'];
+
 export const handleLogout = (): void => {
   localStorage.clear();
-  window.location.reload();
+  // Don't redirect when already on a public page, e.g. a 401 from a failed login attempt
+  if (!PUBLIC_PATHS.includes(window.location.pathname)) {
+    window.location.href = '/login';
+  }
 };
 
 export const getLocalStorageItem = <T>(key: string, defaultValue: T | null = null): T | string | null => {
@@ -39,6 +44,7 @@ export const handleCatchMessages = (error: unknown): void => {
   const message = axiosError.response?.data?.message || axiosError.message || 'Oops! Something went wrong.';
 
   console.error('API Error:', message);
+  showToast.error(message);
 };
 
 export const handleErrorMessages = (errors?: ErrorMessage[]): void => {

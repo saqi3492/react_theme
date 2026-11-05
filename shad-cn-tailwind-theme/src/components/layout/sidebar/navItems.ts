@@ -1,7 +1,22 @@
-import { Briefcase, Building2, CheckSquare, FileText, HelpCircle, LayoutGrid, LogOut, User, UserCog, Users } from 'lucide-react';
+import {
+  Briefcase,
+  Building2,
+  CheckSquare,
+  FileText,
+  ListTodo,
+  HelpCircle,
+  LayoutGrid,
+  LogOut,
+  Radio,
+  User,
+  UserCog,
+  Users,
+} from 'lucide-react';
 
 export const navItems: NavItem[] = [
   { path: '/dashboard', name: 'Dashboard', icon: LayoutGrid },
+  { path: '/todos', name: 'Todos', icon: ListTodo },
+  { path: '/sse', name: 'SSE', icon: Radio },
   {
     name: 'Configuration',
     icon: Briefcase,
