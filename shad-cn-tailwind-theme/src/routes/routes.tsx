@@ -6,6 +6,8 @@ import PublicGuard from './PublicGuard';
 const Login = lazy(() => import('@/pages/auth/Login'));
 const Signup = lazy(() => import('@/pages/auth/Signup'));
 const Dashboard = lazy(() => import('@/pages/dashboard/Dashboard'));
+const Sse = lazy(() => import('@/pages/sse/Sse'));
+const Todos = lazy(() => import('@/pages/todos/Todos'));
 
 const Routes = () => {
   const routes = useRoutes([
@@ -15,6 +17,8 @@ const Routes = () => {
       children: [
         { index: true, element: <Navigate to="/dashboard" replace /> },
         { path: 'dashboard', element: <Dashboard /> },
+        { path: 'sse', element: <Sse /> },
+        { path: 'todos', element: <Todos /> },
         { path: 'configuration/staff-types', element: <h1>Staff Types</h1> },
         { path: 'configuration/documents', element: <h1>Documents</h1> },
         { path: 'central-record', element: <h1>Central Record</h1> },

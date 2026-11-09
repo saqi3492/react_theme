@@ -1,22 +1,25 @@
 import HeaderContent from './HeaderContent';
 import { AppBar } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import { styled, alpha } from '@mui/material/styles';
 import { HEADER_HEIGHT } from '@/utils/constants';
 
 const Header = () => {
   return (
-    <MuiAppBar>
+    <MuiAppBar elevation={0}>
       <HeaderContent />
     </MuiAppBar>
   );
 };
 export default Header;
 
-const MuiAppBar = styled(AppBar)(() => ({
+const MuiAppBar = styled(AppBar)(({ theme }) => ({
   height: HEADER_HEIGHT,
   position: 'fixed',
   top: 0,
   justifyContent: 'center',
-  background: '#f4f9f3',
-  boxShadow: 'rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px',
+  color: theme.palette.text.primary,
+  backgroundColor: alpha(theme.palette.background.paper, 0.85),
+  backdropFilter: 'blur(8px)',
+  borderBottom: `1px solid ${theme.palette.divider}`,
+  boxShadow: '0 1px 8px rgba(16, 24, 40, 0.04)',
 }));

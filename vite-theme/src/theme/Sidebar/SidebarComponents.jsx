@@ -5,17 +5,31 @@ import { useSelector } from 'react-redux';
 import clsx from 'clsx';
 
 const StyledNavItemButton = styled(ButtonBase)(({ theme, active }) => ({
+  position: 'relative',
   height: 44,
   width: '100%',
   padding: '0 18px',
-  borderRadius: 8,
+  borderRadius: 10,
   marginBottom: 4,
   justifyContent: 'flex-start',
   transition: 'all 0.15s ease',
-  backgroundColor: active ? alpha(theme.palette.primary.main, 0.06) : 'transparent',
+  backgroundColor: active ? alpha(theme.palette.primary.main, 0.1) : 'transparent',
   color: active ? theme.palette.primary.main : 'inherit',
   '&:hover': {
-    backgroundColor: theme.palette.action.hover,
+    backgroundColor: active ? alpha(theme.palette.primary.main, 0.14) : alpha(theme.palette.primary.main, 0.05),
+    '& .bulletDot::after': { borderColor: theme.palette.primary.main },
+  },
+  '&.navItem::before': {
+    content: '""',
+    position: 'absolute',
+    left: 0,
+    top: 10,
+    bottom: 10,
+    width: 3,
+    borderRadius: '0 3px 3px 0',
+    backgroundColor: theme.palette.primary.main,
+    transition: 'opacity 0.15s ease',
+    opacity: active ? 1 : 0,
   },
 }));
 
@@ -27,19 +41,32 @@ export const NavItemButton = ({ active, sx, children, ...props }) => {
   );
 };
 
-const StyledBulletIcon = styled(Box)(({ theme, active }) => ({
+// Spacer that keeps child text aligned and draws a dot centered on the tree line from SidebarAccordion
+const StyledBulletIcon = styled(Box, { shouldForwardProp: prop => prop !== 'active' })(({ theme, active }) => ({
+  position: 'relative',
   width: 4,
   height: 4,
+  flexShrink: 0,
   marginLeft: '10px',
   marginRight: '8px',
-  overflow: 'hidden',
-  borderRadius: '50%',
-  background: active ? theme.palette.primary.main : theme.palette.text.disabled,
-  boxShadow: active ? `0px 0px 0px 3px ${theme.palette.primary[200]}` : 'none',
+  '&::after': {
+    content: '""',
+    position: 'absolute',
+    left: '50%',
+    top: '50%',
+    width: 8,
+    height: 8,
+    borderRadius: '50%',
+    transform: 'translate(-50%, -50%)',
+    transition: 'all 0.15s ease',
+    backgroundColor: active ? theme.palette.primary.main : theme.palette.background.paper,
+    border: `2px solid ${active ? theme.palette.primary.main : theme.palette.text.disabled}`,
+    boxShadow: active ? `0 0 0 3px ${alpha(theme.palette.primary.main, 0.2)}` : 'none',
+  },
 }));
 
-export const BulletIcon = ({ active, sx, ...props }) => {
-  return <StyledBulletIcon active={active} sx={{ ...sx }} {...props} />;
+export const BulletIcon = ({ active, sx, className, ...props }) => {
+  return <StyledBulletIcon active={active} className={clsx('bulletDot', className)} sx={{ ...sx }} {...props} />;
 };
 
 const StyledBadgeValue = styled(Box, { shouldForwardProp: prop => prop !== 'sidebarCompact' })(({ theme, compact, sidebarCompact }) => ({

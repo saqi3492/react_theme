@@ -4,20 +4,20 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { navItems } from './navItems';
 import SidebarAccordion from './SidebarAccordion';
 import { SIDEBAR_TOP_HEADER_AREA } from '@/utils/constants';
-import LogoutBox from './LogoutBox';
 import { NavItemButton, BulletIcon, BadgeValue, Paragraph, Span } from './SidebarComponents';
 import SimpleBar from 'simplebar-react';
 import 'simplebar-react/dist/simplebar.min.css';
 
 const ListLabel = styled(Paragraph)(({ theme, compact }) => ({
-  fontWeight: 700,
-  fontSize: '12px',
+  fontWeight: 600,
+  fontSize: '11px',
+  letterSpacing: '0.08em',
   marginTop: '20px',
-  marginLeft: '15px',
-  marginBottom: '10px',
+  marginLeft: '18px',
+  marginBottom: '8px',
   textTransform: 'uppercase',
   transition: 'all 0.15s ease',
-  color: theme.palette.text.secondary,
+  color: theme.palette.text.disabled,
   ...(compact && {
     opacity: 0,
     width: 0,
@@ -29,7 +29,7 @@ export const StyledText = styled(Span)(({ theme, compact, active }) => ({
   paddingLeft: '0.8rem',
   transition: 'all 0.15s ease',
   fontSize: '13px',
-  fontWeight: 500,
+  fontWeight: active ? 600 : 500,
   color: active ? theme.palette.primary.main : theme.palette.text.secondary,
   ...(compact && {
     opacity: 0,
@@ -90,10 +90,8 @@ const MultiLevelMenu = ({ sidebarCompact = false }) => {
   return (
     <Stack direction="column" sx={{ justifyContent: 'space-between', height: `calc(100vh - ${SIDEBAR_TOP_HEADER_AREA}px)` }}>
       <SimpleBar style={{ maxHeight: '100%', overflowX: 'hidden' }}>
-        <Box sx={{ p: '0 5px' }}>{renderLevels(navItems)}</Box>
+        <Box sx={{ p: '4px 10px' }}>{renderLevels(navItems)}</Box>
       </SimpleBar>
-
-      <LogoutBox isCompact={COMPACT} />
     </Stack>
   );
 };

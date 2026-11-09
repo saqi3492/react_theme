@@ -1,13 +1,11 @@
 import PeopleIcon from '@mui/icons-material/People';
 import AssignmentIcon from '@mui/icons-material/Assignment';
-import TableChartIcon from '@mui/icons-material/TableChart';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import ChatIcon from '@mui/icons-material/Chat';
 import LockIcon from '@mui/icons-material/Lock';
 import SensorsIcon from '@mui/icons-material/Sensors';
 
-// Define the navigation items with icons
 export const navItems = [
   {
     type: 'label',
@@ -30,6 +28,7 @@ export const navItems = [
   {
     name: 'Profiles',
     icon: PeopleIcon,
+    defaultOpen: false,
     children: [
       {
         name: 'Profile 1',
@@ -44,6 +43,7 @@ export const navItems = [
   {
     name: 'Accounts',
     icon: LockIcon,
+    defaultOpen: false,
     children: [
       {
         name: 'Account 1',
@@ -53,11 +53,16 @@ export const navItems = [
         name: 'Account 2',
         path: '/dashboard/account-v2',
       },
+      {
+        name: 'Settings',
+        path: '/settings',
+      },
     ],
   },
   {
     name: 'User & Contact',
     icon: PeopleIcon,
+    defaultOpen: false,
     children: [
       {
         name: 'Contact List',
@@ -72,6 +77,7 @@ export const navItems = [
   {
     name: 'Projects',
     icon: AssignmentIcon,
+    defaultOpen: false,
     children: [
       {
         name: 'Project List 1',
@@ -96,49 +102,6 @@ export const navItems = [
     ],
   },
   {
-    name: 'Data Table',
-    icon: TableChartIcon,
-    path: '/dashboard/data-table-v2',
-  },
-  {
-    type: 'label',
-    label: 'Apps',
-  },
-  {
-    name: 'Todo List',
-    icon: CheckCircleIcon,
-    path: '/dashboard/todo-list',
-  },
-  {
-    name: 'Calendar',
-    icon: CalendarTodayIcon,
-    path: '/dashboard/calender',
-  },
-  {
-    name: 'Data Table',
-    icon: TableChartIcon,
-    path: '/dashboard/data-table-v2',
-  },
-  {
-    type: 'label',
-    label: 'Apps',
-  },
-  {
-    name: 'Todo List',
-    icon: CheckCircleIcon,
-    path: '/dashboard/todo-list',
-  },
-  {
-    name: 'Calendar',
-    icon: CalendarTodayIcon,
-    path: '/dashboard/calender',
-  },
-  {
-    name: 'Data Table',
-    icon: TableChartIcon,
-    path: '/dashboard/data-table-v2',
-  },
-  {
     type: 'label',
     label: 'Apps',
   },
@@ -155,6 +118,7 @@ export const navItems = [
   {
     name: 'Chats',
     icon: ChatIcon,
+    defaultOpen: false,
     children: [
       {
         name: 'Chat 1',
@@ -165,10 +129,12 @@ export const navItems = [
   {
     name: 'Sessions',
     icon: LockIcon,
+    defaultOpen: true,
     children: [
       {
         iconText: 'RT',
         name: 'Sign In',
+        defaultOpen: false,
         children: [
           {
             name: 'Sign In 1',
@@ -179,6 +145,7 @@ export const navItems = [
       {
         iconText: 'RT',
         name: 'Register',
+        defaultOpen: true,
         children: [
           {
             name: 'Register 1',
@@ -193,6 +160,7 @@ export const navItems = [
       {
         iconText: 'RT',
         name: 'Forget Password',
+        defaultOpen: false,
         children: [
           {
             name: 'Forget Password 1',

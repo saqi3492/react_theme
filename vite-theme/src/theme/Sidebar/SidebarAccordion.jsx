@@ -1,20 +1,40 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { styled } from '@mui/material/styles';
-import { Box } from '@mui/material';
+import { Box, Collapse } from '@mui/material';
 import { useLocation } from 'react-router-dom';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { NavItemButton, BulletIcon, BadgeValue, Span } from './SidebarComponents';
 
-const NavExpandRoot = styled(Box)(() => ({
+const NavExpandRoot = styled(Box)(({ theme }) => ({
   '& .subMenu': {
     padding: 0,
   },
   '& .expansion-panel': {
     '& .expansion-panel': {
       paddingLeft: 8,
+      '&::before': { left: 37 },
+      '& .navItem::before': { left: 29 },
     },
-    overflow: 'hidden',
-    transition: 'max-height 0.3s cubic-bezier(0, 0, 0.2, 1)',
+    position: 'relative',
+    // vertical tree line under the parent icon
+    '&::before': {
+      content: '""',
+      position: 'absolute',
+      left: 29,
+      top: 0,
+      bottom: 6,
+      width: 2,
+      borderRadius: 2,
+      backgroundColor: theme.palette.divider,
+    },
+    // active child highlights its segment of the tree line
+    '& .navItem::before': {
+      left: 29,
+      top: 8,
+      bottom: 8,
+      width: 2,
+      borderRadius: 2,
+    },
   },
 }));
 
@@ -45,55 +65,24 @@ const ItemText = styled(Span)(({ theme, compact, active }) => ({
 
 const SidebarAccordion = props => {
   const { item, children, sidebarCompact } = props;
-  const elementRef = useRef(null);
-  const componentHeight = useRef(0);
   const { pathname } = useLocation();
-  const [collapsed, setCollapsed] = useState(false);
-  const [hasActive, setHasActive] = useState(false);
-  const [height, setHeight] = useState(0);
+  const [collapsed, setCollapsed] = useState(item.defaultOpen ?? false);
+  const [prevPathname, setPrevPathname] = useState(null);
+  const hasActive = item.children.some(child => child.path === pathname);
+
+  // OPEN DROPDOWN IF CHILD IS ACTIVE
+  if (pathname !== prevPathname) {
+    setPrevPathname(pathname);
+    if (hasActive) setCollapsed(true);
+  }
 
   const { name, icon, iconText, badge } = item;
 
-  const handleClick = () => {
-    componentHeight.current = 0;
-    calcaulateHeight(elementRef.current);
-    setHeight(componentHeight.current);
-    setCollapsed(!collapsed);
-  };
-
-  const calcaulateHeight = useCallback(function innercalcaulateHeight(node) {
-    if (node.name !== 'child') {
-      for (let child of node.children) {
-        innercalcaulateHeight(child);
-      }
-    }
-
-    if (node.name === 'child') componentHeight.current += node.scrollHeight;
-    else componentHeight.current += 44; //here 44 is node height
-
-    return;
-  }, []);
-
-  useEffect(() => {
-    if (!elementRef) return;
-    calcaulateHeight(elementRef.current); // OPEN DROPDOWN IF CHILD IS ACTIVE
-    setHeight(componentHeight.current);
-
-    for (let child of item.children) {
-      if (child.path === pathname) {
-        setCollapsed(true);
-        setHasActive(true);
-      }
-    }
-
-    return () => {
-      setHasActive(false);
-    };
-  }, [calcaulateHeight, pathname, item.children]);
+  const handleClick = () => setCollapsed(!collapsed);
 
   return (
     <NavExpandRoot className="subMenu">
-      <NavItemButton sx={{ padding: '0 12px', justifyContent: 'space-between' }} onClick={handleClick} active={hasActive ? 1 : 0}>
+      <NavItemButton sx={{ padding: '0 12px', justifyContent: 'space-between' }} onClick={handleClick}>
         <Box sx={{ pl: '7px', display: 'flex', alignItems: 'center' }}>
           {icon && (
             <item.icon
@@ -118,15 +107,9 @@ const SidebarAccordion = props => {
         <ChevronIconStyled color="disabled" compact={sidebarCompact ? 1 : 0} collapsed={collapsed ? 1 : 0} className="accordionArrow" />
       </NavItemButton>
 
-      <div
-        ref={elementRef}
-        className="expansion-panel"
-        style={{
-          maxHeight: !collapsed || sidebarCompact ? '0px' : height + 'px',
-        }}
-      >
+      <Collapse in={collapsed} timeout={250} className="expansion-panel">
         {children}
-      </div>
+      </Collapse>
     </NavExpandRoot>
   );
 };

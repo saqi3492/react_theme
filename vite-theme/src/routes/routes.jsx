@@ -9,6 +9,7 @@ const UserDetails = lazy(() => import('@/pages/users/UserDetails'));
 const Training = lazy(() => import('@/pages/training'));
 const Incidents = lazy(() => import('@/pages/incidents'));
 const Sse = lazy(() => import('@/pages/sse/Sse'));
+const Settings = lazy(() => import('@/pages/settings'));
 const SignIn = lazy(() => import('@/pages/signIn/SignIn'));
 const SignUp = lazy(() => import('@/pages/signUp/SignUp'));
 const ForgotPassword = lazy(() => import('@/pages/forgotPassword/ForgotPassword'));
@@ -25,6 +26,7 @@ const Routes = () => {
         { path: '/training', element: <Training /> },
         { path: '/incidents', element: <Incidents /> },
         { path: '/sse', element: <Sse /> },
+        { path: '/settings', element: <Settings /> },
       ],
     },
     {
