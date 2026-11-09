@@ -1,16 +1,18 @@
 import { useState } from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { IconButton, Tooltip } from '@mui/material';
+// import UserDeleteDialog from './UserDeleteDialog';
+import { deleteTodo } from './UsersApiCalls';
 import EditIcon from '@mui/icons-material/Edit';
 import ConfirmDialog from '@/shared/ConfirmDialog';
 import UserForm from './UserForm';
-import { deleteUser } from './UsersApiCalls';
+// import { deleteUser } from './UsersApiCalls';
 
 const ActionRenderer = ({ data }) => {
   const [dialog, setDialog] = useState(null);
 
   const handleDelete = async () => {
-    await deleteUser(data.id);
+    await deleteTodo(data.id);
   };
 
   return (

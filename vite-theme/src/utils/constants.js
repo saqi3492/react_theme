@@ -15,23 +15,19 @@ export const defaultColDef = {
 
 export const usersColDefs = [
   {
-    headerName: 'Full Name',
-    colId: 'fullName',
-    field: 'fullName',
-    cellRenderer: 'NameRenderer',
+    headerName: 'Headline',
+    colId: 'headline',
+    field: 'headline',
   },
   {
-    headerName: 'Email',
-    colId: 'email',
-    field: 'email',
+    headerName: 'Description',
+    colId: 'description',
+    field: 'description',
   },
   {
-    headerName: 'Status',
-    colId: 'isActive',
-    field: 'isActive',
-    flex: 0,
-    width: 120,
-    cellRenderer: 'StatusRenderer',
+    headerName: 'Age Of Work',
+    colId: 'ageOfWork',
+    field: 'ageOfWork',
   },
   {
     headerName: 'Created At',

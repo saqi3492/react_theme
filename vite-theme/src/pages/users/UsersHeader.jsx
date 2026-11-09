@@ -2,8 +2,8 @@ import { useState, useCallback } from 'react';
 import { Typography, Stack, Box, IconButton, Button, Tooltip } from '@mui/material';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import RefreshIcon from '@mui/icons-material/Refresh';
+import TodoForm from './TodoForm';
 import SearchField from '@/shared/SearchField';
-import UserForm from './UserForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetFiltersAction, setSearchedText } from '@/store/reducers/usersSlice';
 
@@ -51,7 +51,7 @@ const UsersHeader = ({ refetch, isFetching }) => {
           </Button>
         </Box>
       </Stack>
-      {isCreateDialog ? <UserForm onClose={() => setIsCreateDialog(false)} /> : null}
+      {isCreateDialog ? <TodoForm onClose={() => setIsCreateDialog(false)} /> : null}
     </>
   );
 };
